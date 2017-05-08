@@ -1,0 +1,22 @@
+{
+  parserClass="com.cwlplugin.parser.CwlParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Cwl"
+  psiImplClassSuffix="Impl"
+  psiPackage="com.cwlplugin.psi"
+  psiImplPackage="com.cwlplugin.psi.impl"
+
+  elementTypeHolderClass="com.cwlplugin.psi.CwlTypes"
+  elementTypeClass="com.cwlplugin.psi.CwlElementType"
+  tokenTypeClass="com.cwlplugin.psi.CwlTokenType"
+
+  psiImplUtilClass="com.cwlplugin.psi.impl.CwlPsiImplUtil"
+}
+
+simpleFile ::= item_*
+
+private item_ ::= (property|COMMENT|CRLF)
+
+property ::= (KEY? SEPARATOR VALUE?) | KEY {methods=[getKey getValue]}
