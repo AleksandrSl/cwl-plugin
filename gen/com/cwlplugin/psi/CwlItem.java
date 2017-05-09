@@ -5,10 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface CwlProperty extends PsiElement {
-
-  String getKey();
-
-  String getValue();
+public interface CwlItem extends PsiElement {
 
 }

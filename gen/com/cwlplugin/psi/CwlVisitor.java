@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public class CwlVisitor extends PsiElementVisitor {
 
-  public void visitProperty(@NotNull CwlProperty o) {
+  public void visitItem(@NotNull CwlItem o) {
     visitPsiElement(o);
   }
 

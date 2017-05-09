@@ -11,27 +11,19 @@ import static com.cwlplugin.psi.CwlTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.cwlplugin.psi.*;
 
-public class CwlPropertyImpl extends ASTWrapperPsiElement implements CwlProperty {
+public class CwlItemImpl extends ASTWrapperPsiElement implements CwlItem {
 
-  public CwlPropertyImpl(ASTNode node) {
+  public CwlItemImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull CwlVisitor visitor) {
-    visitor.visitProperty(this);
+    visitor.visitItem(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof CwlVisitor) accept((CwlVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  public String getKey() {
-    return CwlPsiImplUtil.getKey(this);
-  }
-
-  public String getValue() {
-    return CwlPsiImplUtil.getValue(this);
   }
 
 }

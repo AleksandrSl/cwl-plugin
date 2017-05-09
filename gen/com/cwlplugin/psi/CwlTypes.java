@@ -8,19 +8,18 @@ import com.cwlplugin.psi.impl.*;
 
 public interface CwlTypes {
 
-  IElementType PROPERTY = new CwlElementType("PROPERTY");
+  IElementType ITEM = new CwlElementType("ITEM");
 
+  IElementType COLON = new CwlTokenType("COLON");
   IElementType COMMENT = new CwlTokenType("COMMENT");
-  IElementType CRLF = new CwlTokenType("CRLF");
-  IElementType KEY = new CwlTokenType("KEY");
-  IElementType SEPARATOR = new CwlTokenType("SEPARATOR");
-  IElementType VALUE = new CwlTokenType("VALUE");
+  IElementType IDENTIFIER = new CwlTokenType("IDENTIFIER");
+  IElementType INPUTS = new CwlTokenType("INPUTS");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-       if (type == PROPERTY) {
-        return new CwlPropertyImpl(node);
+       if (type == ITEM) {
+        return new CwlItemImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

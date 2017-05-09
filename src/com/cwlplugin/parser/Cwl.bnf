@@ -12,11 +12,74 @@
   elementTypeClass="com.cwlplugin.psi.CwlElementType"
   tokenTypeClass="com.cwlplugin.psi.CwlTokenType"
 
-  psiImplUtilClass="com.cwlplugin.psi.impl.CwlPsiImplUtil"
+  // These tokens are just for Interactive Preview
+  tokens = [
+  CWL_VERSION = "cwlVersion"
+  VERSION = "v1.0"
+  REQUIREMENTS = "requirements"
+  CLASS = "class"
+  INPUTS = "inputs"
+  OUTPUTS = "outputs"
+  COLON = ":"
+  space="regexp:\s+"
+  BASECOMMAND = "baseCommand"
+  COMMAND = "regexp:([\w]*)"
+  IDENTIFIER = "regexp:([\w]*)"
+  LABEL = "label"
+  TYPE = "type"
+  SECONDARY_FILES = "secondaryFiles"
+  DOC = "doc"
+  FORMAT = "format"
+  STREAMABLE = "streamable"
+  INPUT_BINDING = "inputBinding"
+  DEFAULT = "default"
+  STRING = "regexp:(\s\|[\n\r]\w)"
+  LOAD_CONTENTS = "loadContext"
+  POSITION = "position"
+  PREFIX = "prefix"
+  SEPARATE = "separate"
+  ITEM_SEPARATOR = "itemSeparator"
+  VALUE_FROM = "valueFrom"
+  SHELL_QUOTE = "shellQuote"
+  INT = "regexp:\d+"
+  BOOLEAN = "True"
+  EXPRESSION = "$()"
+  ]
+
+
+//  psiImplUtilClass="com.cwlplugin.psi.impl.CwlPsiImplUtil"
 }
 
-simpleFile ::= item_*
+cwlFile ::= cwl_version class
 
-private item_ ::= (property|COMMENT|CRLF)
+private cwl_version ::= CWL_VERSION COLON VERSION
 
-property ::= (KEY? SEPARATOR VALUE?) | KEY {methods=[getKey getValue]}
+class ::= CLASS COLON tool
+tool ::= (commandline_tool)
+
+// TODO add expression_tool and workflow
+
+commandline_tool ::=
+    ("CommandLineTool"
+    BASECOMMAND COLON COMMAND
+    INPUTS COLON
+    parameter *
+    OUTPUTS "[" "]"
+    )
+
+parameter ::= IDENTIFIER COLON (label | doc | secondary_files | input_binding | default | streamable | format )
+input_binding ::=
+(LOAD_CONTENTS COLON BOOLEAN
+| VALUE_FROM COLON STRING
+| POSITION COLON INT
+| SEPARATE COLON STRING
+| ITEM_SEPARATOR COLON STRING
+| PREFIX COLON STRING
+| SHELL_QUOTE COLON BOOLEAN)
+
+
+
+//private item ::= INPUTS COLON IDENTIFIER {pin=2 recoverWhile=rule_recover}
+//private rule_recover ::= !(";" | id "=")
+
+//property ::= (KEY? SEPARATOR VALUE?) | KEY {methods=[getKey getValue]}

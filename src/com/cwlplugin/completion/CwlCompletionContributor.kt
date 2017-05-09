@@ -1,6 +1,5 @@
 package com.cwlplugin.completion
 
-import com.cwlplugin.parser.KEYWORDS
 import com.intellij.codeInsight.completion.CompletionContributor
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionResultSet
@@ -18,9 +17,9 @@ class CwlCompletionContributor: CompletionContributor() {
             val psiElement = parameters.position
             val psiFile = parameters.originalPosition?.containingFile
 
-            for (value in KEYWORDS) {
-                result.addElement(LookupElementBuilder.create(value.toString()))
-            }
+//            for (value in KEYWORDS) {
+//                result.addElement(LookupElementBuilder.create(value.toString()))
+//            }
         }
     }
 }

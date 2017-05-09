@@ -39,11 +39,11 @@ class CwlSyntaxHighlighter: SyntaxHighlighterBase() {
 
   override fun getTokenHighlights(tokenType: IElementType? ): Array<TextAttributesKey> {
       when (tokenType) {
-          CwlTypes.SEPARATOR -> return SyntaxHighlighterBase.pack(BAD_CHARACTER)
-          CwlTypes.KEY -> return SyntaxHighlighterBase.pack(KEY)
-          CwlTypes.VALUE -> return SyntaxHighlighterBase.pack(VALUE)
+//          CwlTypes.SEPARATOR -> return SyntaxHighlighterBase.pack(BAD_CHARACTER)
+          CwlTypes.INPUTS -> return SyntaxHighlighterBase.pack(KEY)
+//          CwlTypes.VALUE -> return SyntaxHighlighterBase.pack(VALUE)
           CwlTypes.COMMENT -> return SyntaxHighlighterBase.pack(COMMENT)
-          CwlTypes.SEPARATOR -> return SyntaxHighlighterBase.pack(SEPARATOR)
+          CwlTypes.COLON -> return SyntaxHighlighterBase.pack(SEPARATOR)
           else -> return SyntaxHighlighterBase.pack(null)
       }
   }
