@@ -23,8 +23,10 @@
   COLON = ":"
   space="regexp:\s+"
   BASECOMMAND = "baseCommand"
-  COMMAND = "regexp:([\w]*)"
-  IDENTIFIER = "regexp:([\w]*)"
+//  COMMAND = "regexp:\w*"
+  COMMAND = "ls"
+  IDENTIFIER = "input_file"
+//  IDENTIFIER = "regexp:([\w]*)"
   LABEL = "label"
   TYPE = "type"
   SECONDARY_FILES = "secondaryFiles"
@@ -44,6 +46,8 @@
   INT = "regexp:\d+"
   BOOLEAN = "True"
   EXPRESSION = "$()"
+  STRING_TYPE = "string"
+  COMMAND_LINE_TOOL = "CommandLineTool"
   ]
 
 
@@ -60,15 +64,20 @@ tool ::= (commandline_tool)
 // TODO add expression_tool and workflow
 
 commandline_tool ::=
-    ("CommandLineTool"
+    (COMMAND_LINE_TOOL
     BASECOMMAND COLON COMMAND
     INPUTS COLON
-    parameter *
-    OUTPUTS "[" "]"
+    parameter
+    OUTPUTS COLON "[" "]"
     )
 
-parameter ::= IDENTIFIER COLON (label | doc | secondary_files | input_binding | default | streamable | format )
-input_binding ::=
+parameter ::= IDENTIFIER COLON
+type input_binding
+//(label | doc | type | secondary_files | input_binding | default | streamable | format )
+
+type ::= TYPE COLON STRING_TYPE
+
+input_binding ::= INPUT_BINDING COLON
 (LOAD_CONTENTS COLON BOOLEAN
 | VALUE_FROM COLON STRING
 | POSITION COLON INT
