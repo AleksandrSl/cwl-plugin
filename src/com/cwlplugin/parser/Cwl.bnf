@@ -35,8 +35,9 @@
   STREAMABLE = "streamable"
   INPUT_BINDING = "inputBinding"
   DEFAULT = "default"
-  STRING = "regexp:(\s\|[\n\r]\w)"
-  LOAD_CONTENTS = "loadContext"
+//  STRING = "regexp:(\s\|[\n\r]\w)"
+  STRING = "some_string"
+  LOAD_CONTENTS = "loadContents"
   POSITION = "position"
   PREFIX = "prefix"
   SEPARATE = "separate"
@@ -48,13 +49,15 @@
   EXPRESSION = "$()"
   STRING_TYPE = "string"
   COMMAND_LINE_TOOL = "CommandLineTool"
+  ANY = "*"
+  ID = "id"
   ]
 
 
 //  psiImplUtilClass="com.cwlplugin.psi.impl.CwlPsiImplUtil"
 }
 
-cwlFile ::= cwl_version class
+cwlFile ::= !<<eof>> cwl_version class
 
 private cwl_version ::= CWL_VERSION COLON VERSION
 
@@ -71,14 +74,15 @@ commandline_tool ::=
     OUTPUTS COLON "[" "]"
     )
 
-parameter ::= IDENTIFIER COLON
-type input_binding
-//(label | doc | type | secondary_files | input_binding | default | streamable | format )
+parameter ::= IDENTIFIER COLON parameter_field *
+parameter_field ::= ( id | type | label | doc | input_binding | secondary_files | default | streamable | format )
 
+id ::= ID COLON STRING
 type ::= TYPE COLON STRING_TYPE
 
-input_binding ::= INPUT_BINDING COLON
-(LOAD_CONTENTS COLON BOOLEAN
+input_binding ::= INPUT_BINDING COLON input_binding_field *
+
+input_binding_field ::= (LOAD_CONTENTS COLON BOOLEAN
 | VALUE_FROM COLON STRING
 | POSITION COLON INT
 | SEPARATE COLON STRING
@@ -86,7 +90,12 @@ input_binding ::= INPUT_BINDING COLON
 | PREFIX COLON STRING
 | SHELL_QUOTE COLON BOOLEAN)
 
-
+label ::= LABEL COLON STRING
+doc ::= DOC COLON STRING
+secondary_files ::= SECONDARY_FILES COLON STRING
+default ::= DEFAULT COLON ANY
+streamable ::= STREAMABLE COLON BOOLEAN
+format ::= FORMAT COLON STRING
 
 //private item ::= INPUTS COLON IDENTIFIER {pin=2 recoverWhile=rule_recover}
 //private rule_recover ::= !(";" | id "=")
