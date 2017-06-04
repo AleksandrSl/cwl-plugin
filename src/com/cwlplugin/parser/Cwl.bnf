@@ -53,51 +53,57 @@
   ID = "id"
   ]
 
-
 //  psiImplUtilClass="com.cwlplugin.psi.impl.CwlPsiImplUtil"
 }
 
-cwlFile ::= !<<eof>> cwl_version class
+cwl_file ::= !<<eof>> cwl_version tool_description
 
 private cwl_version ::= CWL_VERSION COLON VERSION
 
-class ::= CLASS COLON tool
-tool ::= (commandline_tool)
-
-// TODO add expression_tool and workflow
+tool_description ::= CLASS COLON tool
+tool ::= (commandline_tool | expression_tool | workflow)
 
 commandline_tool ::=
     (COMMAND_LINE_TOOL
     BASECOMMAND COLON COMMAND
-    INPUTS COLON
-    parameter
-    OUTPUTS COLON "[" "]"
+    inputs
+    outputs
     )
 
-parameter ::= IDENTIFIER COLON parameter_field *
-parameter_field ::= ( id | type | label | doc | input_binding | secondary_files | default | streamable | format )
+inputs ::= INPUTS COLON input_parameter *
 
+input_parameter ::= IDENTIFIER COLON parameter_field *
+parameter_field ::= ( default| doc | format | id | input_binding | label | secondary_files | streamable | type )
+
+default ::= DEFAULT COLON ANY
+doc ::= DOC COLON STRING
+format ::= FORMAT COLON STRING
 id ::= ID COLON STRING
-type ::= TYPE COLON STRING_TYPE
 
-input_binding ::= INPUT_BINDING COLON input_binding_field *
-
-input_binding_field ::= (LOAD_CONTENTS COLON BOOLEAN
+input_binding ::= INPUT_BINDING COLON input_binding_parameter *
+input_binding_parameter ::=
+(
+LOAD_CONTENTS COLON BOOLEAN
 | VALUE_FROM COLON STRING
 | POSITION COLON INT
 | SEPARATE COLON STRING
 | ITEM_SEPARATOR COLON STRING
 | PREFIX COLON STRING
-| SHELL_QUOTE COLON BOOLEAN)
+| SHELL_QUOTE COLON BOOLEAN
+)
 
 label ::= LABEL COLON STRING
-doc ::= DOC COLON STRING
 secondary_files ::= SECONDARY_FILES COLON STRING
-default ::= DEFAULT COLON ANY
 streamable ::= STREAMABLE COLON BOOLEAN
-format ::= FORMAT COLON STRING
+type ::= TYPE COLON STRING_TYPE
+
+outputs ::= OUTPUTS COLON "[" "]"
 
 //private item ::= INPUTS COLON IDENTIFIER {pin=2 recoverWhile=rule_recover}
-//private rule_recover ::= !(";" | id "=")
 
 //property ::= (KEY? SEPARATOR VALUE?) | KEY {methods=[getKey getValue]}
+
+
+// TODO add expression_tool and workflow
+expression_tool ::= ""
+workflow ::=""
