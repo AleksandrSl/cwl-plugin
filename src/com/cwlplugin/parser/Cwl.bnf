@@ -31,6 +31,7 @@
   TYPE = "type"
   SECONDARY_FILES = "secondaryFiles"
   DOC = "doc"
+  GLOB = "glob"
   FORMAT = "format"
   STREAMABLE = "streamable"
   INPUT_BINDING = "inputBinding"
@@ -46,6 +47,7 @@
   SHELL_QUOTE = "shellQuote"
   INT = "regexp:\d+"
   BOOLEAN = "True"
+  OUTPUT_EVAL = "outputEval"
   EXPRESSION = "$()"
   STRING_TYPE = "string"
   COMMAND_LINE_TOOL = "CommandLineTool"
@@ -65,44 +67,126 @@ tool ::= (commandline_tool | expression_tool | workflow)
 
 commandline_tool ::=
     (COMMAND_LINE_TOOL
-    BASECOMMAND COLON COMMAND
-    inputs
-    outputs
+    | inputs
+    | outputs
+    | class
+    | base_command
+    | requirements
+    | id
+    | label
+    | doc
+    | hints
+    | arguments
+    | stderr
+    | stdin
+    | stdout
     )
 
-inputs ::= INPUTS COLON input_parameter *
+inputs
+// array<CommandInputParameter> | map<CommandInputParameter.id, CommandInputParameter.type> | map<CommandInputParameter.id, CommandInputParameter>	True
+outputs
+// array<CommandOutputParameter> | map<CommandOutputParameter.id, CommandOutputParameter.type> | map<CommandOutputParameter.id, CommandOutputParameter>	True
+class ::= CLASS COLON STRING
+// string	True
+id
+// string	False
+requirements ::= REQUIREMENTS COLON requirement *
+requirement ::= (
+inline_javascript_requirement
+| schema_def_requirement
+| docker_requirement
+| software_requirement
+| initial_workdir_requirement
+| env_var_requirement
+| shell_command_requirement
+| resource_requirement
+)
 
-input_parameter ::= IDENTIFIER COLON parameter_field *
-parameter_field ::= ( default| doc | format | id | input_binding | label | secondary_files | streamable | type )
+inline_javascript_requirement ::= STRING
+schema_def_requirement ::= STRING
+docker_requirement ::= STRING
+software_requirement ::= STRING
+initial_workdir_requirement ::= STRING
+env_var_requirement ::= STRING
+shell_command_requirement ::= STRING
+resource_requirement ::= STRING
+// array<InlineJavascriptRequirement | SchemaDefRequirement | DockerRequirement | SoftwareRequirement | InitialWorkDirRequirement | EnvVarRequirement | ShellCommandRequirement | ResourceRequirement>	False
+hints
+// array<Any>	False
+label
+// string	False
+
+doc
+// string	False
+
+base_command ::= BASECOMMAND COLON COMMAND
+// string | array<string>	False
+arguments ::= STRING | EXPRESSION
+// array<string | Expression | CommandLineBinding>	False
+stdin ::= STRING | EXPRESSION
+// string | Expression	False
+stderr ::= STRING | EXPRESSION
+// string | Expression	False
+stdout ::= STRING | EXPRESSION
+//	string | Expression	False
+
+success_codes ::= STRING
+// array<int>	False
+temporary_fail_codes ::= STRING
+//	array<int>	False
+permanent_fail_codes ::= STRING
+//	array<int>	False
+
+
+inputs ::= INPUTS COLON command_input_parameter *
+
+command_input_parameter ::= IDENTIFIER COLON command_parameter_field *
+command_parameter_field ::= ( default | doc | format | id | input_binding | label | secondary_files | streamable | type )
 
 default ::= DEFAULT COLON ANY
 doc ::= DOC COLON STRING
 format ::= FORMAT COLON STRING
 id ::= ID COLON STRING
 
-input_binding ::= INPUT_BINDING COLON input_binding_parameter *
-input_binding_parameter ::=
+load_contents ::= LOAD_CONTENTS COLON BOOLEAN
+value_from ::= VALUE_FROM COLON STRING
+position ::= POSITION COLON INT
+separate ::= SEPARATE COLON STRING
+item_separator ::= ITEM_SEPARATOR COLON STRING
+prefix ::= PREFIX COLON STRING
+shell_quote ::= SHELL_QUOTE COLON BOOLEAN
+
+input_binding ::= command_line_binding
+command_line_binding ::= COLON command_line_binding_field *
+command_line_binding_field ::=
 (
-LOAD_CONTENTS COLON BOOLEAN
-| VALUE_FROM COLON STRING
-| POSITION COLON INT
-| SEPARATE COLON STRING
-| ITEM_SEPARATOR COLON STRING
-| PREFIX COLON STRING
-| SHELL_QUOTE COLON BOOLEAN
+load_contents
+| value_from
+| position
+| separate
+| item_separator
+| prefix
+| shell_quote
 )
+
 
 label ::= LABEL COLON STRING
 secondary_files ::= SECONDARY_FILES COLON STRING
 streamable ::= STREAMABLE COLON BOOLEAN
 type ::= TYPE COLON STRING_TYPE
 
-outputs ::= OUTPUTS COLON "[" "]"
+outputs ::= OUTPUTS COLON command_output_parameter *
 
+command_output_parameter ::= IDENTIFIER COLON command_output_parameter_field *
+command_output_parameter_field ::= (id | label | secondary_files | format | streamable | doc | command_output_binding | type)
 //private item ::= INPUTS COLON IDENTIFIER {pin=2 recoverWhile=rule_recover}
 
-//property ::= (KEY? SEPARATOR VALUE?) | KEY {methods=[getKey getValue]}
 
+command_output_binding ::= COLON command_output_binding_field *
+command_output_binding_field ::= (glob | load_contents | output_eval)
+//property ::= (KEY? SEPARATOR VALUE?) | KEY {methods=[getKey getValue]}
+glob ::= GLOB COLON (STRING | EXPRESSION)
+output_eval ::= OUTPUT_EVAL COLON (STRING | EXPRESSION)
 
 // TODO add expression_tool and workflow
 expression_tool ::= ""

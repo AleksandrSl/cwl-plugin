@@ -12,7 +12,6 @@ import javax.swing.Icon
  * Created by aleksandrsl on 08.05.17.
  */
 class CwlColorSettingsPage: ColorSettingsPage {
-
     companion object {
         private val DESCRIPTORS: Array<AttributesDescriptor> = arrayOf(
             AttributesDescriptor("Key", CwlSyntaxHighlighter.KEY),
@@ -29,21 +28,13 @@ class CwlColorSettingsPage: ColorSettingsPage {
         return mutableMapOf()
     }
 
-    override fun getIcon(): Icon? {
-        return CwlIcons.FILE
-    }
+    override fun getIcon(): Icon? = CwlIcons.FILE
 
-    override fun getAttributeDescriptors(): Array<AttributesDescriptor> {
-        return DESCRIPTORS
-    }
+    override fun getAttributeDescriptors(): Array<AttributesDescriptor> = DESCRIPTORS
 
-    override fun getColorDescriptors(): Array<ColorDescriptor> {
-        return ColorDescriptor.EMPTY_ARRAY
-    }
+    override fun getColorDescriptors(): Array<ColorDescriptor> = ColorDescriptor.EMPTY_ARRAY
 
-    override fun getDisplayName(): String {
-        return "cwl"
-    }
+    override fun getDisplayName(): String = "cwl"
 
     override fun getDemoText(): String {
         return "# You are reading the \".properties\" entry.\n" +
