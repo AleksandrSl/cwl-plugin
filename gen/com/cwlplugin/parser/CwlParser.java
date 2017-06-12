@@ -1606,9 +1606,9 @@ public class CwlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ""
+  // " "
   static boolean expression_tool(PsiBuilder b, int l) {
-    return consumeToken(b, "");
+    return consumeToken(b, " ");
   }
 
   /* ********************************************************** */
@@ -2757,14 +2757,12 @@ public class CwlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // command_line_tool | expression_tool | workflow
+  // (command_line_tool)
   static boolean tool_description(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "tool_description")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = command_line_tool(b, l + 1);
-    if (!r) r = expression_tool(b, l + 1);
-    if (!r) r = workflow(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -2819,9 +2817,9 @@ public class CwlParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ""
+  // " "
   static boolean workflow(PsiBuilder b, int l) {
-    return consumeToken(b, "");
+    return consumeToken(b, " ");
   }
 
   /* ********************************************************** */

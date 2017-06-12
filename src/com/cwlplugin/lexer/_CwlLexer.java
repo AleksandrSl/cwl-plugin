@@ -1734,7 +1734,7 @@ class _CwlLexer implements FlexLexer {
       } else {
           // Logger, don't hear such word
           System.out.println("Line term is present");
-          /* There can be lies with white space symbols only, they should be ignored
+          /* There can be lines with white space symbols only, they should be ignored
            * So get all white spaces after last line ending - they will mark current indentation
            */
           currentIndent = (text.length() - lastLineTerminator - 1);

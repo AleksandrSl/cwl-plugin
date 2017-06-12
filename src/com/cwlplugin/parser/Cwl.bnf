@@ -121,7 +121,7 @@
   WRITABLE = "writable"
 ]
 
-//  psiImplUtilClass="com.cwlplugin.psi.impl.CwlPsiImplUtil"
+  psiImplUtilClass="com.cwlplugin.psi.CwlPsiImplUtilKt"
 }
 
 //Make cwlVersion the first line
@@ -163,7 +163,7 @@ inline_javascript_requirement
 | env_var_requirement
 | shell_command_requirement
 | resource_requirement
-)
+) {methods=[getRequirement]}
 
 private inline_javascript_requirement ::= CLASS COLON INLINE_JAVASCRIPT_REQUIREMENT
 private schema_def_requirement ::= CLASS COLON SCHEMA_DEF_REQUIREMENT
@@ -302,7 +302,7 @@ command_output_parameter_field ::= (id | label | secondary_files | format | stre
 output_binding ::= command_output_binding
 command_output_binding ::= COLON INDENT command_output_binding_field + DEDENT
 command_output_binding_field ::= (glob | load_contents | output_eval)
-//property ::= (KEY? SEPARATOR VALUE?) | KEY {methods=[getKey getValue]}
+//property ::= (KEY? SEPARATOR VALUE?) | KEY {methods=[getRequirement getValue]}
 private glob ::= GLOB COLON (STRING | EXPRESSION | string_array)
 private output_eval ::= OUTPUT_EVAL COLON (STRING | EXPRESSION)
 

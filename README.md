@@ -32,7 +32,9 @@ To compile you will need:
 
 ## Plans
 
-- [ ] Add grammar
+- [X] Add grammar for CommandLineTool
+- [ ] Add grammar for ExpressionTool
+- [ ] Add grammar for Workflow
 - [ ] Add syntax highlighting
 - [ ] Add completion
 - [ ] Add refactoring possibility
