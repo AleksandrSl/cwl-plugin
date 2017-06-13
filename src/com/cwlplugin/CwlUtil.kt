@@ -1,6 +1,6 @@
 //package com.cwlplugin
 //
-// import com.cwlplugin.psi.CwlanguageFile
+// import com.cwlplugin.psi.CwlFile
 // import com.cwlplugin.psi.CwlItem
 //import com.intellij.openapi.fileTypes.FileType
 //import com.intellij.openapi.project.Project
@@ -25,7 +25,7 @@
 //        val result: MutableList<CwlItem> = mutableListOf()
 //
 //        virtualFiles
-//                .mapNotNull { PsiManager.getInstance(project).findFile(it) as CwlanguageFile? }
+//                .mapNotNull { PsiManager.getInstance(project).findFile(it) as CwlFile? }
 //                .map { PsiTreeUtil.getChildrenOfType(it, CwlItem::class.java) }
 //                .forEach { properties -> properties?.filter { it -> it.key == key}?.toCollection(result) }
 //        return result
@@ -36,7 +36,7 @@
 //        val virtualFiles = FileBasedIndex.getInstance().getContainingFiles<FileType, Void>(FileTypeIndex.NAME,
 //                CwlFileType, GlobalSearchScope.allScope(project))
 //        virtualFiles
-//                .mapNotNull { PsiManager.getInstance(project).findFile(it) as CwlanguageFile? }
+//                .mapNotNull { PsiManager.getInstance(project).findFile(it) as CwlFile? }
 //                .mapNotNull { PsiTreeUtil.getChildrenOfType(it, CwlItem::class.java) }
 //                .forEach { properties -> properties.toCollection(result) }
 //

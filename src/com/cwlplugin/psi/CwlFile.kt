@@ -7,7 +7,7 @@ import com.intellij.openapi.fileTypes.FileType
 import com.intellij.psi.FileViewProvider
 import javax.swing.Icon
 
-class CwlanguageFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, CwlLanguage) {
+class CwlFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, CwlLanguage) {
 
     override fun getFileType(): FileType = CwlFileType
 
