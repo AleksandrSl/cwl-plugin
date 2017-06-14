@@ -61,8 +61,6 @@
   IDENTIFIER = "IDENTIFIER"
   ID = "id"
   INITIAL_WORKDIR_REQUIREMENT = "InitialWorkDirRequirement"
-   = "ation"
-   = "Deation"
   INLINE_JAVASCRIPT_REQUIREMENT = "InlineJavascriptRequirement"
   INPUT_BINDING = "inputBinding"
   INPUTS_TK = "inputs"
@@ -120,7 +118,7 @@
   WRITABLE = "writable"
 ]
 
-  psiImplUtilClass="com.cwlplugin.psi.CwlPsiImplUtilKt"
+//  psiImplUtilClass="com.cwlplugin.psi.CwlPsiImplUtilKt"
 }
 
 //Make cwlVersion the first line
@@ -162,7 +160,7 @@ inline_javascript_requirement
 | env_var_requirement
 | shell_command_requirement
 | resource_requirement
-) {methods=[getRequirement]}
+)
 
 private inline_javascript_requirement ::= CLASS COLON INLINE_JAVASCRIPT_REQUIREMENT
 private schema_def_requirement ::= CLASS COLON SCHEMA_DEF_REQUIREMENT
@@ -251,16 +249,7 @@ private permanent_fail_codes ::= PERMANENT_FAIL_CODES COLON int_array
 // array<CommandInputParameter> | map<CommandInputParameter.id, CommandInputParameter.type> | map<CommandInputParameter.id, CommandInputParameter>	True
 inputs ::= INPUTS_TK COLON  command_input_parameter + 
 
-command_input_parameter ::= IDENTIFIER COLON  command_input_parameter_field + 
-//{
-//pin=3
-//recoverWhile="recover_command_input_parameter"
-//mixin="com.cwlplugin.psi.CwlNamedElementImpl"
-//implements="com.cwlplugin.psi.CwlNamedElement"
-//methods=[getIdentifier getName getNameIdentifier setName]
-//}
-
-//private recover_command_input_parameter ::= !(IDENTIFIER|COLON|)
+command_input_parameter ::= IDENTIFIER COLON  command_input_parameter_field +
 
 command_input_parameter_field ::= ( default | doc | format | id | input_binding | label | secondary_files | streamable | type )
 

@@ -6,5 +6,4 @@ import com.intellij.lang.Language
  */
 object CwlLanguage: Language("cwl") {
     override fun getDisplayName(): String = "cwl"
-
 }
