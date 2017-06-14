@@ -1,37 +1,36 @@
-package com.cwlplugin.psi
-
-import org.jetbrains.annotations.ReadOnly
-
-
-
-/**
- * A minimal interface that {@link CwlCommandLineTool} implements for the purpose of code-generation that does not need the full power of PSI.
- * This interface can be easily implemented by synthetic elements to generate code for them.
- * @author Aleksandr Slepchenkov [aslepchenkov@parseq.pro](mailto:aslepchenkov@parseq.pro)
- */
-public interface CwlPureCommandLineTool :  CwlPureElement, CwlDeclarationContainer {
-
-    fun getName(): String
-
-    fun getRequirements(): List<CwlRequirement>
-
-//    fun getInputs(): List<CwlInput>
-
-//    fun getOutputs(): List<CwlOutput>
-
-//    fun getSuperTypeListEntries(): List<CwlSuperTypeListEntry>
+//package com.cwlplugin.psi
 //
-//    fun getCompanionObjects(): List<CwlObjectDeclaration>
+//import com.cwlplugin.junk.CwlDeclarationContainer
 //
-//    fun hasExplicitPrimaryConstructor(): Boolean
 //
-//    fun hasPrimaryConstructor(): Boolean
+///**
+// * A minimal interface that {@link CwlCommandLineTool} implements for the purpose of code-generation that does not need the full power of PSI.
+// * This interface can be easily implemented by synthetic elements to generate code for them.
+// * @author Aleksandr Slepchenkov [aslepchenkov@parseq.pro](mailto:aslepchenkov@parseq.pro)
+// */
+//public interface CwlPureCommandLineTool :  CwlPureElement, CwlDeclarationContainer {
 //
-//    fun getPrimaryConstructor(): CwlPrimaryConstructor
+//    fun getName(): String
 //
-//    fun getPrimaryConstructorModifierList(): CwlModifierList
+//    fun getRequirements(): List<CwlRequirement>
 //
-//    fun getPrimaryConstructorParameters(): List<CwlParameter>
+////    fun getInputs(): List<CwlInput>
 //
-//    fun getSecondaryConstructors(): List<CwlSecondaryConstructor>
-}
+////    fun getOutputs(): List<CwlOutput>
+//
+////    fun getSuperTypeListEntries(): List<CwlSuperTypeListEntry>
+////
+////    fun getCompanionObjects(): List<CwlObjectDeclaration>
+////
+////    fun hasExplicitPrimaryConstructor(): Boolean
+////
+////    fun hasPrimaryConstructor(): Boolean
+////
+////    fun getPrimaryConstructor(): CwlPrimaryConstructor
+////
+////    fun getPrimaryConstructorModifierList(): CwlModifierList
+////
+////    fun getPrimaryConstructorParameters(): List<CwlParameter>
+////
+////    fun getSecondaryConstructors(): List<CwlSecondaryConstructor>
+//}

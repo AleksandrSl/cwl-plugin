@@ -28,8 +28,10 @@
     <fileTypeFactory implementation="com.cwlplugin.CwlFileTypeFactory"/>
     <lang.parserDefinition language="cwl" implementationClass="com.cwlplugin.parser.CwlParserDefinition"/>
     <lang.syntaxHighlighterFactory key="cwl" implementationClass="com.cwlplugin.highlighter.CwlSyntaxHighlighterFactory"/>
-      <colorSettingsPage implementation="com.cwlplugin.highlighter.CwlColorSettingsPage"/>
-      <completion.contributor language="cwl" implementationClass="com.cwlplugin.completion.CwlCompletionContributor"/>
+    <colorSettingsPage implementation="com.cwlplugin.highlighter.CwlColorSettingsPage"/>
+    <completion.contributor language="cwl" implementationClass="com.cwlplugin.completion.CwlCompletionContributor"/>
+    <!--<psi.referenceContributor implementation="com.cwlplugin.reference.CwlReferenceContributor"/>-->
+    <!--<lang.refactoringSupport language="cwl" implementationClass="com.cwlplugin.refactoring.CwlRefactoringSupportProvider"/>-->
     <!-- Add your extensions here -->
   </extensions>
 

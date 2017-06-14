@@ -2,10 +2,10 @@
 
 package com.cwlplugin.lexer;
 
-import com.cwlplugin.psi.CwlTypes;
 import com.intellij.lexer.FlexLexer;
-import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
+import com.intellij.psi.TokenType;
+import com.cwlplugin.psi.CwlTypes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -1707,75 +1707,75 @@ class _CwlLexer implements FlexLexer {
 
   /* user code: */
   public _CwlLexer() {
-    this(null);
+    this((java.io.Reader)null);
   }
 
-  private int currentIndent = 0;
-  private List<Integer> indentStack = new ArrayList<Integer>();
-
-  private static <T> T beforeLast(List<T> list){
-    return list.get(list.size() - 2);
-  }
-
-  private static <T> T last(List<T> list){
-      return list.get(list.size() - 1);
-  }
-
-  private IElementType getWhitespaceTypeAndUpdateIndent() {
-      String text = yytext().toString();
-      // Handle all types of line endings
-      int lastLineTerminator = text.lastIndexOf("\n");
-      if (lastLineTerminator == -1) {
-          lastLineTerminator = text.lastIndexOf("\r");
-      }
-      // If there is no line endings, then it is a white space between words
-      if (lastLineTerminator == -1) {
-          return TokenType.WHITE_SPACE;
-      } else {
-          // Logger, don't hear such word
-          System.out.println("Line term is present");
-          /* There can be lines with white space symbols only, they should be ignored
-           * So get all white spaces after last line ending - they will mark current indentation
-           */
-          currentIndent = (text.length() - lastLineTerminator - 1);
-          System.out.println(currentIndent);
-          /* If there is no white space symbols after last line ending then line has zero indent and indent stack should be cleared
-           * and corresponding DEDENTs should be returned. Since one cannot return many tokens at once,
-           * push back this line ending to get in this block as much time as needed
-           */
-          if (currentIndent == 0 ){
-              if (indentStack.size() > 0) {
-                  indentStack.remove(indentStack.size() - 1);
-                  yypushback(1);
-                  return CwlLexerTypes.DEDENT;
-              } else {
-                  return TokenType.WHITE_SPACE;
-              }
-          // If current indent is equal to last indent in stack
-          } else if(!indentStack.isEmpty() && currentIndent == last(indentStack)) {
-              return TokenType.WHITE_SPACE;
-          } else if(indentStack.isEmpty() || currentIndent > last(indentStack)) {
-              indentStack.add(currentIndent);
-              return CwlTypes.INDENT;
-          } else if (indentStack.size() > 1) {
-              // If current indent is less then last indent, check whether it is equal to one of the indent in stack
-              int currentIndentIndex = indentStack.indexOf(currentIndent);
-              if (currentIndentIndex >= 0) {
-                  /* If it's the case, remove all indents after indent that is equal to current indent.
-                   * As in the case with zero indent, one cannot do this at once, so push last line ending and all
-                   * white spaces after it back.
-                   */
-                  indentStack.remove(indentStack.size() - 1);
-                  yypushback(currentIndent + 1);
-                  return CwlTypes.DEDENT;
-              } else {
-                  return TokenType.BAD_CHARACTER;
-              }
-          } else {
-              return TokenType.BAD_CHARACTER;
-          }
-      }
-  }
+//  private int currentIndent = 0;
+//  private List<Integer> indentStack = new ArrayList<Integer>();
+//
+//  private static <T> T beforeLast(List<T> list){
+//    return list.get(list.size() - 2);
+//  }
+//
+//  private static <T> T last(List<T> list){
+//      return list.get(list.size() - 1);
+//  }
+//
+//  private IElementType getWhitespaceTypeAndUpdateIndent() {
+//      String text = yytext().toString();
+//      // Handle all types of line endings
+//      int lastLineTerminator = text.lastIndexOf("\n");
+//      if (lastLineTerminator == -1) {
+//          lastLineTerminator = text.lastIndexOf("\r");
+//      }
+//      // If there is no line endings, then it is a white space between words
+//      if (lastLineTerminator == -1) {
+//          return TokenType.WHITE_SPACE;
+//      } else {
+//          // Logger, don't hear such word
+//          System.out.println("Line term is present");
+//          /* There can be lines with white space symbols only, they should be ignored
+//           * So get all white spaces after last line ending - they will mark current indentation
+//           */
+//          currentIndent = (text.length() - lastLineTerminator - 1);
+//          System.out.println(currentIndent);
+//          /* If there is no white space symbols after last line ending then line has zero indent and indent stack should be cleared
+//           * and corresponding DEDENTs should be returned. Since one cannot return many tokens at once,
+//           * push back this line ending to get in this block as much time as needed
+//           */
+//          if (currentIndent == 0 ){
+//              if (indentStack.size() > 0) {
+//                  indentStack.remove(indentStack.size() - 1);
+//                  yypushback(1);
+//                  return CwlLexerTypes.DEDENT;
+//              } else {
+//                  return TokenType.WHITE_SPACE;
+//              }
+//          // If current indent is equal to last indent in stack
+//          } else if(!indentStack.isEmpty() && currentIndent == last(indentStack)) {
+//              return TokenType.WHITE_SPACE;
+//          } else if(indentStack.isEmpty() || currentIndent > last(indentStack)) {
+//              indentStack.add(currentIndent);
+//              return CwlTypes.INDENT;
+//          } else if (indentStack.size() > 1) {
+//              // If current indent is less then last indent, check whether it is equal to one of the indent in stack
+//              int currentIndentIndex = indentStack.indexOf(currentIndent);
+//              if (currentIndentIndex >= 0) {
+//                  /* If it's the case, remove all indents after indent that is equal to current indent.
+//                   * As in the case with zero indent, one cannot do this at once, so push last line ending and all
+//                   * white spaces after it back.
+//                   */
+//                  indentStack.remove(indentStack.size() - 1);
+//                  yypushback(currentIndent + 1);
+//                  return CwlTypes.DEDENT;
+//              } else {
+//                  return TokenType.BAD_CHARACTER;
+//              }
+//          } else {
+//              return TokenType.BAD_CHARACTER;
+//          }
+//      }
+//  }
 
 
   /**
@@ -2041,7 +2041,7 @@ class _CwlLexer implements FlexLexer {
             }
           case 96: break;
           case 2: 
-            { return getWhitespaceTypeAndUpdateIndent();
+            { return TokenType.WHITE_SPACE;
             }
           case 97: break;
           case 3: 
@@ -2189,7 +2189,7 @@ class _CwlLexer implements FlexLexer {
             }
           case 133: break;
           case 39: 
-            { return CwlTypes.INPUTS;
+            { return CwlTypes.INPUTS_TK;
             }
           case 134: break;
           case 40: 
@@ -2345,7 +2345,7 @@ class _CwlLexer implements FlexLexer {
             }
           case 172: break;
           case 78: 
-            { return CwlTypes.REQUIREMENTS;
+            { return CwlTypes.REQUIREMENTS_TK;
             }
           case 173: break;
           case 79: 

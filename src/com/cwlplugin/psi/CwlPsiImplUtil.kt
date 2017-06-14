@@ -1,6 +1,7 @@
 package com.cwlplugin.psi
 
 import com.cwlplugin.icons.CwlIcons
+import com.cwlplugin.junk.CwlElementFactory
 import com.intellij.lang.ASTNode
 import com.intellij.navigation.ItemPresentation
 import com.intellij.psi.PsiElement
@@ -21,37 +22,31 @@ fun getRequirement(element: CwlRequirement): String? {
     }
   }
 
-//  fun getValue(SimpleProperty element): String? {
-//    ASTNode valueNode = element.getNode().findChildByType(SimpleTypes.VALUE);
-//    if (valueNode != null) {
-//      return valueNode.getText();
-//    } else {
-//      return null;
+
+
+
+//fun getName(element: CwlRequirement): String? = getRequirement(element)
+//
+//  fun setName(element: CwlRequirement, newName: String): PsiElement {
+//    val keyNode: ASTNode? = element.node.findChildByType(CwlTypes.REQUIREMENT)
+//    if (keyNode != null) {
+//        val requirement: CwlRequirement = createRequirement(element.project, newName)
+//        val newKeyNode: ASTNode = requirement.firstChild.node
+//      element.node.replaceChild(keyNode, newKeyNode)
 //    }
-//  }
+//    return element
+//}
 
-  fun getName(element: CwlRequirement): String? = getRequirement(element)
-
-  fun setName(element: CwlRequirement, newName: String): PsiElement {
-    val keyNode: ASTNode? = element.node.findChildByType(CwlTypes.REQUIREMENT)
-    if (keyNode != null) {
-        val requirement: CwlRequirement = createRequirement(element.project, newName)
-        val newKeyNode: ASTNode = requirement.firstChild.node
-      element.node.replaceChild(keyNode, newKeyNode)
-    }
-    return element
-  }
-
-  fun getNameIdentifier(element: CwlRequirement): PsiElement? {
+fun getNameIdentifier(element: CwlRequirement): PsiElement? {
     val keyNode: ASTNode?  = element.node.findChildByType(CwlTypes.REQUIREMENT)
     if (keyNode != null) {
       return keyNode.psi
     } else {
       return null
     }
-  }
+}
 
-  fun getPresentation(element: CwlRequirement): ItemPresentation {
+ fun getPresentation(element: CwlRequirement): ItemPresentation {
     return object : ItemPresentation {
 
       override fun getPresentableText(): String{
@@ -66,4 +61,29 @@ fun getRequirement(element: CwlRequirement): String? {
         return CwlIcons.FILE
       }
     }
-  }
+}
+
+
+fun getName(element: CwlCommandInputParameter): String? {
+    return getIdentifier(element)
+}
+
+
+fun setName(element: CwlCommandInputParameter, newName: String): PsiElement {
+    val identifierNode: ASTNode? = element.node.findChildByType(CwlTypes.IDENTIFIER)
+    if (identifierNode != null) {
+        val commandInputParameter: CwlCommandInputParameter = CwlElementFactory.createCommandInputParameter(element.project, newName)
+        val newIdentifierNode: ASTNode = commandInputParameter.firstChild.node
+        element.node.replaceChild(identifierNode, newIdentifierNode)
+    }
+    return element
+}
+
+fun getNameIdentifier(element: CwlCommandInputParameter): PsiElement? {
+    val identifierNode: ASTNode? = element.node.findChildByType(CwlTypes.IDENTIFIER)
+    return identifierNode?.psi
+}
+
+fun getIdentifier(element: CwlCommandInputParameter): String? {
+    return element.node.findChildByType(CwlTypes.IDENTIFIER)?.text?.replace("\\\\ ", " ")
+}

@@ -12,7 +12,7 @@ object CwlFileType: LanguageFileType(CwlLanguage) {
     }
 
     override fun getDescription(): String {
-        return "Cwl language file"
+        return "Common Workflow Language file"
     }
 
     override fun getDefaultExtension(): String {

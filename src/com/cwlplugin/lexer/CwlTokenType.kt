@@ -7,9 +7,7 @@ import org.jetbrains.annotations.*
 /**
  * Created by aleksandrsl on 06.05.17.
  */
-open class CwlToken(debugName: String): IElementType(debugName, CwlLanguage) {
+open class CwlTokenType(debugName: String): IElementType(debugName, CwlLanguage) {
 
-    override fun toString(): String {
-        return "CwlToken." + super.toString()
-    }
+    override fun toString(): String = "Cwl." + super.toString()
 }

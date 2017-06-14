@@ -11,7 +11,7 @@ class CwlFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, CwlLan
 
     override fun getFileType(): FileType = CwlFileType
 
-    override fun toString(): String = "Cwl File"
+    override fun toString(): String = "CWL File"
 
     override fun getIcon(flags: Int): Icon? = super.getIcon(flags)
 }
