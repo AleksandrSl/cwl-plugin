@@ -32,4 +32,22 @@ public class CwlFile_Impl extends ASTWrapperPsiElement implements CwlFile_ {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CwlFileField.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getClassTk() {
+    return findNotNullChildByType(CLASS_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getFileType() {
+    return findNotNullChildByType(FILE_TYPE);
+  }
+
 }

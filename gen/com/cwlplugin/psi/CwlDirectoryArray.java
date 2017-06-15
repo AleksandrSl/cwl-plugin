@@ -10,4 +10,10 @@ public interface CwlDirectoryArray extends PsiElement {
   @NotNull
   List<CwlDirectory> getDirectoryList();
 
+  @NotNull
+  PsiElement getLbracketTk();
+
+  @NotNull
+  PsiElement getRbracketTk();
+
 }

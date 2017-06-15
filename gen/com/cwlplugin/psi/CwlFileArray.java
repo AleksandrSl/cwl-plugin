@@ -10,4 +10,10 @@ public interface CwlFileArray extends PsiElement {
   @NotNull
   List<CwlFile_> getFile_List();
 
+  @NotNull
+  PsiElement getLbracketTk();
+
+  @NotNull
+  PsiElement getRbracketTk();
+
 }

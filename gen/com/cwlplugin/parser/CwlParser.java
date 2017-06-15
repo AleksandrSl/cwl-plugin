@@ -137,6 +137,9 @@ public class CwlParser implements PsiParser, LightPsiParser {
     else if (t == DIRENT_ARRAY) {
       r = dirent_array(b, 0);
     }
+    else if (t == DOCKER_PULL) {
+      r = docker_pull(b, 0);
+    }
     else if (t == DOCKER_REQUIREMENT) {
       r = docker_requirement(b, 0);
     }
@@ -163,9 +166,6 @@ public class CwlParser implements PsiParser, LightPsiParser {
     }
     else if (t == INITIAL_WORKDIR_REQUIREMENT) {
       r = initial_workdir_requirement(b, 0);
-    }
-    else if (t == INLINE_JAVASCRIPT_REQUIREMENT) {
-      r = inline_javascript_requirement(b, 0);
     }
     else if (t == INPUT_BINDING) {
       r = input_binding(b, 0);
@@ -1472,13 +1472,24 @@ public class CwlParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // DOCKER_PULL_TK COLON_TK STRING_TK
-  static boolean docker_pull(PsiBuilder b, int l) {
+  public static boolean docker_pull(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "docker_pull")) return false;
     if (!nextTokenIs(b, DOCKER_PULL_TK)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, DOCKER_PULL_TK, COLON_TK, STRING_TK);
-    exit_section_(b, m, null, r);
+    exit_section_(b, m, DOCKER_PULL, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // !(DOCKER_REQUIREMENT_TK)
+  static boolean docker_recover(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "docker_recover")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !consumeToken(b, DOCKER_REQUIREMENT_TK);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
@@ -1486,13 +1497,13 @@ public class CwlParser implements PsiParser, LightPsiParser {
   // CLASS_TK COLON_TK DOCKER_REQUIREMENT_TK  docker_requirement_field +
   public static boolean docker_requirement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "docker_requirement")) return false;
-    if (!nextTokenIs(b, CLASS_TK)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, CLASS_TK, COLON_TK, DOCKER_REQUIREMENT_TK);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, DOCKER_REQUIREMENT, "<docker requirement>");
+    r = consumeTokens(b, 3, CLASS_TK, COLON_TK, DOCKER_REQUIREMENT_TK);
+    p = r; // pin = 3
     r = r && docker_requirement_3(b, l + 1);
-    exit_section_(b, m, DOCKER_REQUIREMENT, r);
-    return r;
+    exit_section_(b, l, m, r, p, docker_recover_parser_);
+    return r || p;
   }
 
   // docker_requirement_field +
@@ -1928,13 +1939,13 @@ public class CwlParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // CLASS_TK COLON_TK INLINE_JAVASCRIPT_REQUIREMENT_TK
-  public static boolean inline_javascript_requirement(PsiBuilder b, int l) {
+  static boolean inline_javascript_requirement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "inline_javascript_requirement")) return false;
     if (!nextTokenIs(b, CLASS_TK)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeTokens(b, 0, CLASS_TK, COLON_TK, INLINE_JAVASCRIPT_REQUIREMENT_TK);
-    exit_section_(b, m, INLINE_JAVASCRIPT_REQUIREMENT, r);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -2911,4 +2922,9 @@ public class CwlParser implements PsiParser, LightPsiParser {
     return r;
   }
 
+  final static Parser docker_recover_parser_ = new Parser() {
+    public boolean parse(PsiBuilder b, int l) {
+      return docker_recover(b, l + 1);
+    }
+  };
 }

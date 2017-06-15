@@ -26,4 +26,22 @@ public class CwlLabelImpl extends ASTWrapperPsiElement implements CwlLabel {
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getLabelTk() {
+    return findNotNullChildByType(LABEL_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getStringTk() {
+    return findNotNullChildByType(STRING_TK);
+  }
+
 }

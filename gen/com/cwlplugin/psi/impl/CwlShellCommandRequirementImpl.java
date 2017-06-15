@@ -26,4 +26,22 @@ public class CwlShellCommandRequirementImpl extends ASTWrapperPsiElement impleme
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getClassTk() {
+    return findNotNullChildByType(CLASS_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getShellCommandRequirementTk() {
+    return findNotNullChildByType(SHELL_COMMAND_REQUIREMENT_TK);
+  }
+
 }

@@ -10,4 +10,13 @@ public interface CwlDockerRequirement extends PsiElement {
   @NotNull
   List<CwlDockerRequirementField> getDockerRequirementFieldList();
 
+  @NotNull
+  PsiElement getClassTk();
+
+  @NotNull
+  PsiElement getColonTk();
+
+  @NotNull
+  PsiElement getDockerRequirementTk();
+
 }

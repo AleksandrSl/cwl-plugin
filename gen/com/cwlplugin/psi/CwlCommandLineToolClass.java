@@ -7,4 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface CwlCommandLineToolClass extends PsiElement {
 
+  @NotNull
+  PsiElement getClassTk();
+
+  @NotNull
+  PsiElement getColonTk();
+
+  @NotNull
+  PsiElement getCommandLineToolTk();
+
 }

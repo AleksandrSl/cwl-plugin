@@ -10,4 +10,10 @@ public interface CwlArguments extends PsiElement {
   @NotNull
   List<CwlInputBinding> getInputBindingList();
 
+  @NotNull
+  PsiElement getLbracketTk();
+
+  @NotNull
+  PsiElement getRbracketTk();
+
 }

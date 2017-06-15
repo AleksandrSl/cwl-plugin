@@ -32,4 +32,16 @@ public class CwlCommandInputArraySchemaArrayImpl extends ASTWrapperPsiElement im
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CwlCommandInputArraySchema.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getLbracketTk() {
+    return findNotNullChildByType(LBRACKET_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getRbracketTk() {
+    return findNotNullChildByType(RBRACKET_TK);
+  }
+
 }

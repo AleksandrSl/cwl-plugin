@@ -17,9 +17,6 @@ public interface CwlRequirement extends PsiElement {
   CwlInitialWorkdirRequirement getInitialWorkdirRequirement();
 
   @Nullable
-  CwlInlineJavascriptRequirement getInlineJavascriptRequirement();
-
-  @Nullable
   CwlResourceRequirement getResourceRequirement();
 
   @Nullable
@@ -30,5 +27,14 @@ public interface CwlRequirement extends PsiElement {
 
   @Nullable
   CwlSoftwareRequirement getSoftwareRequirement();
+
+  @Nullable
+  PsiElement getClassTk();
+
+  @Nullable
+  PsiElement getColonTk();
+
+  @Nullable
+  PsiElement getInlineJavascriptRequirementTk();
 
 }

@@ -49,20 +49,20 @@ TraditionalComment = "#" {InputCharacter}* {LineTerminator}?
 // Put constrains on identifier myself. I don't see meaning in identifiers like "*&&****&" or uyutut&&&%
 Identifier = [:jletter:] [:jletterdigit:]*
 DecIntegerLiteral = 0 | [1-9][0-9]*
-SimpleString = \" [^\r\n]* \"
+SimpleString = \" [^\"\r\n]* \"
 BareString = [^\n\r\(: \)]+
 String = {BareString} | {SimpleString}
 Expression = \$\(.*\) | \$\{.*\}
 
 Boolean = True | False
 %state STRING
-
 %%
     <YYINITIAL> {
 //        "|"                                { yybegin(MULTILINE_STRING); }
 
         {WhiteSpace}                       { return TokenType.WHITE_SPACE; }
-        {DecIntegerLiteral}                { return CwlTypes.INT_TK; }
+        "1"                                { return CwlTypes.INT_TK; }
+//        {DecIntegerLiteral}                { return CwlTypes.INT_TK; }
         {Comment}                          { return CwlLexerTypes.COMMENT; }
         "array"                            { return CwlTypes.ARRAY_TYPE_TK; }
         "baseCommand"                      { return CwlTypes.BASECOMMAND_TK; }

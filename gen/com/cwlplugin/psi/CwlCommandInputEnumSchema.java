@@ -16,4 +16,13 @@ public interface CwlCommandInputEnumSchema extends PsiElement {
   @Nullable
   CwlSymbols getSymbols();
 
+  @Nullable
+  PsiElement getColonTk();
+
+  @Nullable
+  PsiElement getEnumType();
+
+  @Nullable
+  PsiElement getTypeTk();
+
 }

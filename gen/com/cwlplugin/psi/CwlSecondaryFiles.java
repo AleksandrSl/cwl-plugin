@@ -7,4 +7,22 @@ import com.intellij.psi.PsiElement;
 
 public interface CwlSecondaryFiles extends PsiElement {
 
+  @NotNull
+  PsiElement getColonTk();
+
+  @Nullable
+  PsiElement getExpressionTk();
+
+  @Nullable
+  PsiElement getLbracketTk();
+
+  @Nullable
+  PsiElement getRbracketTk();
+
+  @NotNull
+  PsiElement getSecondaryFilesTk();
+
+  @Nullable
+  PsiElement getStringTk();
+
 }

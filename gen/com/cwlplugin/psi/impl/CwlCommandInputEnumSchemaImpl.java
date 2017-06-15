@@ -44,4 +44,22 @@ public class CwlCommandInputEnumSchemaImpl extends ASTWrapperPsiElement implemen
     return findChildByClass(CwlSymbols.class);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getColonTk() {
+    return findChildByType(COLON_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getEnumType() {
+    return findChildByType(ENUM_TYPE);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getTypeTk() {
+    return findChildByType(TYPE_TK);
+  }
+
 }

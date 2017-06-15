@@ -7,4 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface CwlType extends PsiElement {
 
+  @NotNull
+  PsiElement getColonTk();
+
+  @NotNull
+  PsiElement getStringTypeTk();
+
+  @NotNull
+  PsiElement getTypeTk();
+
 }

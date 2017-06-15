@@ -10,4 +10,13 @@ public interface CwlDirectory extends PsiElement {
   @NotNull
   List<CwlDirectoryField> getDirectoryFieldList();
 
+  @NotNull
+  PsiElement getClassTk();
+
+  @NotNull
+  PsiElement getColonTk();
+
+  @NotNull
+  PsiElement getDirectoryTypeTk();
+
 }

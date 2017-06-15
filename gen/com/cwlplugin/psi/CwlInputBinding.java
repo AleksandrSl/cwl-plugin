@@ -10,4 +10,10 @@ public interface CwlInputBinding extends PsiElement {
   @NotNull
   List<CwlCommandLineBindingField> getCommandLineBindingFieldList();
 
+  @NotNull
+  PsiElement getColonTk();
+
+  @NotNull
+  PsiElement getInputBindingTk();
+
 }

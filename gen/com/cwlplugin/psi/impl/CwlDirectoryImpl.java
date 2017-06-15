@@ -32,4 +32,22 @@ public class CwlDirectoryImpl extends ASTWrapperPsiElement implements CwlDirecto
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CwlDirectoryField.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getClassTk() {
+    return findNotNullChildByType(CLASS_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getDirectoryTypeTk() {
+    return findNotNullChildByType(DIRECTORY_TYPE_TK);
+  }
+
 }

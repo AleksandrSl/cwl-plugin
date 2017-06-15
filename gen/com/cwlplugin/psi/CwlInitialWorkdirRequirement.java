@@ -10,4 +10,13 @@ public interface CwlInitialWorkdirRequirement extends PsiElement {
   @NotNull
   CwlInitialWorkdirListing getInitialWorkdirListing();
 
+  @NotNull
+  PsiElement getClassTk();
+
+  @NotNull
+  PsiElement getColonTk();
+
+  @NotNull
+  PsiElement getInitialWorkdirRequirementTk();
+
 }

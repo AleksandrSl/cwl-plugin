@@ -32,4 +32,22 @@ public class CwlSoftwareRequirementImpl extends ASTWrapperPsiElement implements 
     return findNotNullChildByClass(CwlPackages.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getClassTk() {
+    return findNotNullChildByType(CLASS_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getSoftwareRequirementTk() {
+    return findNotNullChildByType(SOFTWARE_REQUIREMENT_TK);
+  }
+
 }

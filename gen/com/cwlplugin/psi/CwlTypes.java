@@ -47,6 +47,7 @@ public interface CwlTypes {
   IElementType DIRECTORY_FIELD = new CwlElementType("DIRECTORY_FIELD");
   IElementType DIRENT = new CwlElementType("DIRENT");
   IElementType DIRENT_ARRAY = new CwlElementType("DIRENT_ARRAY");
+  IElementType DOCKER_PULL = new CwlElementType("DOCKER_PULL");
   IElementType DOCKER_REQUIREMENT = new CwlElementType("DOCKER_REQUIREMENT");
   IElementType DOCKER_REQUIREMENT_FIELD = new CwlElementType("DOCKER_REQUIREMENT_FIELD");
   IElementType ENV_VAR_REQUIREMENT = new CwlElementType("ENV_VAR_REQUIREMENT");
@@ -56,7 +57,6 @@ public interface CwlTypes {
   IElementType HINTS = new CwlElementType("HINTS");
   IElementType INITIAL_WORKDIR_LISTING = new CwlElementType("INITIAL_WORKDIR_LISTING");
   IElementType INITIAL_WORKDIR_REQUIREMENT = new CwlElementType("INITIAL_WORKDIR_REQUIREMENT");
-  IElementType INLINE_JAVASCRIPT_REQUIREMENT = new CwlElementType("INLINE_JAVASCRIPT_REQUIREMENT");
   IElementType INPUTS = new CwlElementType("INPUTS");
   IElementType INPUT_BINDING = new CwlElementType("INPUT_BINDING");
   IElementType INT_ARRAY = new CwlElementType("INT_ARRAY");
@@ -307,6 +307,9 @@ public interface CwlTypes {
       else if (type == DIRENT_ARRAY) {
         return new CwlDirentArrayImpl(node);
       }
+      else if (type == DOCKER_PULL) {
+        return new CwlDockerPullImpl(node);
+      }
       else if (type == DOCKER_REQUIREMENT) {
         return new CwlDockerRequirementImpl(node);
       }
@@ -333,9 +336,6 @@ public interface CwlTypes {
       }
       else if (type == INITIAL_WORKDIR_REQUIREMENT) {
         return new CwlInitialWorkdirRequirementImpl(node);
-      }
-      else if (type == INLINE_JAVASCRIPT_REQUIREMENT) {
-        return new CwlInlineJavascriptRequirementImpl(node);
       }
       else if (type == INPUTS) {
         return new CwlInputsImpl(node);

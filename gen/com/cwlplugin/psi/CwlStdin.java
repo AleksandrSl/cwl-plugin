@@ -7,4 +7,16 @@ import com.intellij.psi.PsiElement;
 
 public interface CwlStdin extends PsiElement {
 
+  @Nullable
+  PsiElement getColonTk();
+
+  @Nullable
+  PsiElement getExpressionTk();
+
+  @Nullable
+  PsiElement getStdinTk();
+
+  @Nullable
+  PsiElement getStringTk();
+
 }

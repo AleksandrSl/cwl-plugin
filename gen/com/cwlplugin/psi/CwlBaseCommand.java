@@ -7,4 +7,16 @@ import com.intellij.psi.PsiElement;
 
 public interface CwlBaseCommand extends PsiElement {
 
+  @NotNull
+  PsiElement getBasecommandTk();
+
+  @NotNull
+  PsiElement getColonTk();
+
+  @Nullable
+  PsiElement getLbracketTk();
+
+  @Nullable
+  PsiElement getRbracketTk();
+
 }

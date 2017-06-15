@@ -32,4 +32,16 @@ public class CwlTemporaryFailCodesImpl extends ASTWrapperPsiElement implements C
     return findNotNullChildByClass(CwlIntArray.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getTemporaryFailCodesTk() {
+    return findNotNullChildByType(TEMPORARY_FAIL_CODES_TK);
+  }
+
 }

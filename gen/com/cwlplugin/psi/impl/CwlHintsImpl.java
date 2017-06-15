@@ -26,4 +26,16 @@ public class CwlHintsImpl extends ASTWrapperPsiElement implements CwlHints {
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getHintsTk() {
+    return findNotNullChildByType(HINTS_TK);
+  }
+
 }

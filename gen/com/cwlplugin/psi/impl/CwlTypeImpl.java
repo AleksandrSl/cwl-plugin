@@ -26,4 +26,22 @@ public class CwlTypeImpl extends ASTWrapperPsiElement implements CwlType {
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getStringTypeTk() {
+    return findNotNullChildByType(STRING_TYPE_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getTypeTk() {
+    return findNotNullChildByType(TYPE_TK);
+  }
+
 }

@@ -32,4 +32,22 @@ public class CwlDockerRequirementImpl extends ASTWrapperPsiElement implements Cw
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CwlDockerRequirementField.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getClassTk() {
+    return findNotNullChildByType(CLASS_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getDockerRequirementTk() {
+    return findNotNullChildByType(DOCKER_REQUIREMENT_TK);
+  }
+
 }

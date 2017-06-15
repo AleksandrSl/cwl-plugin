@@ -26,4 +26,40 @@ public class CwlEnvVarRequirementImpl extends ASTWrapperPsiElement implements Cw
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getClassTk() {
+    return findNotNullChildByType(CLASS_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getEnvDefTk() {
+    return findNotNullChildByType(ENV_DEF_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getEnvNameTk() {
+    return findNotNullChildByType(ENV_NAME_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getEnvValueTk() {
+    return findNotNullChildByType(ENV_VALUE_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getEnvVarRequirementTk() {
+    return findNotNullChildByType(ENV_VAR_REQUIREMENT_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getExpressionTk() {
+    return findChildByType(EXPRESSION_TK);
+  }
+
 }

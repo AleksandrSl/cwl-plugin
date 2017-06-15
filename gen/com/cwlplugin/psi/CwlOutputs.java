@@ -10,4 +10,10 @@ public interface CwlOutputs extends PsiElement {
   @NotNull
   List<CwlCommandOutputParameter> getCommandOutputParameterList();
 
+  @NotNull
+  PsiElement getColonTk();
+
+  @NotNull
+  PsiElement getOutputsTk();
+
 }

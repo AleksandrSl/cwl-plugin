@@ -110,4 +110,40 @@ public class CwlCommandLineToolFieldImpl extends ASTWrapperPsiElement implements
     return findChildByClass(CwlTemporaryFailCodes.class);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getColonTk() {
+    return findChildByType(COLON_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getDocTk() {
+    return findChildByType(DOC_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getIdTk() {
+    return findChildByType(ID_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getLbracketTk() {
+    return findChildByType(LBRACKET_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getRbracketTk() {
+    return findChildByType(RBRACKET_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getStringTk() {
+    return findChildByType(STRING_TK);
+  }
+
 }

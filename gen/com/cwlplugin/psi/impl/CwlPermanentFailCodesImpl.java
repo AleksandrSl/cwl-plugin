@@ -32,4 +32,16 @@ public class CwlPermanentFailCodesImpl extends ASTWrapperPsiElement implements C
     return findNotNullChildByClass(CwlIntArray.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getPermanentFailCodesTk() {
+    return findNotNullChildByType(PERMANENT_FAIL_CODES_TK);
+  }
+
 }

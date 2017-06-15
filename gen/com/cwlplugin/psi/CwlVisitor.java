@@ -159,6 +159,10 @@ public class CwlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDockerPull(@NotNull CwlDockerPull o) {
+    visitPsiElement(o);
+  }
+
   public void visitDockerRequirement(@NotNull CwlDockerRequirement o) {
     visitPsiElement(o);
   }
@@ -192,10 +196,6 @@ public class CwlVisitor extends PsiElementVisitor {
   }
 
   public void visitInitialWorkdirRequirement(@NotNull CwlInitialWorkdirRequirement o) {
-    visitPsiElement(o);
-  }
-
-  public void visitInlineJavascriptRequirement(@NotNull CwlInlineJavascriptRequirement o) {
     visitPsiElement(o);
   }
 

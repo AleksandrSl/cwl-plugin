@@ -56,4 +56,58 @@ public class CwlCommandInputParameterFieldImpl extends ASTWrapperPsiElement impl
     return findChildByClass(CwlType.class);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getColonTk() {
+    return findChildByType(COLON_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getDefaultTk() {
+    return findChildByType(DEFAULT_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getDocTk() {
+    return findChildByType(DOC_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getExpressionTk() {
+    return findChildByType(EXPRESSION_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getFormatTk() {
+    return findChildByType(FORMAT_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getIdTk() {
+    return findChildByType(ID_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getLbracketTk() {
+    return findChildByType(LBRACKET_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getRbracketTk() {
+    return findChildByType(RBRACKET_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getStringTk() {
+    return findChildByType(STRING_TK);
+  }
+
 }

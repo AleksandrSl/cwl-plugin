@@ -26,4 +26,22 @@ public class CwlStreamableImpl extends ASTWrapperPsiElement implements CwlStream
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getBooleanTk() {
+    return findNotNullChildByType(BOOLEAN_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getStreamableTk() {
+    return findNotNullChildByType(STREAMABLE_TK);
+  }
+
 }

@@ -7,4 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface CwlHints extends PsiElement {
 
+  @NotNull
+  PsiElement getColonTk();
+
+  @NotNull
+  PsiElement getHintsTk();
+
 }

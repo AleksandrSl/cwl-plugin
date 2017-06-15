@@ -16,4 +16,10 @@ public interface CwlInitialWorkdirListing extends PsiElement {
   @Nullable
   CwlFileArray getFileArray();
 
+  @Nullable
+  PsiElement getLbracketTk();
+
+  @Nullable
+  PsiElement getRbracketTk();
+
 }

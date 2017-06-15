@@ -7,4 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface CwlLabel extends PsiElement {
 
+  @NotNull
+  PsiElement getColonTk();
+
+  @NotNull
+  PsiElement getLabelTk();
+
+  @NotNull
+  PsiElement getStringTk();
+
 }

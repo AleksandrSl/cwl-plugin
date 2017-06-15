@@ -49,4 +49,22 @@ public interface CwlCommandLineToolField extends PsiElement {
   @Nullable
   CwlTemporaryFailCodes getTemporaryFailCodes();
 
+  @Nullable
+  PsiElement getColonTk();
+
+  @Nullable
+  PsiElement getDocTk();
+
+  @Nullable
+  PsiElement getIdTk();
+
+  @Nullable
+  PsiElement getLbracketTk();
+
+  @Nullable
+  PsiElement getRbracketTk();
+
+  @Nullable
+  PsiElement getStringTk();
+
 }

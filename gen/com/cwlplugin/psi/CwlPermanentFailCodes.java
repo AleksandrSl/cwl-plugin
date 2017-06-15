@@ -10,4 +10,10 @@ public interface CwlPermanentFailCodes extends PsiElement {
   @NotNull
   CwlIntArray getIntArray();
 
+  @NotNull
+  PsiElement getColonTk();
+
+  @NotNull
+  PsiElement getPermanentFailCodesTk();
+
 }

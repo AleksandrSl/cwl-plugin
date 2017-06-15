@@ -113,7 +113,7 @@
   WORKFLOW_TK = "Workflow"
   WRITABLE_TK = "writable"
 ]
-
+generateTokenAccessors=true
 //  psiImplUtilClass="com.cwlplugin.psi.CwlPsiImplUtilKt"
 }
 
@@ -158,9 +158,15 @@ inline_javascript_requirement
 | resource_requirement
 )
 
-inline_javascript_requirement ::= CLASS_TK COLON_TK INLINE_JAVASCRIPT_REQUIREMENT_TK
+private inline_javascript_requirement ::= CLASS_TK COLON_TK INLINE_JAVASCRIPT_REQUIREMENT_TK
 schema_def_requirement ::= CLASS_TK COLON_TK SCHEMA_DEF_REQUIREMENT_TK
 docker_requirement ::= CLASS_TK COLON_TK DOCKER_REQUIREMENT_TK  docker_requirement_field +
+{
+pin=3
+recoverWhile=docker_recover
+}
+
+private docker_recover ::= !(DOCKER_REQUIREMENT_TK)
 docker_requirement_field ::= (
 docker_pull
 | docker_load
@@ -168,7 +174,7 @@ docker_pull
 | docker_import
 | docker_image_id
 | docker_output_directory)
-private docker_pull ::= DOCKER_PULL_TK COLON_TK STRING_TK
+docker_pull ::= DOCKER_PULL_TK COLON_TK STRING_TK
 private docker_load ::= DOCKER_LOAD_TK COLON_TK STRING_TK
 private docker_file ::= DOCKER_FILE_TK COLON_TK STRING_TK
 private docker_import ::= DOCKER_IMPORT_TK COLON_TK STRING_TK

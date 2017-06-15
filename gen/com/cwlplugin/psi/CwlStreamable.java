@@ -7,4 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface CwlStreamable extends PsiElement {
 
+  @NotNull
+  PsiElement getBooleanTk();
+
+  @NotNull
+  PsiElement getColonTk();
+
+  @NotNull
+  PsiElement getStreamableTk();
+
 }

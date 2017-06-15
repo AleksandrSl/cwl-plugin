@@ -26,4 +26,28 @@ public class CwlStderrImpl extends ASTWrapperPsiElement implements CwlStderr {
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getColonTk() {
+    return findChildByType(COLON_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getExpressionTk() {
+    return findChildByType(EXPRESSION_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getStderrTk() {
+    return findChildByType(STDERR_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getStringTk() {
+    return findChildByType(STRING_TK);
+  }
+
 }

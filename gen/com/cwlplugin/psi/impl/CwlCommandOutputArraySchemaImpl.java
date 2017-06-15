@@ -44,4 +44,22 @@ public class CwlCommandOutputArraySchemaImpl extends ASTWrapperPsiElement implem
     return findChildByClass(CwlOutputBinding.class);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getArrayType() {
+    return findChildByType(ARRAY_TYPE);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getColonTk() {
+    return findChildByType(COLON_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getTypeTk() {
+    return findChildByType(TYPE_TK);
+  }
+
 }

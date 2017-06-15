@@ -7,4 +7,22 @@ import com.intellij.psi.PsiElement;
 
 public interface CwlEnvVarRequirement extends PsiElement {
 
+  @NotNull
+  PsiElement getClassTk();
+
+  @NotNull
+  PsiElement getEnvDefTk();
+
+  @NotNull
+  PsiElement getEnvNameTk();
+
+  @NotNull
+  PsiElement getEnvValueTk();
+
+  @NotNull
+  PsiElement getEnvVarRequirementTk();
+
+  @Nullable
+  PsiElement getExpressionTk();
+
 }

@@ -26,4 +26,28 @@ public class CwlStdinImpl extends ASTWrapperPsiElement implements CwlStdin {
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getColonTk() {
+    return findChildByType(COLON_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getExpressionTk() {
+    return findChildByType(EXPRESSION_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getStdinTk() {
+    return findChildByType(STDIN_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getStringTk() {
+    return findChildByType(STRING_TK);
+  }
+
 }

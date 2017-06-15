@@ -10,4 +10,10 @@ public interface CwlRequirements extends PsiElement {
   @NotNull
   List<CwlRequirement> getRequirementList();
 
+  @NotNull
+  PsiElement getColonTk();
+
+  @NotNull
+  PsiElement getRequirementsTk();
+
 }

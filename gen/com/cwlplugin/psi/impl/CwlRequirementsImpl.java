@@ -32,4 +32,16 @@ public class CwlRequirementsImpl extends ASTWrapperPsiElement implements CwlRequ
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CwlRequirement.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getRequirementsTk() {
+    return findNotNullChildByType(REQUIREMENTS_TK);
+  }
+
 }

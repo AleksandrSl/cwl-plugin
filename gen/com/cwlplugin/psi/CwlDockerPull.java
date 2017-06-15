@@ -5,6 +5,15 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface CwlInlineJavascriptRequirement extends PsiElement {
+public interface CwlDockerPull extends PsiElement {
+
+  @NotNull
+  PsiElement getColonTk();
+
+  @NotNull
+  PsiElement getDockerPullTk();
+
+  @NotNull
+  PsiElement getStringTk();
 
 }

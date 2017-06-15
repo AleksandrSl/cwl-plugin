@@ -46,12 +46,6 @@ public class CwlRequirementImpl extends ASTWrapperPsiElement implements CwlRequi
 
   @Override
   @Nullable
-  public CwlInlineJavascriptRequirement getInlineJavascriptRequirement() {
-    return findChildByClass(CwlInlineJavascriptRequirement.class);
-  }
-
-  @Override
-  @Nullable
   public CwlResourceRequirement getResourceRequirement() {
     return findChildByClass(CwlResourceRequirement.class);
   }
@@ -72,6 +66,24 @@ public class CwlRequirementImpl extends ASTWrapperPsiElement implements CwlRequi
   @Nullable
   public CwlSoftwareRequirement getSoftwareRequirement() {
     return findChildByClass(CwlSoftwareRequirement.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getClassTk() {
+    return findChildByType(CLASS_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getColonTk() {
+    return findChildByType(COLON_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getInlineJavascriptRequirementTk() {
+    return findChildByType(INLINE_JAVASCRIPT_REQUIREMENT_TK);
   }
 
 }

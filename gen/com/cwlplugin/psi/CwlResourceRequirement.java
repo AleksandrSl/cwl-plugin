@@ -10,4 +10,13 @@ public interface CwlResourceRequirement extends PsiElement {
   @NotNull
   List<CwlResourceRequirementField> getResourceRequirementFieldList();
 
+  @NotNull
+  PsiElement getClassTk();
+
+  @NotNull
+  PsiElement getColonTk();
+
+  @NotNull
+  PsiElement getResourceRequirementTk();
+
 }

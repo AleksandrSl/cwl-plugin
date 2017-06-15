@@ -1,23 +1,8 @@
 package com.cwlplugin.completion
 
 
-import com.cwlplugin.psi.CwlFile
-import com.cwlplugin.psi.CwlTypes
-import com.cwlplugin.psi.impl.CwlRequirementsImpl
 import com.intellij.codeInsight.completion.CompletionContributor
-import com.intellij.codeInsight.completion.CompletionParameters
-import com.intellij.codeInsight.completion.CompletionProvider
-import com.intellij.codeInsight.completion.CompletionResultSet
 import com.intellij.codeInsight.completion.CompletionType
-import com.intellij.codeInsight.lookup.LookupElementBuilder
-import com.intellij.openapi.util.Conditions.or
-import com.intellij.openapi.wm.KeyEventProcessor
-import com.intellij.patterns.ElementPattern
-import com.intellij.patterns.PlatformPatterns
-import com.intellij.patterns.PlatformPatterns.psiElement
-import com.intellij.patterns.PsiElementPattern
-import com.intellij.psi.PsiElement
-import com.intellij.util.ProcessingContext
 
 
 //var CwlFile.doNotComplete: Boolean? by UserDataProperty(Key.create("DO_NOT_COMPLETE"))
@@ -29,16 +14,31 @@ class CwlCompletionContributor : CompletionContributor() {
 
     init {
 
-        extend(
-                CompletionType.BASIC,
-                requirements(),
-                SimpleProvider(listOf("requirement"))
-        )
+        extend(CompletionType.BASIC, CwlKeywordCompletionProvider.requirements(),
+                CwlKeywordCompletionProvider("1","DockerRequirement", "InlineJavascriptRequirement"))
 
-        extend(CompletionType.BASIC, baseDeclarationPattern(),
-                CwlKeywordCompletionProvider("const", "enum", "extern", "fn", "impl", "mod", "pub", "static", "struct", "trait", "type", "unsafe", "use"))
+        extend(CompletionType.BASIC, CwlKeywordCompletionProvider.commandLineTool1(),
+                CwlKeywordCompletionProvider("2"))
 
-//        extend(CompletionType.BASIC,
+        extend(CompletionType.BASIC, CwlKeywordCompletionProvider.commandLineTool2(),
+                CwlKeywordCompletionProvider("3", "DockerRequirement", "InlineJavascriptRequirement"))
+
+        extend(CompletionType.BASIC, CwlKeywordCompletionProvider.commandLineTool3(),
+                CwlKeywordCompletionProvider("4", "DockerRequirement", "InlineJavascriptRequirement"))
+
+        extend(CompletionType.BASIC, CwlKeywordCompletionProvider.commandLineTool4(),
+                CwlKeywordCompletionProvider("5", "DockerRequirement", "InlineJavascriptRequirement"))
+        extend(CompletionType.BASIC, CwlKeywordCompletionProvider.commandLineTool5(),
+                CwlKeywordCompletionProvider("6", "DockerRequirement", "InlineJavascriptRequirement"))
+
+        extend(CompletionType.BASIC, CwlKeywordCompletionProvider.commandLineTool6(),
+                CwlKeywordCompletionProvider("7", "DockerRequirement", "InlineJavascriptRequirement"))
+        extend(CompletionType.BASIC, CwlKeywordCompletionProvider.commandLineTool7(),
+                CwlKeywordCompletionProvider("8", "DockerRequirement", "InlineJavascriptRequirement"))
+
+//
+//
+// extend(CompletionType.BASIC,
 //                PlatformPatterns.psiElement(CwlTypes.INPUTS_TK),
 //                object : CompletionProvider<CompletionParameters>() {
 //                    public override fun addCompletions(parameters: CompletionParameters,
@@ -49,92 +49,12 @@ class CwlCompletionContributor : CompletionContributor() {
 //                }
 //        )
 
-//        extend(CompletionType.BASIC,
-//                PlatformPatterns.psiElement(CwlTypes.IDENTIFIER),
-//                object : CompletionProvider<CompletionParameters>() {
-//                    public override fun addCompletions(parameters: CompletionParameters,
-//                                                       context: ProcessingContext,
-//                                                       resultSet: CompletionResultSet) {
-//                        resultSet.addElement(LookupElementBuilder.create("Hel"))
-//                        resultSet.addElement(LookupElementBuilder.create("Hel1"))
-//                        resultSet.addElement(LookupElementBuilder.create("Hel2"))
-//                        resultSet.addElement(LookupElementBuilder.create("Hel3"))
-//                        resultSet.addElement(LookupElementBuilder.create("classification"))
-//
-//                    }
-//                }
-//        )
-
-//        extend(CompletionType.BASIC,
-//                PlatformPatterns.psiElement(CwlTypes.STRING),
-//                object : CompletionProvider<CompletionParameters>() {
-//                    public override fun addCompletions(parameters: CompletionParameters,
-//                                                       context: ProcessingContext,
-//                                                       resultSet: CompletionResultSet) {
-//                        resultSet.addElement(LookupElementBuilder.create("WTF"))
-//                    }
-//                }
-//        )
-//
-//        extend(CompletionType.BASIC,
-//                PlatformPatterns.psiElement(CwlTypes.REQUIREMENTS),
-//                object : CompletionProvider<CompletionParameters>() {
-//                    public override fun addCompletions(parameters: CompletionParameters,
-//                                                       context: ProcessingContext,
-//                                                       resultSet: CompletionResultSet) {
-//                        resultSet.addElement(LookupElementBuilder.create("requirement"))
-//                        resultSet.addElement(LookupElementBuilder.create("Hel1"))
-//                        resultSet.addElement(LookupElementBuilder.create("Hel2"))
-//                        resultSet.addElement(LookupElementBuilder.create("Hel3"))
-//                        resultSet.addElement(LookupElementBuilder.create("classification"))
-//                    }
-//                }
-//        )
-//
-//        extend(CompletionType.BASIC,
-//                PlatformPatterns.psiElement(CwlTypes.REQUIREMENT),
-//                object : CompletionProvider<CompletionParameters>() {
-//                    public override fun addCompletions(parameters: CompletionParameters,
-//                                                       context: ProcessingContext,
-//                                                       resultSet: CompletionResultSet) {
-//                        resultSet.addElement(LookupElementBuilder.create("requirement"))
-//                        resultSet.addElement(LookupElementBuilder.create("Hel1"))
-//                        resultSet.addElement(LookupElementBuilder.create("Hel2"))
-//                        resultSet.addElement(LookupElementBuilder.create("Hel3"))
-//                        resultSet.addElement(LookupElementBuilder.create("classification"))
-//                    }
-//                }
-//        )
-
 //        val provider = object : CompletionProvider<CompletionParameters>() {
 //            override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext, result: CompletionResultSet) {
 //                performCompletion(parameters, result)
 //            }
 //        }
 //        extend(CompletionType.BASIC, PlatformPatterns.psiElement(), provider)
-    }
-
-//    private fun declarationPattern(): PsiElementPattern.Capture<PsiElement> =
-//            baseDeclarationPattern().and(statementBeginningPattern())
-
-    private fun baseDeclarationPattern(): PsiElementPattern.Capture<PsiElement> =
-            psiElement<PsiElement>().andOr(
-                    //                    psiElement().withParent(CwlPath::class.java),
-                    psiElement<CwlFile>().withParent(psiElement<CwlFile>()))
-
-
-
-    private fun requirements(): ElementPattern<PsiElement> {
-        println("Requirements function used ${psiElement(CwlTypes.REQUIREMENTS_TK)}")
-        return PlatformPatterns.psiElement(CwlTypes.REQUIREMENTS)
-//        return psiElement(CwlTypes.REQUIREMENTS_TK)
-    }
-
-    /**
-     * From Rust plugin
-     */
-    inline fun <reified I : PsiElement> psiElement(): PsiElementPattern.Capture<I> {
-        return psiElement(I::class.java)
     }
 }
 

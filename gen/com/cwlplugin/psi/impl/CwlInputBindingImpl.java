@@ -32,4 +32,16 @@ public class CwlInputBindingImpl extends ASTWrapperPsiElement implements CwlInpu
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CwlCommandLineBindingField.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getInputBindingTk() {
+    return findNotNullChildByType(INPUT_BINDING_TK);
+  }
+
 }

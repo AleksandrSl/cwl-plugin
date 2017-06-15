@@ -26,4 +26,22 @@ public class CwlSchemaDefRequirementImpl extends ASTWrapperPsiElement implements
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getClassTk() {
+    return findNotNullChildByType(CLASS_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getSchemaDefRequirementTk() {
+    return findNotNullChildByType(SCHEMA_DEF_REQUIREMENT_TK);
+  }
+
 }

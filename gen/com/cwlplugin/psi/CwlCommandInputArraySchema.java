@@ -16,4 +16,13 @@ public interface CwlCommandInputArraySchema extends PsiElement {
   @Nullable
   CwlLabel getLabel();
 
+  @Nullable
+  PsiElement getArrayType();
+
+  @Nullable
+  PsiElement getColonTk();
+
+  @Nullable
+  PsiElement getTypeTk();
+
 }

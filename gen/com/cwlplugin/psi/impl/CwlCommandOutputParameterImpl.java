@@ -32,4 +32,16 @@ public class CwlCommandOutputParameterImpl extends ASTWrapperPsiElement implemen
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CwlCommandOutputParameterField.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getIdentifierTk() {
+    return findNotNullChildByType(IDENTIFIER_TK);
+  }
+
 }

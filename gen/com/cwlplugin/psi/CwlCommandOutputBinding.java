@@ -10,4 +10,7 @@ public interface CwlCommandOutputBinding extends PsiElement {
   @NotNull
   List<CwlCommandOutputBindingField> getCommandOutputBindingFieldList();
 
+  @NotNull
+  PsiElement getColonTk();
+
 }

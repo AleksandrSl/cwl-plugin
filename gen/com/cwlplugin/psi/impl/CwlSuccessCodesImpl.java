@@ -32,4 +32,16 @@ public class CwlSuccessCodesImpl extends ASTWrapperPsiElement implements CwlSucc
     return findNotNullChildByClass(CwlIntArray.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getSuccessCodesTk() {
+    return findNotNullChildByType(SUCCESS_CODES_TK);
+  }
+
 }

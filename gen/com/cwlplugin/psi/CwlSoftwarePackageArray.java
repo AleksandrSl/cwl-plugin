@@ -10,4 +10,10 @@ public interface CwlSoftwarePackageArray extends PsiElement {
   @NotNull
   List<CwlSoftwarePackage> getSoftwarePackageList();
 
+  @NotNull
+  PsiElement getLbracketTk();
+
+  @NotNull
+  PsiElement getRbracketTk();
+
 }

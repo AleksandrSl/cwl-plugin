@@ -10,4 +10,10 @@ public interface CwlCommandInputParameter extends PsiElement {
   @NotNull
   List<CwlCommandInputParameterField> getCommandInputParameterFieldList();
 
+  @NotNull
+  PsiElement getColonTk();
+
+  @NotNull
+  PsiElement getIdentifierTk();
+
 }

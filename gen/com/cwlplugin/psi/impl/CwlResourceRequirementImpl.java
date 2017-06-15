@@ -32,4 +32,22 @@ public class CwlResourceRequirementImpl extends ASTWrapperPsiElement implements 
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CwlResourceRequirementField.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getClassTk() {
+    return findNotNullChildByType(CLASS_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getResourceRequirementTk() {
+    return findNotNullChildByType(RESOURCE_REQUIREMENT_TK);
+  }
+
 }

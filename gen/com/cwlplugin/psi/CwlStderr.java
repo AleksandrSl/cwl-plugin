@@ -7,4 +7,16 @@ import com.intellij.psi.PsiElement;
 
 public interface CwlStderr extends PsiElement {
 
+  @Nullable
+  PsiElement getColonTk();
+
+  @Nullable
+  PsiElement getExpressionTk();
+
+  @Nullable
+  PsiElement getStderrTk();
+
+  @Nullable
+  PsiElement getStringTk();
+
 }

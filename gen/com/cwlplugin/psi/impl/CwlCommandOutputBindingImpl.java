@@ -32,4 +32,10 @@ public class CwlCommandOutputBindingImpl extends ASTWrapperPsiElement implements
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CwlCommandOutputBindingField.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
 }

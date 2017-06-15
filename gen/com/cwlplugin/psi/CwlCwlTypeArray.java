@@ -10,4 +10,10 @@ public interface CwlCwlTypeArray extends PsiElement {
   @NotNull
   List<CwlCwlType> getCwlTypeList();
 
+  @NotNull
+  PsiElement getLbracketTk();
+
+  @NotNull
+  PsiElement getRbracketTk();
+
 }

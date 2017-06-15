@@ -10,4 +10,10 @@ public interface CwlSuccessCodes extends PsiElement {
   @NotNull
   CwlIntArray getIntArray();
 
+  @NotNull
+  PsiElement getColonTk();
+
+  @NotNull
+  PsiElement getSuccessCodesTk();
+
 }

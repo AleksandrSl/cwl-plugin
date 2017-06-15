@@ -26,4 +26,52 @@ public class CwlDockerRequirementFieldImpl extends ASTWrapperPsiElement implemen
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public CwlDockerPull getDockerPull() {
+    return findChildByClass(CwlDockerPull.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getColonTk() {
+    return findChildByType(COLON_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getDockerFileTk() {
+    return findChildByType(DOCKER_FILE_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getDockerImageIdTk() {
+    return findChildByType(DOCKER_IMAGE_ID_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getDockerImportTk() {
+    return findChildByType(DOCKER_IMPORT_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getDockerLoadTk() {
+    return findChildByType(DOCKER_LOAD_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getDockerOutputDirectoryTk() {
+    return findChildByType(DOCKER_OUTPUT_DIRECTORY_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getStringTk() {
+    return findChildByType(STRING_TK);
+  }
+
 }

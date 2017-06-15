@@ -26,4 +26,58 @@ public class CwlCommandOutputBindingFieldImpl extends ASTWrapperPsiElement imple
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getBooleanTk() {
+    return findChildByType(BOOLEAN_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getExpressionTk() {
+    return findChildByType(EXPRESSION_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getGlobTk() {
+    return findChildByType(GLOB_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getLbracketTk() {
+    return findChildByType(LBRACKET_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getLoadContentsTk() {
+    return findChildByType(LOAD_CONTENTS_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getOutputEvalTk() {
+    return findChildByType(OUTPUT_EVAL_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getRbracketTk() {
+    return findChildByType(RBRACKET_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getStringTk() {
+    return findChildByType(STRING_TK);
+  }
+
 }

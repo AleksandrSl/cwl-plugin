@@ -26,4 +26,16 @@ public class CwlIntArrayImpl extends ASTWrapperPsiElement implements CwlIntArray
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getLbracketTk() {
+    return findNotNullChildByType(LBRACKET_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getRbracketTk() {
+    return findNotNullChildByType(RBRACKET_TK);
+  }
+
 }

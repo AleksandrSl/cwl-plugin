@@ -16,4 +16,13 @@ public interface CwlCommandOutputArraySchema extends PsiElement {
   @Nullable
   CwlOutputBinding getOutputBinding();
 
+  @Nullable
+  PsiElement getArrayType();
+
+  @Nullable
+  PsiElement getColonTk();
+
+  @Nullable
+  PsiElement getTypeTk();
+
 }

@@ -26,4 +26,16 @@ public class CwlSymbolsImpl extends ASTWrapperPsiElement implements CwlSymbols {
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getLbracketTk() {
+    return findNotNullChildByType(LBRACKET_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getRbracketTk() {
+    return findNotNullChildByType(RBRACKET_TK);
+  }
+
 }

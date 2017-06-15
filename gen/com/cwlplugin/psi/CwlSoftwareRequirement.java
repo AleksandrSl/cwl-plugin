@@ -10,4 +10,13 @@ public interface CwlSoftwareRequirement extends PsiElement {
   @NotNull
   CwlPackages getPackages();
 
+  @NotNull
+  PsiElement getClassTk();
+
+  @NotNull
+  PsiElement getColonTk();
+
+  @NotNull
+  PsiElement getSoftwareRequirementTk();
+
 }

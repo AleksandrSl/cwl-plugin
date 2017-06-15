@@ -32,4 +32,16 @@ public class CwlInputsImpl extends ASTWrapperPsiElement implements CwlInputs {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CwlCommandInputParameter.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getInputsTk() {
+    return findNotNullChildByType(INPUTS_TK);
+  }
+
 }
