@@ -28,8 +28,8 @@ public class CwlCommandLineBindingFieldImpl extends ASTWrapperPsiElement impleme
 
   @Override
   @Nullable
-  public PsiElement getInt() {
-    return findChildByType(INT);
+  public PsiElement getIntTk() {
+    return findChildByType(INT_TK);
   }
 
 }

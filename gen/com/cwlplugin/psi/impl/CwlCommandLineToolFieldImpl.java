@@ -27,15 +27,27 @@ public class CwlCommandLineToolFieldImpl extends ASTWrapperPsiElement implements
   }
 
   @Override
-  @NotNull
-  public List<CwlCommandLineBindingField> getCommandLineBindingFieldList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, CwlCommandLineBindingField.class);
+  @Nullable
+  public CwlArguments getArguments() {
+    return findChildByClass(CwlArguments.class);
   }
 
   @Override
-  @NotNull
-  public List<CwlCommandOutputParameter> getCommandOutputParameterList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, CwlCommandOutputParameter.class);
+  @Nullable
+  public CwlBaseCommand getBaseCommand() {
+    return findChildByClass(CwlBaseCommand.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlCommandLineToolClass getCommandLineToolClass() {
+    return findChildByClass(CwlCommandLineToolClass.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlHints getHints() {
+    return findChildByClass(CwlHints.class);
   }
 
   @Override
@@ -46,14 +58,56 @@ public class CwlCommandLineToolFieldImpl extends ASTWrapperPsiElement implements
 
   @Override
   @Nullable
-  public CwlIntArray getIntArray() {
-    return findChildByClass(CwlIntArray.class);
+  public CwlLabel getLabel() {
+    return findChildByClass(CwlLabel.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlOutputs getOutputs() {
+    return findChildByClass(CwlOutputs.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlPermanentFailCodes getPermanentFailCodes() {
+    return findChildByClass(CwlPermanentFailCodes.class);
   }
 
   @Override
   @Nullable
   public CwlRequirements getRequirements() {
     return findChildByClass(CwlRequirements.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlStderr getStderr() {
+    return findChildByClass(CwlStderr.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlStdin getStdin() {
+    return findChildByClass(CwlStdin.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlStdout getStdout() {
+    return findChildByClass(CwlStdout.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlSuccessCodes getSuccessCodes() {
+    return findChildByClass(CwlSuccessCodes.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlTemporaryFailCodes getTemporaryFailCodes() {
+    return findChildByClass(CwlTemporaryFailCodes.class);
   }
 
 }

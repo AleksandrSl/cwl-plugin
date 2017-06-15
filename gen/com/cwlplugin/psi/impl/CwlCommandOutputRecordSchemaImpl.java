@@ -34,6 +34,12 @@ public class CwlCommandOutputRecordSchemaImpl extends ASTWrapperPsiElement imple
 
   @Override
   @Nullable
+  public CwlLabel getLabel() {
+    return findChildByClass(CwlLabel.class);
+  }
+
+  @Override
+  @Nullable
   public CwlRecordType getRecordType() {
     return findChildByClass(CwlRecordType.class);
   }

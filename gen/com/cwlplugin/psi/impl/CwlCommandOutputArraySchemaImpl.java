@@ -34,6 +34,12 @@ public class CwlCommandOutputArraySchemaImpl extends ASTWrapperPsiElement implem
 
   @Override
   @Nullable
+  public CwlLabel getLabel() {
+    return findChildByClass(CwlLabel.class);
+  }
+
+  @Override
+  @Nullable
   public CwlOutputBinding getOutputBinding() {
     return findChildByClass(CwlOutputBinding.class);
   }

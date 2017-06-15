@@ -7,19 +7,46 @@ import com.intellij.psi.PsiElement;
 
 public interface CwlCommandLineToolField extends PsiElement {
 
-  @NotNull
-  List<CwlCommandLineBindingField> getCommandLineBindingFieldList();
+  @Nullable
+  CwlArguments getArguments();
 
-  @NotNull
-  List<CwlCommandOutputParameter> getCommandOutputParameterList();
+  @Nullable
+  CwlBaseCommand getBaseCommand();
+
+  @Nullable
+  CwlCommandLineToolClass getCommandLineToolClass();
+
+  @Nullable
+  CwlHints getHints();
 
   @Nullable
   CwlInputs getInputs();
 
   @Nullable
-  CwlIntArray getIntArray();
+  CwlLabel getLabel();
+
+  @Nullable
+  CwlOutputs getOutputs();
+
+  @Nullable
+  CwlPermanentFailCodes getPermanentFailCodes();
 
   @Nullable
   CwlRequirements getRequirements();
+
+  @Nullable
+  CwlStderr getStderr();
+
+  @Nullable
+  CwlStdin getStdin();
+
+  @Nullable
+  CwlStdout getStdout();
+
+  @Nullable
+  CwlSuccessCodes getSuccessCodes();
+
+  @Nullable
+  CwlTemporaryFailCodes getTemporaryFailCodes();
 
 }

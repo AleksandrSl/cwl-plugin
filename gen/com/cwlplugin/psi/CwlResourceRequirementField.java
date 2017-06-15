@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface CwlResourceRequirementField extends PsiElement {
 
   @Nullable
-  PsiElement getNumber();
+  PsiElement getNumberTk();
 
 }

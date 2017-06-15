@@ -17,7 +17,6 @@
 package com.cwlplugin.completion
 
 import com.cwlplugin.psi.CwlFile
-import com.cwlplugin.psi.startOffset
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
@@ -84,3 +83,6 @@ class ToFromOriginalFileMapper private constructor(
         return PsiTreeUtil.findElementOfClassAtOffset(syntheticFile, offset, element::class.java, true)
     }
 }
+
+val PsiElement.startOffset: Int
+    get() = textRange.startOffset

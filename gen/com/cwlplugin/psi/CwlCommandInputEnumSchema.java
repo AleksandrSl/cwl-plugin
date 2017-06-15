@@ -7,8 +7,11 @@ import com.intellij.psi.PsiElement;
 
 public interface CwlCommandInputEnumSchema extends PsiElement {
 
-  @NotNull
-  List<CwlCommandLineBindingField> getCommandLineBindingFieldList();
+  @Nullable
+  CwlInputBinding getInputBinding();
+
+  @Nullable
+  CwlLabel getLabel();
 
   @Nullable
   CwlSymbols getSymbols();

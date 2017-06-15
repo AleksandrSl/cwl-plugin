@@ -28,20 +28,50 @@ public class CwlRequirementImpl extends ASTWrapperPsiElement implements CwlRequi
 
   @Override
   @Nullable
-  public CwlInitialWorkdirListing getInitialWorkdirListing() {
-    return findChildByClass(CwlInitialWorkdirListing.class);
+  public CwlDockerRequirement getDockerRequirement() {
+    return findChildByClass(CwlDockerRequirement.class);
   }
 
   @Override
   @Nullable
-  public CwlPackages getPackages() {
-    return findChildByClass(CwlPackages.class);
+  public CwlEnvVarRequirement getEnvVarRequirement() {
+    return findChildByClass(CwlEnvVarRequirement.class);
   }
 
   @Override
-  @NotNull
-  public List<CwlResourceRequirementField> getResourceRequirementFieldList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, CwlResourceRequirementField.class);
+  @Nullable
+  public CwlInitialWorkdirRequirement getInitialWorkdirRequirement() {
+    return findChildByClass(CwlInitialWorkdirRequirement.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlInlineJavascriptRequirement getInlineJavascriptRequirement() {
+    return findChildByClass(CwlInlineJavascriptRequirement.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlResourceRequirement getResourceRequirement() {
+    return findChildByClass(CwlResourceRequirement.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlSchemaDefRequirement getSchemaDefRequirement() {
+    return findChildByClass(CwlSchemaDefRequirement.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlShellCommandRequirement getShellCommandRequirement() {
+    return findChildByClass(CwlShellCommandRequirement.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlSoftwareRequirement getSoftwareRequirement() {
+    return findChildByClass(CwlSoftwareRequirement.class);
   }
 
 }

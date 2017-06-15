@@ -28,6 +28,12 @@ public class CwlCommandOutputEnumSchemaImpl extends ASTWrapperPsiElement impleme
 
   @Override
   @Nullable
+  public CwlLabel getLabel() {
+    return findChildByClass(CwlLabel.class);
+  }
+
+  @Override
+  @Nullable
   public CwlOutputBinding getOutputBinding() {
     return findChildByClass(CwlOutputBinding.class);
   }

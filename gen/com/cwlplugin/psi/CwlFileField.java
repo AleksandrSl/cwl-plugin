@@ -14,6 +14,6 @@ public interface CwlFileField extends PsiElement {
   CwlFileArray getFileArray();
 
   @Nullable
-  PsiElement getNumber();
+  PsiElement getNumberTk();
 
 }

@@ -40,8 +40,8 @@ public class CwlFileFieldImpl extends ASTWrapperPsiElement implements CwlFileFie
 
   @Override
   @Nullable
-  public PsiElement getNumber() {
-    return findChildByType(NUMBER);
+  public PsiElement getNumberTk() {
+    return findChildByType(NUMBER_TK);
   }
 
 }

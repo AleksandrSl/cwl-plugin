@@ -118,9 +118,9 @@ class CwlCompletionContributor : CompletionContributor() {
 //            baseDeclarationPattern().and(statementBeginningPattern())
 
     private fun baseDeclarationPattern(): PsiElementPattern.Capture<PsiElement> =
-            psiElement().andOr(
+            psiElement<PsiElement>().andOr(
                     //                    psiElement().withParent(CwlPath::class.java),
-                    psiElement().withParent(psiElement<CwlFile>()))
+                    psiElement<CwlFile>().withParent(psiElement<CwlFile>()))
 
 
 

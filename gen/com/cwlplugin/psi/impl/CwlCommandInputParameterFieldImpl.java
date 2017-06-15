@@ -27,9 +27,33 @@ public class CwlCommandInputParameterFieldImpl extends ASTWrapperPsiElement impl
   }
 
   @Override
-  @NotNull
-  public List<CwlCommandLineBindingField> getCommandLineBindingFieldList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, CwlCommandLineBindingField.class);
+  @Nullable
+  public CwlInputBinding getInputBinding() {
+    return findChildByClass(CwlInputBinding.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlLabel getLabel() {
+    return findChildByClass(CwlLabel.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlSecondaryFiles getSecondaryFiles() {
+    return findChildByClass(CwlSecondaryFiles.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlStreamable getStreamable() {
+    return findChildByClass(CwlStreamable.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlType getType() {
+    return findChildByClass(CwlType.class);
   }
 
 }

@@ -7,7 +7,19 @@ import com.intellij.psi.PsiElement;
 
 public interface CwlCommandInputParameterField extends PsiElement {
 
-  @NotNull
-  List<CwlCommandLineBindingField> getCommandLineBindingFieldList();
+  @Nullable
+  CwlInputBinding getInputBinding();
+
+  @Nullable
+  CwlLabel getLabel();
+
+  @Nullable
+  CwlSecondaryFiles getSecondaryFiles();
+
+  @Nullable
+  CwlStreamable getStreamable();
+
+  @Nullable
+  CwlType getType();
 
 }

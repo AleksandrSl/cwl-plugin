@@ -55,12 +55,12 @@ class CwlSyntaxHighlighter: SyntaxHighlighterBase() {
       when (tokenType) {
 
           com.intellij.psi.TokenType.BAD_CHARACTER -> return BAD_CHAR_KEYS
-          CwlTypes.REQUIREMENTS -> return REQUIREMENTS_KEYS
-          CwlTypes.INPUTS -> return INPUTS_KEYS
-          CwlTypes.OUTPUTS -> return OUTPUTS_KEYS
-          CwlTypes.DOC -> return DOC_KEYS
+          CwlTypes.REQUIREMENTS_TK -> return REQUIREMENTS_KEYS
+          CwlTypes.INPUTS_TK -> return INPUTS_KEYS
+          CwlTypes.OUTPUTS_TK -> return OUTPUTS_KEYS
+          CwlTypes.DOC_TK -> return DOC_KEYS
           CwlLexerTypes.COMMENT -> return COMMENT_KEYS
-          CwlTypes.COLON -> return SEPARATOR_KEYS
+          CwlTypes.COLON_TK -> return SEPARATOR_KEYS
           else -> return EMPTY_KEYS
       }
   }

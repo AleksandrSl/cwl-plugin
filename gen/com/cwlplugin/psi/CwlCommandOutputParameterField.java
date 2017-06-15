@@ -8,6 +8,18 @@ import com.intellij.psi.PsiElement;
 public interface CwlCommandOutputParameterField extends PsiElement {
 
   @Nullable
+  CwlLabel getLabel();
+
+  @Nullable
   CwlOutputBinding getOutputBinding();
+
+  @Nullable
+  CwlSecondaryFiles getSecondaryFiles();
+
+  @Nullable
+  CwlStreamable getStreamable();
+
+  @Nullable
+  CwlType getType();
 
 }

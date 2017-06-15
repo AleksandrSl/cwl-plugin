@@ -28,8 +28,32 @@ public class CwlCommandOutputParameterFieldImpl extends ASTWrapperPsiElement imp
 
   @Override
   @Nullable
+  public CwlLabel getLabel() {
+    return findChildByClass(CwlLabel.class);
+  }
+
+  @Override
+  @Nullable
   public CwlOutputBinding getOutputBinding() {
     return findChildByClass(CwlOutputBinding.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlSecondaryFiles getSecondaryFiles() {
+    return findChildByClass(CwlSecondaryFiles.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlStreamable getStreamable() {
+    return findChildByClass(CwlStreamable.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlType getType() {
+    return findChildByClass(CwlType.class);
   }
 
 }

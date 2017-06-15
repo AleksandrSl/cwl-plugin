@@ -26,4 +26,10 @@ public class CwlFileArrayImpl extends ASTWrapperPsiElement implements CwlFileArr
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public List<CwlFile_> getFile_List() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CwlFile_.class);
+  }
+
 }

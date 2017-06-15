@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface CwlCommandOutputEnumSchema extends PsiElement {
 
   @Nullable
+  CwlLabel getLabel();
+
+  @Nullable
   CwlOutputBinding getOutputBinding();
 
   @Nullable

@@ -28,8 +28,8 @@ public class CwlResourceRequirementFieldImpl extends ASTWrapperPsiElement implem
 
   @Override
   @Nullable
-  public PsiElement getNumber() {
-    return findChildByType(NUMBER);
+  public PsiElement getNumberTk() {
+    return findChildByType(NUMBER_TK);
   }
 
 }
