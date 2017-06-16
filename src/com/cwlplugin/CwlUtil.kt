@@ -15,7 +15,7 @@ import com.intellij.util.indexing.FileBasedIndex
 /**
  * Created by aleksandrsl on 08.05.17.
  */
-//object CwlUtil {
+object CwlUtil {
 //
 //    fun findCommandInputParameters(project: Project, identifier: String): List<CwlCommandInputParameter> {
 //
@@ -42,4 +42,5 @@ import com.intellij.util.indexing.FileBasedIndex
 //
 //        return result
 //    }
-//}
+
+}
