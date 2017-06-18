@@ -14,21 +14,26 @@ class CwlParser : PsiParser{
     private val LOGGER = Logger.getInstance(CwlParser::class.java.name)
 
     override fun parse(root: IElementType, builder: PsiBuilder): ASTNode {
+        println("START PARSING")
         val start = System.currentTimeMillis()
         val rootMarker = builder.mark()
-        val context = createParsingContext(builder, toolType)
-        val statementParser = context.getStatementParser()
-        builder.setTokenTypeRemapper(statementParser) // must be done before touching the caching lexer with eof() call.
-        var lastAfterSemicolon = false
+        val context = createParsingContext(builder, ToolType.COMMAND_LINE_TOOL)
+        val requirementsParser = context.requirementsParser
+        builder.setTokenTypeRemapper(requirementsParser) // must be done before touching the caching lexer with eof() call.
+//        var lastAfterSemicolon = false
+        builder.setDebugMode(true)
+        requirementsParser.parsePrimaryRequirements()
         while (!builder.eof()) {
-            context.pushScope(context.emptyParsingScope())
-            if (lastAfterSemicolon) {
-                statementParser.parseSimpleStatement()
-            } else {
-                statementParser.parseStatement()
-            }
-            lastAfterSemicolon = context.getScope().isAfterSemicolon()
-            context.popScope()
+
+            builder.advanceLexer()
+//            context.pushScope(context.emptyParsingScope())
+//            if (lastAfterSemicolon) {
+//                statementParser.parseSimpleStatement()
+//            } else {
+//                statementParser.parseStatement()
+//            }
+//            lastAfterSemicolon = context.getScope().isAfterSemicolon()
+//            context.popScope()
         }
         rootMarker.done(root)
         val ast = builder.treeBuilt
@@ -36,11 +41,11 @@ class CwlParser : PsiParser{
         val kb = builder.currentOffset / 1000.0
         LOGGER.debug("Parsed " + String.format("%.1f", kb) + "K file in " + diff + "ms")
         return ast
-
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     protected fun createParsingContext(builder: PsiBuilder, toolType: ToolType): ParsingContext {
         return ParsingContext(builder, toolType)
     }
+
+
 }

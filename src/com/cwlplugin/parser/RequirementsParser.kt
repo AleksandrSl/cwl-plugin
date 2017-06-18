@@ -1,19 +1,31 @@
 package com.cwlplugin.parser
 
-import com.cwlplugin.parser.CwlTokenTypes.REQUIREMENTS_KEYWORD
-import com.cwlplugin.psi.CwlElementType
-import com.cwlplugin.psi.CwlTypes
-import com.intellij.CommonBundle
-import com.intellij.CommonBundle.message
+import com.cwlplugin.CwlBundle.message
+import com.intellij.lang.ITokenTypeRemapper
 import com.intellij.lang.PsiBuilder
+import com.intellij.openapi.diagnostic.Logger
 import com.intellij.psi.tree.IElementType
-import org.jetbrains.annotations.PropertyKey
-import java.util.ResourceBundle.getBundle
 
 /**
  * @author Aleksandr Slepchenkov [aslepchenkov@parseq.pro](mailto:aslepchenkov@parseq.pro)
  */
-class RequirementsParser(context: ParsingContext) : Parsing(context) {
+class RequirementsParser(context: ParsingContext) : Parsing(context), ITokenTypeRemapper {
+
+    override fun filter(source: IElementType?, start: Int, end: Int, text: CharSequence?): IElementType {
+        return source!!
+    }
+
+    private val LOG = Logger.getInstance(RequirementsParser::class.java.name)
+
+    fun reportParseStatementError(builder: PsiBuilder, firstToken: IElementType) {
+        if (firstToken === CwlTokenTypes.INCONSISTENT_DEDENT) {
+            builder.error("Unindent does not match any outer indentation level")
+        } else if (firstToken === CwlTokenTypes.INDENT) {
+            builder.error("Unexpected indent")
+        } else {
+            builder.error("Statement expected, found " + firstToken.toString())
+        }
+    }
 
     fun parsePrimaryRequirements(): Boolean {
         val firstToken: IElementType? = myBuilder.tokenType
@@ -22,48 +34,70 @@ class RequirementsParser(context: ParsingContext) : Parsing(context) {
                 when (firstToken) {
                     REQUIREMENTS_KEYWORD -> {
 //                        buildTokenElement(CwlElementTypes.TARGET_REQUIREMENTS_BLOCK, myBuilder)
-                        parseRequirements()
+                        parseRequirementsBlock()
                         return true
                     }
-                    else -> return false
+                    else ->{ reportParseStatementError(myBuilder, firstToken); return false}
                 }
             }
         }
         return false
     }
 
-    fun parseRequirementsDeclaration(): Unit {
-        myBuilder.advanceLexer()
+    /**
+     * Parse all requirements statements and trailing COLON after requirements keyword
+     */
+    fun parseRequirementsBlock(): Unit {
+        val requirementsBlock: PsiBuilder.Marker = myBuilder.mark()
+        nextToken()
         checkMatches(CwlTokenTypes.COLON, message("PARSE.expected.colon"))
-        val context: ParsingContext = parsingContext
-        context.pushScope(context.currentScope.withRequirements())
-        parseSingleRequirement()
-        context.popScope()
+        parseRequirementsList()
+        requirementsBlock.done(CwlElementTypes.REQUIREMENTS_BLOCK)
     }
 
-    fun parseSingleRequirement(): Unit {
-        while (myBuilder.tokenType === CwlTokenTypes.STATEMENT_BREAK) {
-            myBuilder.advanceLexer()
-        }
-        val firstToken: IElementType = myBuilder.tokenType ?: return
-        with(CwlTokenTypes) {
-            assertCurrentToken(CLASS_KEYWORD)
-            val singleRequirement: PsiBuilder.Marker = myBuilder.mark()
-            myBuilder.advanceLexer()
-            if (!true) {
-                myBuilder.error("requirement expected")
+    fun parseRequirementsList() : Unit{
+        // TODO When new line
+        if (myBuilder.tokenType == CwlTokenTypes.STATEMENT_BREAK) {
+            myBuilder.error("STATEMENT_BREAK IS FOUND")
+            nextToken()
+            val indentFound = myBuilder.tokenType == CwlTokenTypes.INDENT
+            if (indentFound) {
+                nextToken()
+                println("parseRequirementsList:1:${myBuilder.tokenType}")
+                if (myBuilder.eof()) {
+                    myBuilder.error("Indented block expected")
+                } else {
+                    while (!myBuilder.eof() && myBuilder.tokenType !== CwlTokenTypes.DEDENT) {
+                        if (!parseRequirement()) break
+                        println("parseRequirementsList:2:${myBuilder.tokenType}")
+                    }
+                }
+            } else {
+                myBuilder.error("Indent expected")
             }
-            parse
-        }
+            if (indentFound && !myBuilder.eof()) {
+                checkMatches(CwlTokenTypes.DEDENT, "Dedent expected")
+            }
+        } else {myBuilder.error("WTF!! ${myBuilder.tokenType}")}
+
     }
 
-    private fun parseColonAndSuite() {
-        if (expectColon()) {
-            parseSuite()
-        } else {
-            val mark = myBuilder.mark()
-            mark.done(PyElementTypes.STATEMENT_LIST)
-        }
+    /**
+     * Parse requirement statement class: requirement
+     *
+     * All current token should already be matched
+     * New token is generated at function beginning
+     */
+    protected fun parseRequirement(): Boolean {
+
+        if (!checkMatches(CwlTokenTypes.CLASS_KEYWORD, "Class keyword expected")) return false
+//        if (!matchToken(CwlTokenTypes.CLASS_KEYWORD)) return
+        val requirement = myBuilder.mark()
+        if (!checkMatches(CwlTokenTypes.COLON, "Colon keyword expected")) { requirement.drop(); return false}
+        if (!checkMatches(CwlTokenTypes.INLINE_JAVASCRIPT_REQUIREMENT_KEYWORD, "InlineJavascriptRequirement keyword expected")) { requirement.drop(); return false}
+        requirement.done(CwlElementTypes.INLINE_JAVASCRIPT_REQUIREMENT)
+//        requirement.done(CwlTokenTypes.INLINE_JAVASCRIPT_REQUIREMENT_KEYWORD) // TODO
+        return true
     }
 }
 

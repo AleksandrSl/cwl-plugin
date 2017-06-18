@@ -3,7 +3,7 @@ package com.cwlplugin.lexer;
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.TokenType;
-import com.cwlplugin.psi.CwlTypes;
+import com.cwlplugin.parser.CwlTokenTypes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +43,9 @@ LineTerminator = \r|\n|\r\n
 InputCharacter = [^\r\n]
 WhiteSpace = [ \t\f\n\r]+
 // Comment
-Comment = {TraditionalComment}
+Comment = {EndOfLineComment}
 // Comment can be the last line of the file, without line terminator
-TraditionalComment = "#" {InputCharacter}* {LineTerminator}?
+EndOfLineComment = "#"{InputCharacter}*
 // Put constrains on identifier myself. I don't see meaning in identifiers like "*&&****&" or uyutut&&&%
 Identifier = [:jletter:] [:jletterdigit:]*
 DecIntegerLiteral = 0 | [1-9][0-9]*
@@ -55,104 +55,112 @@ String = {BareString} | {SimpleString}
 Expression = \$\(.*\) | \$\{.*\}
 
 Boolean = True | False
+
 %state STRING
 
 %%
+
+
     <YYINITIAL> {
+
+        [\ ]                               { return CwlTokenTypes.SPACE; }
+        [\t]                               { return CwlTokenTypes.TAB; }
+        [\f]                               { return CwlTokenTypes.FORMFEED; }
+        {LineTerminator}                   { return CwlTokenTypes.LINE_BREAK; }
 //        "|"                                { yybegin(MULTILINE_STRING); }
 
-        {WhiteSpace}                       { return TokenType.WHITE_SPACE; }
-        {DecIntegerLiteral}                { return CwlTypes.INT; }
-        "array"                            { return CwlTypes.ARRAY_TYPE; }
-        "baseCommand"                      { return CwlTypes.BASECOMMAND; }
-        "basename"                         { return CwlTypes.BASENAME; }
-        {Boolean}                          { return CwlTypes.BOOLEAN; }
-        "boolean"                          { return CwlTypes.BOOLEAN_TYPE; }
-        "checksum"                         { return CwlTypes.CHECKSUM; }
-        "class"                            { return CwlTypes.CLASS; }
-        ":"                                { return CwlTypes.COLON; }
-        ","                                { return CwlTypes.COMMA; }
-        "CommandLineTool"                  { return CwlTypes.COMMAND_LINE_TOOL; }
-        "contents"                         { return CwlTypes.CONTENTS; }
-        "coresMax"                         { return CwlTypes.CORES_MAX; }
-        "coresMin"                         { return CwlTypes.CORES_MIN; }
-        "cwlVersion"                       { return CwlTypes.CWL_VERSION; }
-        "default"                          { return CwlTypes.DEFAULT; }
-        "Directory"                        { return CwlTypes.DIRECTORY_TYPE; }
-        "dirname"                          { return CwlTypes.DIRNAME; }
-        "doc"                              { return CwlTypes.DOC; }
-        "dockerFile"                       { return CwlTypes.DOCKER_FILE; }
-        "dockerImageId"                    { return CwlTypes.DOCKER_IMAGE_ID; }
-        "dockerImport"                     { return CwlTypes.DOCKER_IMPORT; }
-        "dockerLoad"                       { return CwlTypes.DOCKER_LOAD; }
-        "dockerOutputDirectory"            { return CwlTypes.DOCKER_OUTPUT_DIRECTORY; }
-        "dockerPull"                       { return CwlTypes.DOCKER_PULL; }
-        "DockerRequirement"                { return CwlTypes.DOCKER_REQUIREMENT; }
-        "double"                           { return CwlTypes.DOUBLE_TYPE; }
-        "entry"                            { return CwlTypes.ENTRY; }
-        "entryname"                        { return CwlTypes.ENTRYNAME; }
-        "enum"                             { return CwlTypes.ENUM_TYPE; }
-        "envDef"                           { return CwlTypes.ENV_DEF; }
-        "envName"                          { return CwlTypes.ENV_NAME; }
-        "envValue"                         { return CwlTypes.ENV_VALUE; }
-        "EnvVarRequirement"                { return CwlTypes.ENV_VAR_REQUIREMENT; }
-        {Expression}                       { return CwlTypes.EXPRESSION; }
-        "ExpressionTool"                   { return CwlTypes.EXPRESSION_TOOL; }
-        "File"                             { return CwlTypes.FILE_TYPE; }
-        "float"                            { return CwlTypes.FLOAT_TYPE; }
-        "format"                           { return CwlTypes.FORMAT; }
-        "glob"                             { return CwlTypes.GLOB; }
-        "hints"                            { return CwlTypes.HINTS; }
-        "id"                               { return CwlTypes.ID; }
-        "InitialWorkDirRequirement"        { return CwlTypes.INITIAL_WORKDIR_REQUIREMENT; }
-        "InlineJavascriptRequirement"      { return CwlTypes.INLINE_JAVASCRIPT_REQUIREMENT; }
-        "inputBinding"                     { return CwlTypes.INPUT_BINDING; }
-        "inputs"                           { return CwlTypes.INPUTS_TK; }
-        "int"                              { return CwlTypes.INT_TYPE; }
-        "itemSeparator"                    { return CwlTypes.ITEM_SEPARATOR; }
-        "label"                            { return CwlTypes.LABEL; }
-        "["                                { return CwlTypes.LBRACKET; }
-        "listing"                          { return CwlTypes.LISTING; }
-        "loadContents"                     { return CwlTypes.LOAD_CONTENTS; }
-        "location"                         { return CwlTypes.LOCATION; }
-        "long"                             { return CwlTypes.LONG_TYPE; }
-        "name"                             { return CwlTypes.NAME; }
-        "nameext"                          { return CwlTypes.NAMEEXT; }
-        "nameroot"                         { return CwlTypes.NAMEROOT; }
-        "null"                             { return CwlTypes.NULL_TYPE; }
-        "outdirMax"                        { return CwlTypes.OUTDIR_MAX; }
-        "outdirMin"                        { return CwlTypes.OUTDIR_MIN; }
-        "outputEval"                       { return CwlTypes.OUTPUT_EVAL; }
-        "outputs"                          { return CwlTypes.OUTPUTS; }
-        "package"                          { return CwlTypes.PACKAGE; }
-        "path"                             { return CwlTypes.PATH; }
-        "position"                         { return CwlTypes.POSITION; }
-        "prefix"                           { return CwlTypes.PREFIX; }
-        "ramMax"                           { return CwlTypes.RAM_MAX; }
-        "ramMin"                           { return CwlTypes.RAM_MIN; }
-        "]"                                { return CwlTypes.RBRACKET; }
-        "record"                           { return CwlTypes.RECORD; }
-        "requirements"                     { return CwlTypes.REQUIREMENTS_TK; }
-        "ResourceRequirement"              { return CwlTypes.RESOURCE_REQUIREMENT; }
-        "SchemaDefRequirement"             { return CwlTypes.SCHEMA_DEF_REQUIREMENT; }
-        "secondaryFiles"                   { return CwlTypes.SECONDARY_FILES; }
-        "separate"                         { return CwlTypes.SEPARATE; }
-        "ShellCommandRequirement"          { return CwlTypes.SHELL_COMMAND_REQUIREMENT; }
-        "shellQuote"                       { return CwlTypes.SHELL_QUOTE; }
-        "size"                             { return CwlTypes.SIZE; }
-        "SoftwareRequirement"              { return CwlTypes.SOFTWARE_REQUIREMENT; }
-        "specs"                            { return CwlTypes.SPECS; }
-        "streamable"                       { return CwlTypes.STREAMABLE; }
-        "string"                           { return CwlTypes.STRING_TYPE; }
-        "tmpdirMax"                        { return CwlTypes.TMPDIR_MAX; }
-        "tmpdirMin"                        { return CwlTypes.TMPDIR_MIN; }
-        "type"                             { return CwlTypes.TYPE; }
-        "valueFrom"                        { return CwlTypes.VALUE_FROM; }
-        "v1.0"                             { return CwlTypes.CWL_VERSION_VALUE; }
-        "version"                          { return CwlTypes.VERSION; }
-        "Workflow"                         { return CwlTypes.WORKFLOW; }
-        "writable"                         { return CwlTypes.WRITABLE; }
-        {Identifier}                       { return CwlTypes.IDENTIFIER; }
-        {String}                           { return CwlTypes.STRING;}
+        {Comment}                          { return CwlTokenTypes.END_OF_LINE_COMMENT; }
+        {DecIntegerLiteral}                { return CwlTokenTypes.INT; }
+        "array"                            { return CwlTokenTypes.ARRAY_TYPE_KEYWORD; }
+        "baseCommand"                      { return CwlTokenTypes.BASECOMMAND_KEYWORD; }
+        "basename"                         { return CwlTokenTypes.BASENAME_KEYWORD; }
+        {Boolean}                          { return CwlTokenTypes.BOOLEAN; }
+        "boolean"                          { return CwlTokenTypes.BOOLEAN_TYPE_KEYWORD; }
+        "checksum"                         { return CwlTokenTypes.CHECKSUM_KEYWORD; }
+        "class"                            { return CwlTokenTypes.CLASS_KEYWORD; }
+        ":"                                { return CwlTokenTypes.COLON; }
+        ","                                { return CwlTokenTypes.COMMA; }
+        "CommandLineTool"                  { return CwlTokenTypes.COMMAND_LINE_TOOL_KEYWORD; }
+        "contents"                         { return CwlTokenTypes.CONTENTS_KEYWORD; }
+        "coresMax"                         { return CwlTokenTypes.CORES_MAX_KEYWORD; }
+        "coresMin"                         { return CwlTokenTypes.CORES_MIN_KEYWORD; }
+        "cwlVersion"                       { return CwlTokenTypes.CWL_VERSION; }
+        "default"                          { return CwlTokenTypes.DEFAULT_KEYWORD; }
+        "Directory"                        { return CwlTokenTypes.DIRECTORY_TYPE_KEYWORD; }
+        "dirname"                          { return CwlTokenTypes.DIRNAME_KEYWORD; }
+        "doc"                              { return CwlTokenTypes.DOC_KEYWORD; }
+        "dockerFile"                       { return CwlTokenTypes.DOCKER_FILE_KEYWORD; }
+        "dockerImageId"                    { return CwlTokenTypes.DOCKER_IMAGE_ID_KEYWORD; }
+        "dockerImport"                     { return CwlTokenTypes.DOCKER_IMPORT_KEYWORD; }
+        "dockerLoad"                       { return CwlTokenTypes.DOCKER_LOAD_KEYWORD; }
+        "dockerOutputDirectory"            { return CwlTokenTypes.DOCKER_OUTPUT_DIRECTORY_KEYWORD; }
+        "dockerPull"                       { return CwlTokenTypes.DOCKER_PULL_KEYWORD; }
+        "DockerRequirement"                { return CwlTokenTypes.DOCKER_REQUIREMENT_KEYWORD; }
+        "double"                           { return CwlTokenTypes.DOUBLE_TYPE_KEYWORD; }
+        "entry"                            { return CwlTokenTypes.ENTRY_KEYWORD; }
+        "entryname"                        { return CwlTokenTypes.ENTRYNAME_KEYWORD; }
+        "enum"                             { return CwlTokenTypes.ENUM_TYPE_KEYWORD; }
+        "envDef"                           { return CwlTokenTypes.ENV_DEF_KEYWORD; }
+        "envName"                          { return CwlTokenTypes.ENV_NAME_KEYWORD; }
+        "envValue"                         { return CwlTokenTypes.ENV_VALUE_KEYWORD; }
+        "EnvVarRequirement"                { return CwlTokenTypes.ENV_VAR_REQUIREMENT_KEYWORD; }
+        {Expression}                       { return CwlTokenTypes.EXPRESSION; }
+        "ExpressionTool"                   { return CwlTokenTypes.EXPRESSION_TOOL_KEYWORD; }
+        "File"                             { return CwlTokenTypes.FILE_TYPE_KEYWORD; }
+        "float"                            { return CwlTokenTypes.FLOAT_TYPE_KEYWORD; }
+        "format"                           { return CwlTokenTypes.FORMAT_KEYWORD; }
+        "glob"                             { return CwlTokenTypes.GLOB_KEYWORD; }
+        "hints"                            { return CwlTokenTypes.HINTS_KEYWORD; }
+        "id"                               { return CwlTokenTypes.ID_KEYWORD; }
+        "InitialWorkDirRequirement"        { return CwlTokenTypes.INITIAL_WORKDIR_REQUIREMENT_KEYWORD; }
+        "InlineJavascriptRequirement"      { return CwlTokenTypes.INLINE_JAVASCRIPT_REQUIREMENT_KEYWORD; }
+        "inputBinding"                     { return CwlTokenTypes.INPUT_BINDING_KEYWORD; }
+        "inputs"                           { return CwlTokenTypes.INPUTS_KEYWORD; }
+        "int"                              { return CwlTokenTypes.INT_TYPE_KEYWORD; }
+        "itemSeparator"                    { return CwlTokenTypes.ITEM_SEPARATOR_KEYWORD; }
+        "label"                            { return CwlTokenTypes.LABEL_KEYWORD; }
+        "["                                { return CwlTokenTypes.LBRACKET; }
+        "listing"                          { return CwlTokenTypes.LISTING_KEYWORD; }
+        "loadContents"                     { return CwlTokenTypes.LOAD_CONTENTS_KEYWORD; }
+        "location"                         { return CwlTokenTypes.LOCATION_KEYWORD; }
+        "long"                             { return CwlTokenTypes.LONG_TYPE_KEYWORD; }
+        "name"                             { return CwlTokenTypes.NAME_KEYWORD; }
+        "nameext"                          { return CwlTokenTypes.NAMEEXT_KEYWORD; }
+        "nameroot"                         { return CwlTokenTypes.NAMEROOT_KEYWORD; }
+        "null"                             { return CwlTokenTypes.NULL_TYPE_KEYWORD; }
+        "outdirMax"                        { return CwlTokenTypes.OUTDIR_MAX_KEYWORD; }
+        "outdirMin"                        { return CwlTokenTypes.OUTDIR_MIN_KEYWORD; }
+        "outputEval"                       { return CwlTokenTypes.OUTPUT_EVAL_KEYWORD; }
+        "outputs"                          { return CwlTokenTypes.OUTPUTS_KEYWORD; }
+        "package"                          { return CwlTokenTypes.PACKAGE_KEYWORD; }
+        "path"                             { return CwlTokenTypes.PATH_KEYWORD; }
+        "position"                         { return CwlTokenTypes.POSITION_KEYWORD; }
+        "prefix"                           { return CwlTokenTypes.PREFIX_KEYWORD; }
+        "ramMax"                           { return CwlTokenTypes.RAM_MAX_KEYWORD; }
+        "ramMin"                           { return CwlTokenTypes.RAM_MIN_KEYWORD; }
+        "]"                                { return CwlTokenTypes.RBRACKET; }
+        "record"                           { return CwlTokenTypes.RECORD_KEYWORD; }
+        "requirements"                     { return CwlTokenTypes.REQUIREMENTS_KEYWORD; }
+        "ResourceRequirement"              { return CwlTokenTypes.RESOURCE_REQUIREMENT_KEYWORD; }
+        "SchemaDefRequirement"             { return CwlTokenTypes.SCHEMA_DEF_REQUIREMENT_KEYWORD; }
+        "secondaryFiles"                   { return CwlTokenTypes.SECONDARY_FILES_KEYWORD; }
+        "separate"                         { return CwlTokenTypes.SEPARATE_KEYWORD; }
+        "ShellCommandRequirement"          { return CwlTokenTypes.SHELL_COMMAND_REQUIREMENT_KEYWORD; }
+        "shellQuote"                       { return CwlTokenTypes.SHELL_QUOTE_KEYWORD; }
+        "size"                             { return CwlTokenTypes.SIZE_KEYWORD; }
+        "SoftwareRequirement"              { return CwlTokenTypes.SOFTWARE_REQUIREMENT_KEYWORD; }
+        "specs"                            { return CwlTokenTypes.SPECS_KEYWORD; }
+        "streamable"                       { return CwlTokenTypes.STREAMABLE_KEYWORD; }
+        "string"                           { return CwlTokenTypes.STRING_TYPE_KEYWORD; }
+        "tmpdirMax"                        { return CwlTokenTypes.TMPDIR_MAX_KEYWORD; }
+        "tmpdirMin"                        { return CwlTokenTypes.TMPDIR_MIN_KEYWORD; }
+        "type"                             { return CwlTokenTypes.TYPE_KEYWORD; }
+        "valueFrom"                        { return CwlTokenTypes.VALUE_FROM_KEYWORD; }
+        "v1.0"                             { return CwlTokenTypes.CWL_VERSION_VALUE; }
+        "version"                          { return CwlTokenTypes.VERSION_KEYWORD; }
+        "Workflow"                         { return CwlTokenTypes.WORKFLOW_KEYWORD; }
+        "writable"                         { return CwlTokenTypes.WRITABLE_KEYWORD; }
+//        {Identifier}                       { return CwlTokenTypes.IDENTIFIER; }
+//        {String}                           { return CwlTokenTypes.STRING;}
     }
     .                                      { return TokenType.BAD_CHARACTER;}

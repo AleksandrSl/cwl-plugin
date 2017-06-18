@@ -53,7 +53,7 @@ open class Parsing(val parsingContext: ParsingContext) {
         return myBuilder.tokenType === tokenType && tokenText == myBuilder.tokenText
     }
 
-    protected fun atAnyOfTokens(vararg tokenTypes: IElementType): Boolean {
+    protected fun atAnyOfTokens(vararg tokenTypes: IElementType?): Boolean {
         val currentTokenType = myBuilder.tokenType
         return tokenTypes.any { currentTokenType === it }
     }
