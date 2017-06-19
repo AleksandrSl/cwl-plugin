@@ -1,21 +1,10 @@
 package com.cwlplugin
 
- import com.cwlplugin.psi.CwlCommandInputParameter
- import com.cwlplugin.psi.CwlFile
-import com.intellij.openapi.fileTypes.FileType
-import com.intellij.openapi.project.Project
-import com.intellij.psi.util.PsiTreeUtil
-import com.intellij.psi.PsiManager
-import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.psi.search.GlobalSearchScope
-import com.intellij.psi.search.FileTypeIndex
-import com.intellij.util.indexing.FileBasedIndex
-
 
 /**
  * Created by aleksandrsl on 08.05.17.
  */
-//object CwlUtil {
+object CwlUtil {
 //
 //    fun findCommandInputParameters(project: Project, identifier: String): List<CwlCommandInputParameter> {
 //
@@ -42,4 +31,5 @@ import com.intellij.util.indexing.FileBasedIndex
 //
 //        return result
 //    }
-//}
+
+}

@@ -2,14 +2,13 @@ package com.cwlplugin.highlighter
 
 import com.cwlplugin.lexer.CwlLexerAdapter
 import com.cwlplugin.lexer.CwlLexerTypes
-import com.cwlplugin.psi.CwlTypes
+import com.cwlplugin.parser.CwlTokenTypes
 import com.intellij.lexer.Lexer
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
 import com.intellij.openapi.editor.HighlighterColors
 import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase
-import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IElementType
 
 
@@ -55,12 +54,12 @@ class CwlSyntaxHighlighter: SyntaxHighlighterBase() {
       when (tokenType) {
 
           com.intellij.psi.TokenType.BAD_CHARACTER -> return BAD_CHAR_KEYS
-          CwlTypes.REQUIREMENTS_TK -> return REQUIREMENTS_KEYS
-          CwlTypes.INPUTS_TK -> return INPUTS_KEYS
-          CwlTypes.OUTPUTS_TK -> return OUTPUTS_KEYS
-          CwlTypes.DOC_TK -> return DOC_KEYS
+          CwlTokenTypes.REQUIREMENTS_KEYWORD -> return REQUIREMENTS_KEYS
+          CwlTokenTypes.INPUTS_KEYWORD -> return INPUTS_KEYS
+          CwlTokenTypes.OUTPUTS_KEYWORD -> return OUTPUTS_KEYS
+          CwlTokenTypes.DOC_KEYWORD -> return DOC_KEYS
           CwlLexerTypes.COMMENT -> return COMMENT_KEYS
-          CwlTypes.COLON_TK -> return SEPARATOR_KEYS
+          CwlTokenTypes.COLON -> return SEPARATOR_KEYS
           else -> return EMPTY_KEYS
       }
   }
