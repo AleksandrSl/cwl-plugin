@@ -15,21 +15,20 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
 
     fun parseCommandLineTool(): Boolean {
         while (!myBuilder.eof()) {
-            if (!parseCommanLineToolField()) {
+            if (!parseCommandLineToolField()) {
                 return false
             }
         }
         return true
     }
 
-    fun parseCommanLineToolField(): Boolean {
+    fun parseCommandLineToolField(): Boolean {
 
         val firstToken = myBuilder.tokenType ?: return false
         with(CwlTokenTypes) {
             when (firstToken) {
                 REQUIREMENTS_KEYWORD -> {
                     requirementsParser.parseRequirementsBlock()
-
                 }
                 CWL_VERSION -> parseSimpleStatement(CWL_VERSION_VALUE, CwlElementTypes.VERSION)
                 INPUTS_KEYWORD -> {
@@ -76,8 +75,12 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
                 PERMANENT_FAIL_CODES_KEYWORD -> {
                     parseSimpleStatement(STRING, CwlElementTypes.PERMANENT_FAIL_CODES)
                 } // TODO
+//                INDENT -> {
+//                    myBuilder.error("Unexpected indent")
+//                }
                 else -> {
-                    reportParseStatementError(myBuilder, firstToken); return false
+//                    reportParseStatementError(myBuilder, firstToken);
+                    return false
                 }
             }
         }
@@ -85,31 +88,30 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
     }
 
     fun parseInputs(): Boolean {
-        parseColonAndIndentedBlock(CwlElementTypes.INPUTS, this::parseCommandInputParameters)
+        parseColonAndIndentedBlock(CwlElementTypes.INPUTS, parseIndentedBlock = this::parseCommandInputParameters)
         return true
     }
 
     fun parseCommandInputParameters() {
-        parseIndentedBlock(CwlElementTypes.COMMAND_INPUT_PARAMETER, this::parseCommandInputParameter)
+        parseIndentedBlock(CwlElementTypes.COMMAND_INPUT_PARAMETER, parseStatement = this::parseCommandInputParameter)
     }
 
     fun parseCommandInputParameter(): Boolean {
         if (myBuilder.tokenType == CwlTokenTypes.STRING) {
             parseColonAndIndentedBlock(CwlElementTypes.COMMAND_INPUT_PARAMETER,
-                    this::parseCommandInputParameterFields)
+                    parseIndentedBlock = this::parseCommandInputParameterFields)
             return true
         }
         return false
     }
 
     fun parseCommandInputParameterFields() {
-        parseIndentedBlock(CwlElementTypes.COMMAND_INPUT_PARAMETER, this::parseCommandInputParameterField)
+        parseIndentedBlock(CwlElementTypes.COMMAND_INPUT_PARAMETER, parseStatement = this::parseCommandInputParameterField)
     }
 
     fun parseCommandInputParameterField(): Boolean {
-        val firstToken = myBuilder.tokenType
-        if (firstToken != null) {
-            with(CwlTokenTypes) {
+        val firstToken = myBuilder.tokenType ?: return false
+        with(CwlTokenTypes) {
                 when (firstToken) {
                     DEFAULT_KEYWORD -> {
                         parseSimpleStatement(STRING, CwlElementTypes.DEFAULT)
@@ -124,6 +126,7 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
                         parseSimpleStatement(STRING, CwlElementTypes.ID)
                     } // TODO
                     INPUT_BINDING_KEYWORD -> {
+                        parseInputBinding()
                     } // TODO
                     LABEL_KEYWORD -> {
                         parseSimpleStatement(STRING, CwlElementTypes.LABEL)
@@ -142,7 +145,7 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
                     }
                 }
             }
-        }
+
         return true
     }
 

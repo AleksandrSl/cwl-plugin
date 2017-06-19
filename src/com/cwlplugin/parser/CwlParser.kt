@@ -26,7 +26,6 @@ class CwlParser : PsiParser{
         commandLineToolparser.parseCommandLineTool()
 //        requirementsParser.parsePrimaryRequirements()
         while (!builder.eof()) {
-
             builder.advanceLexer()
 //            context.pushScope(context.emptyParsingScope())
 //            if (lastAfterSemicolon) {

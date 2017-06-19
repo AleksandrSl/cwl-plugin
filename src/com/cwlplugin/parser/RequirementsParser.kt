@@ -15,26 +15,6 @@ class RequirementsParser(context: ParsingContext) : Parsing(context) {
 
     private val LOG = Logger.getInstance(RequirementsParser::class.java.name)
 
-
-    fun parsePrimaryRequirements(): Boolean {
-        val firstToken: IElementType? = myBuilder.tokenType
-        if (firstToken != null) {
-            with(CwlTokenTypes) {
-                when (firstToken) {
-                    REQUIREMENTS_KEYWORD -> {
-//                        buildTokenElement(CwlElementTypes.TARGET_REQUIREMENTS_BLOCK, myBuilder)
-                        parseRequirementsBlock()
-                        return true
-                    }
-                    else -> {
-                        reportParseStatementError(myBuilder, firstToken); return false
-                    }
-                }
-            }
-        }
-        return false
-    }
-
     /**
      * Parse all requirements statements and trailing COLON after requirements keyword
      */
@@ -47,10 +27,8 @@ class RequirementsParser(context: ParsingContext) : Parsing(context) {
         requirementsBlock.done(CwlElementTypes.REQUIREMENTS_BLOCK)
     }
 
-
-
     fun parseRequirementsList(): Unit {
-        return parseIndentedBlock(CwlElementTypes.REQUIREMENT_LIST, this::parseRequirement)
+        parseIndentedBlock(CwlElementTypes.REQUIREMENT_LIST, parseStatement = this::parseRequirement)
     }
 
     /**

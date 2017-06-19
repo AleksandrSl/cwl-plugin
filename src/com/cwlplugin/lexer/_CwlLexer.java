@@ -1007,12 +1007,6 @@ class _CwlLexer implements FlexLexer {
   /** denotes if the user-EOF-code has already been executed */
   private boolean zzEOFDone;
 
-  /* user code: */
-  public _CwlLexer() {
-    this((java.io.Reader)null);
-  }
-
-
   /**
    * Creates a new scanner
    *

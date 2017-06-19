@@ -110,12 +110,16 @@ open class Parsing(val parsingContext: ParsingContext) {
     }
 
     fun reportParseStatementError(builder: PsiBuilder, firstToken: IElementType) {
-        if (firstToken === CwlTokenTypes.INCONSISTENT_DEDENT) {
-            builder.error("Unindent does not match any outer indentation level")
-        } else if (firstToken === CwlTokenTypes.INDENT) {
-            builder.error("Unexpected indent")
-        } else {
-            builder.error("Statement expected, found " + firstToken.toString())
+        when(firstToken) {
+            CwlTokenTypes.INCONSISTENT_DEDENT -> {
+                builder.error("Unindent does not match any outer indentation level")
+            }
+            CwlTokenTypes.INDENT -> {
+                builder.error("Unexpected indent")
+            }
+            else -> {
+                builder.error("Statement expected, found " + firstToken.toString())
+            }
         }
     }
 }
