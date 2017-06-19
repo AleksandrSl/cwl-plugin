@@ -32,4 +32,16 @@ public class CwlDirentArrayImpl extends ASTWrapperPsiElement implements CwlDiren
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CwlDirent.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getLbracketTk() {
+    return findNotNullChildByType(LBRACKET_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getRbracketTk() {
+    return findNotNullChildByType(RBRACKET_TK);
+  }
+
 }

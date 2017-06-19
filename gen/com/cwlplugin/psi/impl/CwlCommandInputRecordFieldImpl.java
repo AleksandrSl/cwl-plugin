@@ -33,9 +33,51 @@ public class CwlCommandInputRecordFieldImpl extends ASTWrapperPsiElement impleme
   }
 
   @Override
-  @NotNull
-  public List<CwlCommandLineBindingField> getCommandLineBindingFieldList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, CwlCommandLineBindingField.class);
+  @Nullable
+  public CwlInputBinding getInputBinding() {
+    return findChildByClass(CwlInputBinding.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlLabel getLabel() {
+    return findChildByClass(CwlLabel.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getColonTk() {
+    return findChildByType(COLON_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getDocTk() {
+    return findChildByType(DOC_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getLbracketTk() {
+    return findChildByType(LBRACKET_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getNameTk() {
+    return findChildByType(NAME_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getRbracketTk() {
+    return findChildByType(RBRACKET_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getStringTk() {
+    return findChildByType(STRING_TK);
   }
 
 }

@@ -32,4 +32,16 @@ public class CwlCwlTypeArrayImpl extends ASTWrapperPsiElement implements CwlCwlT
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CwlCwlType.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getLbracketTk() {
+    return findNotNullChildByType(LBRACKET_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getRbracketTk() {
+    return findNotNullChildByType(RBRACKET_TK);
+  }
+
 }

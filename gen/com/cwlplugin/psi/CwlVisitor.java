@@ -7,6 +7,14 @@ import com.intellij.psi.PsiElement;
 
 public class CwlVisitor extends PsiElementVisitor {
 
+  public void visitArguments(@NotNull CwlArguments o) {
+    visitPsiElement(o);
+  }
+
+  public void visitBaseCommand(@NotNull CwlBaseCommand o) {
+    visitPsiElement(o);
+  }
+
   public void visitCommandInputArrayItems(@NotNull CwlCommandInputArrayItems o) {
     visitPsiElement(o);
   }
@@ -52,6 +60,14 @@ public class CwlVisitor extends PsiElementVisitor {
   }
 
   public void visitCommandLineBindingField(@NotNull CwlCommandLineBindingField o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCommandLineTool(@NotNull CwlCommandLineTool o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCommandLineToolClass(@NotNull CwlCommandLineToolClass o) {
     visitPsiElement(o);
   }
 
@@ -143,6 +159,22 @@ public class CwlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDockerPull(@NotNull CwlDockerPull o) {
+    visitPsiElement(o);
+  }
+
+  public void visitDockerRequirement(@NotNull CwlDockerRequirement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitDockerRequirementField(@NotNull CwlDockerRequirementField o) {
+    visitPsiElement(o);
+  }
+
+  public void visitEnvVarRequirement(@NotNull CwlEnvVarRequirement o) {
+    visitPsiElement(o);
+  }
+
   public void visitFile_(@NotNull CwlFile_ o) {
     visitPsiElement(o);
   }
@@ -155,7 +187,19 @@ public class CwlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitHints(@NotNull CwlHints o) {
+    visitPsiElement(o);
+  }
+
   public void visitInitialWorkdirListing(@NotNull CwlInitialWorkdirListing o) {
+    visitPsiElement(o);
+  }
+
+  public void visitInitialWorkdirRequirement(@NotNull CwlInitialWorkdirRequirement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitInputBinding(@NotNull CwlInputBinding o) {
     visitPsiElement(o);
   }
 
@@ -167,11 +211,23 @@ public class CwlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitLabel(@NotNull CwlLabel o) {
+    visitPsiElement(o);
+  }
+
   public void visitOutputBinding(@NotNull CwlOutputBinding o) {
     visitPsiElement(o);
   }
 
+  public void visitOutputs(@NotNull CwlOutputs o) {
+    visitPsiElement(o);
+  }
+
   public void visitPackages(@NotNull CwlPackages o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPermanentFailCodes(@NotNull CwlPermanentFailCodes o) {
     visitPsiElement(o);
   }
 
@@ -187,7 +243,23 @@ public class CwlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitResourceRequirement(@NotNull CwlResourceRequirement o) {
+    visitPsiElement(o);
+  }
+
   public void visitResourceRequirementField(@NotNull CwlResourceRequirementField o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSchemaDefRequirement(@NotNull CwlSchemaDefRequirement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSecondaryFiles(@NotNull CwlSecondaryFiles o) {
+    visitPsiElement(o);
+  }
+
+  public void visitShellCommandRequirement(@NotNull CwlShellCommandRequirement o) {
     visitPsiElement(o);
   }
 
@@ -199,7 +271,43 @@ public class CwlVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitSoftwareRequirement(@NotNull CwlSoftwareRequirement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStderr(@NotNull CwlStderr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStdin(@NotNull CwlStdin o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStdout(@NotNull CwlStdout o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStreamable(@NotNull CwlStreamable o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSuccessCodes(@NotNull CwlSuccessCodes o) {
+    visitPsiElement(o);
+  }
+
   public void visitSymbols(@NotNull CwlSymbols o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTemporaryFailCodes(@NotNull CwlTemporaryFailCodes o) {
+    visitPsiElement(o);
+  }
+
+  public void visitToolDescription(@NotNull CwlToolDescription o) {
+    visitPsiElement(o);
+  }
+
+  public void visitType(@NotNull CwlType o) {
     visitPsiElement(o);
   }
 

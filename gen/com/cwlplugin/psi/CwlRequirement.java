@@ -8,12 +8,33 @@ import com.intellij.psi.PsiElement;
 public interface CwlRequirement extends PsiElement {
 
   @Nullable
-  CwlInitialWorkdirListing getInitialWorkdirListing();
+  CwlDockerRequirement getDockerRequirement();
 
   @Nullable
-  CwlPackages getPackages();
+  CwlEnvVarRequirement getEnvVarRequirement();
 
-  @NotNull
-  List<CwlResourceRequirementField> getResourceRequirementFieldList();
+  @Nullable
+  CwlInitialWorkdirRequirement getInitialWorkdirRequirement();
+
+  @Nullable
+  CwlResourceRequirement getResourceRequirement();
+
+  @Nullable
+  CwlSchemaDefRequirement getSchemaDefRequirement();
+
+  @Nullable
+  CwlShellCommandRequirement getShellCommandRequirement();
+
+  @Nullable
+  CwlSoftwareRequirement getSoftwareRequirement();
+
+  @Nullable
+  PsiElement getClassTk();
+
+  @Nullable
+  PsiElement getColonTk();
+
+  @Nullable
+  PsiElement getInlineJavascriptRequirementTk();
 
 }

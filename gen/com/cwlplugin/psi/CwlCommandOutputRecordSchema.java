@@ -11,6 +11,9 @@ public interface CwlCommandOutputRecordSchema extends PsiElement {
   CwlCommandOutputRecordFields getCommandOutputRecordFields();
 
   @Nullable
+  CwlLabel getLabel();
+
+  @Nullable
   CwlRecordType getRecordType();
 
 }

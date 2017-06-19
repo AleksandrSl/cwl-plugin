@@ -7,4 +7,25 @@ import com.intellij.psi.PsiElement;
 
 public interface CwlDirent extends PsiElement {
 
+  @Nullable
+  PsiElement getBooleanTk();
+
+  @NotNull
+  PsiElement getColonTk();
+
+  @Nullable
+  PsiElement getEntrynameTk();
+
+  @Nullable
+  PsiElement getEntryTk();
+
+  @Nullable
+  PsiElement getExpressionTk();
+
+  @Nullable
+  PsiElement getStringTk();
+
+  @Nullable
+  PsiElement getWritableTk();
+
 }

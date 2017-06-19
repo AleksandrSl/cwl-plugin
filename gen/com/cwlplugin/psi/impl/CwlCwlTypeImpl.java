@@ -26,4 +26,58 @@ public class CwlCwlTypeImpl extends ASTWrapperPsiElement implements CwlCwlType {
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getBooleanTypeTk() {
+    return findChildByType(BOOLEAN_TYPE_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getDirectoryTypeTk() {
+    return findChildByType(DIRECTORY_TYPE_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getDoubleTypeTk() {
+    return findChildByType(DOUBLE_TYPE_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getFileTypeTk() {
+    return findChildByType(FILE_TYPE_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getFloatTypeTk() {
+    return findChildByType(FLOAT_TYPE_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getIntTypeTk() {
+    return findChildByType(INT_TYPE_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getLongTypeTk() {
+    return findChildByType(LONG_TYPE_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getNullTypeTk() {
+    return findChildByType(NULL_TYPE_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getStringTypeTk() {
+    return findChildByType(STRING_TYPE_TK);
+  }
+
 }

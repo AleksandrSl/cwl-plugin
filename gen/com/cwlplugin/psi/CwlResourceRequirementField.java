@@ -7,7 +7,40 @@ import com.intellij.psi.PsiElement;
 
 public interface CwlResourceRequirementField extends PsiElement {
 
+  @NotNull
+  PsiElement getColonTk();
+
   @Nullable
-  PsiElement getNumber();
+  PsiElement getCoresMaxTk();
+
+  @Nullable
+  PsiElement getCoresMinTk();
+
+  @Nullable
+  PsiElement getExpressionTk();
+
+  @Nullable
+  PsiElement getNumberTk();
+
+  @Nullable
+  PsiElement getOutdirMaxTk();
+
+  @Nullable
+  PsiElement getOutdirMinTk();
+
+  @Nullable
+  PsiElement getRamMaxTk();
+
+  @Nullable
+  PsiElement getRamMinTk();
+
+  @Nullable
+  PsiElement getStringTk();
+
+  @Nullable
+  PsiElement getTmpdirMaxTk();
+
+  @Nullable
+  PsiElement getTmpdirMinTk();
 
 }

@@ -14,6 +14,54 @@ public interface CwlFileField extends PsiElement {
   CwlFileArray getFileArray();
 
   @Nullable
-  PsiElement getNumber();
+  PsiElement getBasenameTk();
+
+  @Nullable
+  PsiElement getChecksumTk();
+
+  @NotNull
+  PsiElement getColonTk();
+
+  @Nullable
+  PsiElement getContentsTk();
+
+  @Nullable
+  PsiElement getDirnameTk();
+
+  @Nullable
+  PsiElement getExpressionTk();
+
+  @Nullable
+  PsiElement getFormatTk();
+
+  @Nullable
+  PsiElement getLbracketTk();
+
+  @Nullable
+  PsiElement getLocationTk();
+
+  @Nullable
+  PsiElement getNameextTk();
+
+  @Nullable
+  PsiElement getNamerootTk();
+
+  @Nullable
+  PsiElement getNumberTk();
+
+  @Nullable
+  PsiElement getPathTk();
+
+  @Nullable
+  PsiElement getRbracketTk();
+
+  @Nullable
+  PsiElement getSecondaryFilesTk();
+
+  @Nullable
+  PsiElement getSizeTk();
+
+  @Nullable
+  PsiElement getStringTk();
 
 }

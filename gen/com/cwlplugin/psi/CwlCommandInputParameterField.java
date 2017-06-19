@@ -7,7 +7,46 @@ import com.intellij.psi.PsiElement;
 
 public interface CwlCommandInputParameterField extends PsiElement {
 
-  @NotNull
-  List<CwlCommandLineBindingField> getCommandLineBindingFieldList();
+  @Nullable
+  CwlInputBinding getInputBinding();
+
+  @Nullable
+  CwlLabel getLabel();
+
+  @Nullable
+  CwlSecondaryFiles getSecondaryFiles();
+
+  @Nullable
+  CwlStreamable getStreamable();
+
+  @Nullable
+  CwlType getType();
+
+  @Nullable
+  PsiElement getColonTk();
+
+  @Nullable
+  PsiElement getDefaultTk();
+
+  @Nullable
+  PsiElement getDocTk();
+
+  @Nullable
+  PsiElement getExpressionTk();
+
+  @Nullable
+  PsiElement getFormatTk();
+
+  @Nullable
+  PsiElement getIdTk();
+
+  @Nullable
+  PsiElement getLbracketTk();
+
+  @Nullable
+  PsiElement getRbracketTk();
+
+  @Nullable
+  PsiElement getStringTk();
 
 }

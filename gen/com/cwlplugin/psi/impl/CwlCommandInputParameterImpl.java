@@ -32,4 +32,16 @@ public class CwlCommandInputParameterImpl extends ASTWrapperPsiElement implement
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CwlCommandInputParameterField.class);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getIdentifierTk() {
+    return findNotNullChildByType(IDENTIFIER_TK);
+  }
+
 }

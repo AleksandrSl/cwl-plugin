@@ -28,8 +28,74 @@ public class CwlCommandLineBindingFieldImpl extends ASTWrapperPsiElement impleme
 
   @Override
   @Nullable
-  public PsiElement getInt() {
-    return findChildByType(INT);
+  public PsiElement getBooleanTk() {
+    return findChildByType(BOOLEAN_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getExpressionTk() {
+    return findChildByType(EXPRESSION_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getIntTk() {
+    return findChildByType(INT_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getItemSeparatorTk() {
+    return findChildByType(ITEM_SEPARATOR_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getLoadContentsTk() {
+    return findChildByType(LOAD_CONTENTS_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getPositionTk() {
+    return findChildByType(POSITION_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getPrefixTk() {
+    return findChildByType(PREFIX_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getSeparateTk() {
+    return findChildByType(SEPARATE_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getShellQuoteTk() {
+    return findChildByType(SHELL_QUOTE_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getStringTk() {
+    return findChildByType(STRING_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getValueFromTk() {
+    return findChildByType(VALUE_FROM_TK);
   }
 
 }

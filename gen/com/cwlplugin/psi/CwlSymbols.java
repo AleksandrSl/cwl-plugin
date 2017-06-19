@@ -7,4 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface CwlSymbols extends PsiElement {
 
+  @NotNull
+  PsiElement getLbracketTk();
+
+  @NotNull
+  PsiElement getRbracketTk();
+
 }

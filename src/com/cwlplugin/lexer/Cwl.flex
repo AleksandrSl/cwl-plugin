@@ -41,7 +41,7 @@ notation “s-indent(<n)” and “s-indent(≤n)” to express this.
 // Whitespaces
 LineTerminator = \r|\n|\r\n
 InputCharacter = [^\r\n]
-WhiteSpace = [ \t\f\n\r]+
+WhiteSpace = [ \t\f\n\r]
 // Comment
 Comment = {EndOfLineComment}
 // Comment can be the last line of the file, without line terminator
@@ -49,7 +49,7 @@ EndOfLineComment = "#"{InputCharacter}*
 // Put constrains on identifier myself. I don't see meaning in identifiers like "*&&****&" or uyutut&&&%
 Identifier = [:jletter:] [:jletterdigit:]*
 DecIntegerLiteral = 0 | [1-9][0-9]*
-SimpleString = \" [^\r\n]* \"
+SimpleString = \" [^\"\r\n]* \"
 BareString = [^\n\r\(: \)]+
 String = {BareString} | {SimpleString}
 Expression = \$\(.*\) | \$\{.*\}
@@ -57,7 +57,6 @@ Expression = \$\(.*\) | \$\{.*\}
 Boolean = True | False
 
 %state STRING
-
 %%
 
 

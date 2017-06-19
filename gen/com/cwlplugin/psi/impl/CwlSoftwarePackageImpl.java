@@ -26,4 +26,40 @@ public class CwlSoftwarePackageImpl extends ASTWrapperPsiElement implements CwlS
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getLbracketTk() {
+    return findChildByType(LBRACKET_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getPackageTk() {
+    return findChildByType(PACKAGE_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getRbracketTk() {
+    return findChildByType(RBRACKET_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getSpecsTk() {
+    return findChildByType(SPECS_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getVersionTk() {
+    return findChildByType(VERSION_TK);
+  }
+
 }

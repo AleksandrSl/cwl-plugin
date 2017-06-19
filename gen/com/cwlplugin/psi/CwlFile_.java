@@ -10,4 +10,13 @@ public interface CwlFile_ extends PsiElement {
   @NotNull
   List<CwlFileField> getFileFieldList();
 
+  @NotNull
+  PsiElement getClassTk();
+
+  @NotNull
+  PsiElement getColonTk();
+
+  @NotNull
+  PsiElement getFileType();
+
 }

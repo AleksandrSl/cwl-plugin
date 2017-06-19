@@ -28,6 +28,12 @@ public class CwlCommandOutputEnumSchemaImpl extends ASTWrapperPsiElement impleme
 
   @Override
   @Nullable
+  public CwlLabel getLabel() {
+    return findChildByClass(CwlLabel.class);
+  }
+
+  @Override
+  @Nullable
   public CwlOutputBinding getOutputBinding() {
     return findChildByClass(CwlOutputBinding.class);
   }
@@ -36,6 +42,24 @@ public class CwlCommandOutputEnumSchemaImpl extends ASTWrapperPsiElement impleme
   @Nullable
   public CwlSymbols getSymbols() {
     return findChildByClass(CwlSymbols.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getColonTk() {
+    return findChildByType(COLON_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getEnumType() {
+    return findChildByType(ENUM_TYPE);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getTypeTk() {
+    return findChildByType(TYPE_TK);
   }
 
 }

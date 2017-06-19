@@ -74,4 +74,22 @@ public class CwlCommandOutputRecordFieldTypeImpl extends ASTWrapperPsiElement im
     return findChildByClass(CwlCwlTypeArray.class);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getLbracketTk() {
+    return findChildByType(LBRACKET_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getRbracketTk() {
+    return findChildByType(RBRACKET_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getStringTk() {
+    return findChildByType(STRING_TK);
+  }
+
 }

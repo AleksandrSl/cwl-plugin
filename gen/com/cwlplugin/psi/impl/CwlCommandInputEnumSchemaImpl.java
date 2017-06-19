@@ -27,15 +27,39 @@ public class CwlCommandInputEnumSchemaImpl extends ASTWrapperPsiElement implemen
   }
 
   @Override
-  @NotNull
-  public List<CwlCommandLineBindingField> getCommandLineBindingFieldList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, CwlCommandLineBindingField.class);
+  @Nullable
+  public CwlInputBinding getInputBinding() {
+    return findChildByClass(CwlInputBinding.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlLabel getLabel() {
+    return findChildByClass(CwlLabel.class);
   }
 
   @Override
   @Nullable
   public CwlSymbols getSymbols() {
     return findChildByClass(CwlSymbols.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getColonTk() {
+    return findChildByType(COLON_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getEnumType() {
+    return findChildByType(ENUM_TYPE);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getTypeTk() {
+    return findChildByType(TYPE_TK);
   }
 
 }

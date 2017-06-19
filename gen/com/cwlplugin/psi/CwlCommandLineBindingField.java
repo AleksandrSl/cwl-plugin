@@ -8,6 +8,39 @@ import com.intellij.psi.PsiElement;
 public interface CwlCommandLineBindingField extends PsiElement {
 
   @Nullable
-  PsiElement getInt();
+  PsiElement getBooleanTk();
+
+  @NotNull
+  PsiElement getColonTk();
+
+  @Nullable
+  PsiElement getExpressionTk();
+
+  @Nullable
+  PsiElement getIntTk();
+
+  @Nullable
+  PsiElement getItemSeparatorTk();
+
+  @Nullable
+  PsiElement getLoadContentsTk();
+
+  @Nullable
+  PsiElement getPositionTk();
+
+  @Nullable
+  PsiElement getPrefixTk();
+
+  @Nullable
+  PsiElement getSeparateTk();
+
+  @Nullable
+  PsiElement getShellQuoteTk();
+
+  @Nullable
+  PsiElement getStringTk();
+
+  @Nullable
+  PsiElement getValueFromTk();
 
 }

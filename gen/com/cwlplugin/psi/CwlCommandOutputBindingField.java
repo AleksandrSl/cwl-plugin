@@ -7,4 +7,31 @@ import com.intellij.psi.PsiElement;
 
 public interface CwlCommandOutputBindingField extends PsiElement {
 
+  @Nullable
+  PsiElement getBooleanTk();
+
+  @NotNull
+  PsiElement getColonTk();
+
+  @Nullable
+  PsiElement getExpressionTk();
+
+  @Nullable
+  PsiElement getGlobTk();
+
+  @Nullable
+  PsiElement getLbracketTk();
+
+  @Nullable
+  PsiElement getLoadContentsTk();
+
+  @Nullable
+  PsiElement getOutputEvalTk();
+
+  @Nullable
+  PsiElement getRbracketTk();
+
+  @Nullable
+  PsiElement getStringTk();
+
 }

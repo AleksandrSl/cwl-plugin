@@ -7,4 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface CwlIntArray extends PsiElement {
 
+  @NotNull
+  PsiElement getLbracketTk();
+
+  @NotNull
+  PsiElement getRbracketTk();
+
 }

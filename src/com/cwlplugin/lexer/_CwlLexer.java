@@ -61,6 +61,7 @@ class _CwlLexer implements FlexLexer {
     "\1\35\1\33\1\56\1\62\1\21\1\27\1\45\1\22\1\63\1\50\1\47\1\30\1\75\1\16\1\0"+
     "\1\17\7\0\1\13\242\0\2\13\26\0");
 
+
   /** 
    * Translates DFA states to action switch labels.
    */
@@ -197,6 +198,7 @@ class _CwlLexer implements FlexLexer {
 
   private static int [] zzUnpackRowMap() {
     int [] result = new int[624];
+
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -378,6 +380,7 @@ class _CwlLexer implements FlexLexer {
 
   private static int [] zzUnpackTrans() {
     int [] result = new int[34048];
+
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -760,6 +763,7 @@ class _CwlLexer implements FlexLexer {
             { return TokenType.BAD_CHARACTER;
             }
           case 97: break;
+
           case 2: 
             { return CwlTokenTypes.LINE_BREAK;
             }
@@ -776,6 +780,7 @@ class _CwlLexer implements FlexLexer {
             { return CwlTokenTypes.INT;
             }
           case 101: break;
+
           case 6: 
             { return CwlTokenTypes.COLON;
             }
@@ -1140,6 +1145,7 @@ class _CwlLexer implements FlexLexer {
             { return CwlTokenTypes.INLINE_JAVASCRIPT_REQUIREMENT_KEYWORD;
             }
           case 192: break;
+
           default:
             zzScanError(ZZ_NO_MATCH);
           }

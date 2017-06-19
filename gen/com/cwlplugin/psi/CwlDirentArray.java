@@ -10,4 +10,10 @@ public interface CwlDirentArray extends PsiElement {
   @NotNull
   List<CwlDirent> getDirentList();
 
+  @NotNull
+  PsiElement getLbracketTk();
+
+  @NotNull
+  PsiElement getRbracketTk();
+
 }

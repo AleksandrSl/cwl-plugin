@@ -26,4 +26,46 @@ public class CwlDirentImpl extends ASTWrapperPsiElement implements CwlDirent {
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getBooleanTk() {
+    return findChildByType(BOOLEAN_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getEntrynameTk() {
+    return findChildByType(ENTRYNAME_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getEntryTk() {
+    return findChildByType(ENTRY_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getExpressionTk() {
+    return findChildByType(EXPRESSION_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getStringTk() {
+    return findChildByType(STRING_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getWritableTk() {
+    return findChildByType(WRITABLE_TK);
+  }
+
 }

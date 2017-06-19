@@ -27,9 +27,75 @@ public class CwlResourceRequirementFieldImpl extends ASTWrapperPsiElement implem
   }
 
   @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
   @Nullable
-  public PsiElement getNumber() {
-    return findChildByType(NUMBER);
+  public PsiElement getCoresMaxTk() {
+    return findChildByType(CORES_MAX_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getCoresMinTk() {
+    return findChildByType(CORES_MIN_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getExpressionTk() {
+    return findChildByType(EXPRESSION_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getNumberTk() {
+    return findChildByType(NUMBER_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getOutdirMaxTk() {
+    return findChildByType(OUTDIR_MAX_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getOutdirMinTk() {
+    return findChildByType(OUTDIR_MIN_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getRamMaxTk() {
+    return findChildByType(RAM_MAX_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getRamMinTk() {
+    return findChildByType(RAM_MIN_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getStringTk() {
+    return findChildByType(STRING_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getTmpdirMaxTk() {
+    return findChildByType(TMPDIR_MAX_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getTmpdirMinTk() {
+    return findChildByType(TMPDIR_MIN_TK);
   }
 
 }

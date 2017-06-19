@@ -7,4 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface CwlCommandInputRecordSchemaArray extends PsiElement {
 
+  @NotNull
+  PsiElement getLbracketTk();
+
+  @NotNull
+  PsiElement getRbracketTk();
+
 }

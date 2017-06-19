@@ -38,4 +38,40 @@ public class CwlDirectoryFieldImpl extends ASTWrapperPsiElement implements CwlDi
     return findChildByClass(CwlFileArray.class);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getBasenameTk() {
+    return findChildByType(BASENAME_TK);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getColonTk() {
+    return findNotNullChildByType(COLON_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getListingTk() {
+    return findChildByType(LISTING_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getLocationTk() {
+    return findChildByType(LOCATION_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getPathTk() {
+    return findChildByType(PATH_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getStringTk() {
+    return findChildByType(STRING_TK);
+  }
+
 }

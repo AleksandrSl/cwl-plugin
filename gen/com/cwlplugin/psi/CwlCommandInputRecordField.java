@@ -10,7 +10,28 @@ public interface CwlCommandInputRecordField extends PsiElement {
   @Nullable
   CwlCommandInputRecordFieldType getCommandInputRecordFieldType();
 
-  @NotNull
-  List<CwlCommandLineBindingField> getCommandLineBindingFieldList();
+  @Nullable
+  CwlInputBinding getInputBinding();
+
+  @Nullable
+  CwlLabel getLabel();
+
+  @Nullable
+  PsiElement getColonTk();
+
+  @Nullable
+  PsiElement getDocTk();
+
+  @Nullable
+  PsiElement getLbracketTk();
+
+  @Nullable
+  PsiElement getNameTk();
+
+  @Nullable
+  PsiElement getRbracketTk();
+
+  @Nullable
+  PsiElement getStringTk();
 
 }

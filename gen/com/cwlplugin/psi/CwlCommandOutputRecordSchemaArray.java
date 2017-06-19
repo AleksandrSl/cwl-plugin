@@ -10,4 +10,10 @@ public interface CwlCommandOutputRecordSchemaArray extends PsiElement {
   @NotNull
   List<CwlCommandOutputRecordSchema> getCommandOutputRecordSchemaList();
 
+  @NotNull
+  PsiElement getLbracketTk();
+
+  @NotNull
+  PsiElement getRbracketTk();
+
 }

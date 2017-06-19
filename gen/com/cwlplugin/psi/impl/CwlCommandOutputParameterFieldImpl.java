@@ -28,8 +28,80 @@ public class CwlCommandOutputParameterFieldImpl extends ASTWrapperPsiElement imp
 
   @Override
   @Nullable
+  public CwlLabel getLabel() {
+    return findChildByClass(CwlLabel.class);
+  }
+
+  @Override
+  @Nullable
   public CwlOutputBinding getOutputBinding() {
     return findChildByClass(CwlOutputBinding.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlSecondaryFiles getSecondaryFiles() {
+    return findChildByClass(CwlSecondaryFiles.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlStreamable getStreamable() {
+    return findChildByClass(CwlStreamable.class);
+  }
+
+  @Override
+  @Nullable
+  public CwlType getType() {
+    return findChildByClass(CwlType.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getColonTk() {
+    return findChildByType(COLON_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getDocTk() {
+    return findChildByType(DOC_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getExpressionTk() {
+    return findChildByType(EXPRESSION_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getFormatTk() {
+    return findChildByType(FORMAT_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getIdTk() {
+    return findChildByType(ID_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getLbracketTk() {
+    return findChildByType(LBRACKET_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getRbracketTk() {
+    return findChildByType(RBRACKET_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getStringTk() {
+    return findChildByType(STRING_TK);
   }
 
 }

@@ -10,4 +10,10 @@ public interface CwlCommandInputArraySchemaArray extends PsiElement {
   @NotNull
   List<CwlCommandInputArraySchema> getCommandInputArraySchemaList();
 
+  @NotNull
+  PsiElement getLbracketTk();
+
+  @NotNull
+  PsiElement getRbracketTk();
+
 }

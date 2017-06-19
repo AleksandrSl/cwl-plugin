@@ -28,4 +28,13 @@ public interface CwlCommandInputRecordFieldType extends PsiElement {
   @Nullable
   CwlCwlTypeArray getCwlTypeArray();
 
+  @Nullable
+  PsiElement getLbracketTk();
+
+  @Nullable
+  PsiElement getRbracketTk();
+
+  @Nullable
+  PsiElement getStringTk();
+
 }

@@ -10,7 +10,19 @@ public interface CwlCommandInputArraySchema extends PsiElement {
   @Nullable
   CwlCommandInputArrayItems getCommandInputArrayItems();
 
-  @NotNull
-  List<CwlCommandLineBindingField> getCommandLineBindingFieldList();
+  @Nullable
+  CwlInputBinding getInputBinding();
+
+  @Nullable
+  CwlLabel getLabel();
+
+  @Nullable
+  PsiElement getArrayType();
+
+  @Nullable
+  PsiElement getColonTk();
+
+  @Nullable
+  PsiElement getTypeTk();
 
 }

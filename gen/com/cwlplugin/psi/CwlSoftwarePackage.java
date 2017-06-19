@@ -7,4 +7,22 @@ import com.intellij.psi.PsiElement;
 
 public interface CwlSoftwarePackage extends PsiElement {
 
+  @NotNull
+  PsiElement getColonTk();
+
+  @Nullable
+  PsiElement getLbracketTk();
+
+  @Nullable
+  PsiElement getPackageTk();
+
+  @Nullable
+  PsiElement getRbracketTk();
+
+  @Nullable
+  PsiElement getSpecsTk();
+
+  @Nullable
+  PsiElement getVersionTk();
+
 }

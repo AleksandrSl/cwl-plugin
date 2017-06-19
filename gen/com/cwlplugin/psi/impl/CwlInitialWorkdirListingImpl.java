@@ -44,4 +44,16 @@ public class CwlInitialWorkdirListingImpl extends ASTWrapperPsiElement implement
     return findChildByClass(CwlFileArray.class);
   }
 
+  @Override
+  @Nullable
+  public PsiElement getLbracketTk() {
+    return findChildByType(LBRACKET_TK);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getRbracketTk() {
+    return findChildByType(RBRACKET_TK);
+  }
+
 }
