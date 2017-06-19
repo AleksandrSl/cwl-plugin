@@ -1,13 +1,9 @@
 package com.cwlplugin.completion
 
-import com.cwlplugin.psi.CwlCommandLineTool
-import com.cwlplugin.psi.CwlDockerPull
-import com.cwlplugin.psi.CwlDockerRequirement
+import com.cwlplugin.psi.CwlRequirementList
+import com.cwlplugin.psi.CwlRequirementsBlock
+import com.cwlplugin.parser.CwlTokenTypes
 import com.cwlplugin.psi.CwlFile
-import com.cwlplugin.psi.CwlRequirement
-import com.cwlplugin.psi.CwlRequirements
-import com.cwlplugin.psi.CwlTypes
-import com.cwlplugin.psi.impl.CwlRequirementsImpl
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
@@ -16,11 +12,10 @@ import com.intellij.codeInsight.completion.InsertionContext
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.openapi.editor.EditorModificationUtil
-import com.intellij.patterns.ElementPattern
 import com.intellij.patterns.PlatformPatterns
 import com.intellij.patterns.PsiElementPattern
-import com.intellij.patterns.StandardPatterns
 import com.intellij.psi.PsiElement
+import com.intellij.psi.TokenType
 import com.intellij.util.ProcessingContext
 
 /**
@@ -41,25 +36,32 @@ class CwlKeywordCompletionProvider(private vararg val keywords: String)
 
     companion object {
 
-        fun requirements(): PsiElementPattern.Capture<PsiElement> = PlatformPatterns.psiElement(CwlTypes.COLON_TK).inside(psiElement<CwlCommandLineTool>())
+        fun general_context(): PsiElementPattern.Capture<PsiElement> =
+                psiElement<PsiElement>().withParent(PlatformPatterns.psiFile())
 
-        fun commandLineTool1(): PsiElementPattern.Capture<PsiElement> =
-                psiElement<PsiElement>().withAncestor(8, psiElement<CwlFile>())
+        fun requirements(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().afterLeaf(PlatformPatterns.psiElement(CwlTokenTypes.COLON).withParent(psiElement<CwlRequirementList>()))
 
-        fun commandLineTool2(): PsiElementPattern.Capture<PsiElement> =
-                PlatformPatterns.psiElement(CwlTypes.COLON_TK).inside(psiElement<CwlRequirements>())
+//        fun commandLineTool1(): PsiElementPattern.Capture<PsiElement> =
+//                psiElement<PsiElement>().afterLeaf(psiElement<CwlRequirementsBlock>())
+//
+//        fun commandLineTool2(): PsiElementPattern.Capture<PsiElement> =
+//                psiElement<PsiElement>().withAncestor(2, psiElement<CwlRequirementsBlock>())
+//
+//        fun commandLineTool3(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().withFirstNonWhitespaceChild(psiElement<CwlRequirementList>())
+//
+//        fun commandLineTool4(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().withSuperParent(1, psiElement<CwlRequirementList>())
+//
+//        fun commandLineTool5(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().withParent(psiElement<CwlRequirementsBlock>())
+//
+//        fun commandLineTool6(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().afterLeaf(PlatformPatterns.psiElement(CwlTokenTypes.COLON).withSuperParent(1, psiElement<CwlRequirementList>()))
 
-//        fun commandLineTool3(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().afterLeaf(PlatformPatterns.psiElement(CwlTypes.COLON_TK)).inside(psiElement<CwlRequirement>())
+//        fun commandLineTool7(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().afterLeaf(PlatformPatterns.psiElement(CwlTokenTypes.COLON).withParent(psiElement<CwlRequirementList>()))
 
-        fun commandLineTool3(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().afterLeaf(PlatformPatterns.psiElement(CwlTypes.COLON_TK)).withTreeParent(psiElement<CwlDockerRequirement>())
 
-        fun commandLineTool4(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().afterLeaf(PlatformPatterns.psiElement(CwlTypes.COLON_TK)).inside(psiElement<CwlDockerPull>())
-
-        fun commandLineTool5(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().afterLeaf(PlatformPatterns.psiElement(CwlTypes.COLON_TK)).withParent(psiElement<CwlDockerPull>())
-
-        fun commandLineTool6(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().afterLeaf(PlatformPatterns.psiElement(CwlTypes.COLON_TK).withSuperParent(2, psiElement<CwlRequirements>()))
-
-        fun commandLineTool7(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().afterLeaf(PlatformPatterns.psiElement(CwlTypes.COLON_TK).withParent(psiElement<CwlDockerPull>()))
+        // These works
+//        fun commandLineTool6(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().afterLeaf(PlatformPatterns.psiElement(CwlTokenTypes.COLON).withSuperParent(1, psiElement<CwlRequirementList>()))
+//
+//        fun commandLineTool7(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().afterLeaf(PlatformPatterns.psiElement(CwlTokenTypes.COLON).withParent(psiElement<CwlRequirementList>()))
 
 //                .and(PlatformPatterns.psiElement().withParent(psiElement<CwlFile>()))
 

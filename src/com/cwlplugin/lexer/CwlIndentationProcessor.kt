@@ -51,10 +51,10 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
 
     override fun getTokenType(): IElementType? {
         if (myTokenQueue.size > 0) {
-            println(myTokenQueue[0].type.toString())
+//            println(myTokenQueue[0].type.toString())
             return myTokenQueue[0].type
         }
-        println(super.getTokenType().toString())
+//        println(super.getTokenType().toString())
         return super.getTokenType()
     }
 
@@ -161,8 +161,8 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
 
     protected fun checkSignificantTokens() {
         myLineHasSignificantTokens = (!CwlTokenTypes.WHITESPACE_OR_LINEBREAK.contains(baseTokenType) && (baseTokenType != commentTokenType))
-        println(baseTokenType)
-        println("SIGNIFICANCE CHECKED, RESULT:$myLineHasSignificantTokens")
+//        println(baseTokenType)
+//        println("SIGNIFICANCE CHECKED, RESULT:$myLineHasSignificantTokens")
     }
 
     protected open fun processSpecialTokens() {

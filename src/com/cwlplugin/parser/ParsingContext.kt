@@ -11,6 +11,7 @@ class ParsingContext(val builder: PsiBuilder, val toolType: ToolType) {
 
 //    val inputsParser = InputsParser(this)
     val requirementsParser = RequirementsParser(this)
+    val commandLineToolParser = CommandLineToolParser(this)
 //    val outputsParser = OutputsParser(this)
     val myScopes: Deque<ParsingScope> = ArrayDeque()
     val currentScope: ParsingScope

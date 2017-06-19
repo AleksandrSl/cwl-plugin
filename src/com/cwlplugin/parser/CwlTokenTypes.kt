@@ -10,7 +10,7 @@ import com.intellij.psi.tree.TokenSet
  */
 object CwlTokenTypes {
 
-//    @JvmStatic
+    //    @JvmStatic
     @JvmField
     val IDENTIFIER = CwlElementType("IDENTIFIER")
     @JvmField
@@ -19,6 +19,7 @@ object CwlTokenTypes {
     val COMMENTS = TokenSet.create(CwlLexerTypes.COMMENT)
     @JvmField
     val ANY_TYPE_KEYWORD = CwlElementType("Any")
+    @JvmField val ARGUMENTS_KEYWORD = CwlElementType("ARGUMENTS")
     @JvmField val ARRAY_TYPE_KEYWORD = CwlElementType("array")
     @JvmField val BASECOMMAND_KEYWORD = CwlElementType("baseCommand")
     @JvmField val BASENAME_KEYWORD = CwlElementType("basename")
@@ -30,8 +31,7 @@ object CwlTokenTypes {
     @JvmField val CONTENTS_KEYWORD = CwlElementType("contents")
     @JvmField val CORES_MAX_KEYWORD = CwlElementType("CORES_MAX")
     @JvmField val CORES_MIN_KEYWORD = CwlElementType("coresMin")
-    @JvmField val CWL_VERSION_KEYWORD = CwlElementType("cwlVersion")
-    @JvmField val CWL_VERSION_VALUE_KEYWORD = CwlElementType("v1.0")
+    @JvmField val CWL_VERSION_VALUE = CwlElementType("v1.0")
     @JvmField val DEFAULT_KEYWORD = CwlElementType("default")
     @JvmField val DIRECTORY_TYPE_KEYWORD = CwlElementType("Directory")
     @JvmField val DIRNAME_KEYWORD = CwlElementType("dirname")
@@ -101,6 +101,9 @@ object CwlTokenTypes {
     @JvmField val SOFTWARE_REQUIREMENT_KEYWORD = CwlElementType("SoftwareRequirement")
     @JvmField val SPECS_KEYWORD = CwlElementType("specs")
     @JvmField val STREAMABLE_KEYWORD = CwlElementType("streamable")
+    @JvmField val STDOUT_KEYWORD = CwlElementType("STDOUT")
+    @JvmField val STDERR_KEYWORD = CwlElementType("STDERR")
+    @JvmField val STDIN_KEYWORD = CwlElementType("STDIN")
     @JvmField val STRING = CwlElementType("STRING_VALUE")
     @JvmField val STRING_TYPE_KEYWORD = CwlElementType("string")
     @JvmField val SUCCESS_CODES_KEYWORD = CwlElementType("successCodes")
@@ -122,7 +125,7 @@ object CwlTokenTypes {
     // Indentation
     @JvmField val INDENT = CwlElementType("INDENT")
     @JvmField val DEDENT = CwlElementType("DEDENT")
-    @JvmField  val INCONSISTENT_DEDENT = CwlElementType("INCONSISTENT_DEDENT")
+    @JvmField val INCONSISTENT_DEDENT = CwlElementType("INCONSISTENT_DEDENT")
 
     // Line formatting
     @JvmField val SPACE = CwlElementType("SPACE")
@@ -131,8 +134,11 @@ object CwlTokenTypes {
     @JvmField val LINE_BREAK = CwlElementType("LINE_BREAK")
     @JvmField val STATEMENT_BREAK = CwlElementType("STATEMENT_BREAK")
 
-    @JvmField  val BAD_CHARACTER = TokenType.BAD_CHARACTER
+    @JvmField val BAD_CHARACTER = TokenType.BAD_CHARACTER
     @JvmField val END_OF_LINE_COMMENT = CwlElementType("END_OF_LINE_COMMENT")
+
+
+    @JvmField val CWL_VERSION = CwlElementType("CWL_VERSION")
 
     @JvmField val KEYWORDS: TokenSet = TokenSet.create(
 
@@ -145,7 +151,7 @@ object CwlTokenTypes {
             CONTENTS_KEYWORD,
             CORES_MAX_KEYWORD,
             CORES_MIN_KEYWORD,
-            CWL_VERSION_KEYWORD,
+            CWL_VERSION,
             DEFAULT_KEYWORD,
             DIRECTORY_TYPE_KEYWORD,
             DIRNAME_KEYWORD,
@@ -231,7 +237,7 @@ object CwlTokenTypes {
             BOOLEAN_TYPE_KEYWORD
     )
 
-    @JvmField  val REQUIREMENTS_TOKENS = TokenSet.create(
+    @JvmField val REQUIREMENTS_TOKENS = TokenSet.create(
             REQUIREMENTS_KEYWORD,
             SCHEMA_DEF_REQUIREMENT_KEYWORD,
             DOCKER_REQUIREMENT_KEYWORD,
@@ -253,8 +259,7 @@ object CwlTokenTypes {
     @JvmField val WHITESPACE = TokenSet.create(SPACE, TAB, FORMFEED)
     @JvmField val WHITESPACE_OR_LINEBREAK = TokenSet.create(SPACE, TAB, FORMFEED, LINE_BREAK)
 
-    @JvmField val CWL_VERSION = CwlElementType("CWL_VERSION")
-    @JvmField val CWL_VERSION_VALUE = CwlElementType("CWL_VERSION_VALUE")
+
     @JvmField val EXPRESSION = CwlElementType("EXPRESSION")
 
 }

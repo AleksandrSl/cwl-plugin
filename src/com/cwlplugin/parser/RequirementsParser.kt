@@ -1,7 +1,9 @@
 package com.cwlplugin.parser
 
 import com.cwlplugin.CwlBundle.message
-import com.intellij.lang.ITokenTypeRemapper
+import com.cwlplugin.psi.CwlElement
+import com.cwlplugin.psi.CwlElementType
+import com.cwlplugin.psi.CwlElementTypes
 import com.intellij.lang.PsiBuilder
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.psi.tree.IElementType
@@ -9,23 +11,10 @@ import com.intellij.psi.tree.IElementType
 /**
  * @author Aleksandr Slepchenkov [aslepchenkov@parseq.pro](mailto:aslepchenkov@parseq.pro)
  */
-class RequirementsParser(context: ParsingContext) : Parsing(context), ITokenTypeRemapper {
-
-    override fun filter(source: IElementType?, start: Int, end: Int, text: CharSequence?): IElementType {
-        return source!!
-    }
+class RequirementsParser(context: ParsingContext) : Parsing(context) {
 
     private val LOG = Logger.getInstance(RequirementsParser::class.java.name)
 
-    fun reportParseStatementError(builder: PsiBuilder, firstToken: IElementType) {
-        if (firstToken === CwlTokenTypes.INCONSISTENT_DEDENT) {
-            builder.error("Unindent does not match any outer indentation level")
-        } else if (firstToken === CwlTokenTypes.INDENT) {
-            builder.error("Unexpected indent")
-        } else {
-            builder.error("Statement expected, found " + firstToken.toString())
-        }
-    }
 
     fun parsePrimaryRequirements(): Boolean {
         val firstToken: IElementType? = myBuilder.tokenType
@@ -37,7 +26,9 @@ class RequirementsParser(context: ParsingContext) : Parsing(context), ITokenType
                         parseRequirementsBlock()
                         return true
                     }
-                    else ->{ reportParseStatementError(myBuilder, firstToken); return false}
+                    else -> {
+                        reportParseStatementError(myBuilder, firstToken); return false
+                    }
                 }
             }
         }
@@ -48,6 +39,7 @@ class RequirementsParser(context: ParsingContext) : Parsing(context), ITokenType
      * Parse all requirements statements and trailing COLON after requirements keyword
      */
     fun parseRequirementsBlock(): Unit {
+        parseColonAndIndentedBlock(CwlElementTypes.REQUIREMENTS_BLOCK, this::parseRequirementsList)
         val requirementsBlock: PsiBuilder.Marker = myBuilder.mark()
         nextToken()
         checkMatches(CwlTokenTypes.COLON, message("PARSE.expected.colon"))
@@ -55,48 +47,42 @@ class RequirementsParser(context: ParsingContext) : Parsing(context), ITokenType
         requirementsBlock.done(CwlElementTypes.REQUIREMENTS_BLOCK)
     }
 
-    fun parseRequirementsList() : Unit{
-        // TODO When new line
-        if (myBuilder.tokenType == CwlTokenTypes.STATEMENT_BREAK) {
-            myBuilder.error("STATEMENT_BREAK IS FOUND")
-            nextToken()
-            val indentFound = myBuilder.tokenType == CwlTokenTypes.INDENT
-            if (indentFound) {
-                nextToken()
-                println("parseRequirementsList:1:${myBuilder.tokenType}")
-                if (myBuilder.eof()) {
-                    myBuilder.error("Indented block expected")
-                } else {
-                    while (!myBuilder.eof() && myBuilder.tokenType !== CwlTokenTypes.DEDENT) {
-                        if (!parseRequirement()) break
-                        println("parseRequirementsList:2:${myBuilder.tokenType}")
-                    }
-                }
-            } else {
-                myBuilder.error("Indent expected")
-            }
-            if (indentFound && !myBuilder.eof()) {
-                checkMatches(CwlTokenTypes.DEDENT, "Dedent expected")
-            }
-        } else {myBuilder.error("WTF!! ${myBuilder.tokenType}")}
 
+
+    fun parseRequirementsList(): Unit {
+        return parseIndentedBlock(CwlElementTypes.REQUIREMENT_LIST, this::parseRequirement)
     }
 
     /**
-     * Parse requirement statement class: requirement
+     * Parse requirement statement
      *
-     * All current token should already be matched
-     * New token is generated at function beginning
+     *  class: requirement
      */
     protected fun parseRequirement(): Boolean {
 
-        if (!checkMatches(CwlTokenTypes.CLASS_KEYWORD, "Class keyword expected")) return false
-//        if (!matchToken(CwlTokenTypes.CLASS_KEYWORD)) return
+        println("parseRequirement:: ${myBuilder.tokenType}")
+        if (!checkMatches(CwlTokenTypes.CLASS_KEYWORD, "Class keyword expected", advanceLexer = false)) return false
         val requirement = myBuilder.mark()
-        if (!checkMatches(CwlTokenTypes.COLON, "Colon keyword expected")) { requirement.drop(); return false}
-        if (!checkMatches(CwlTokenTypes.INLINE_JAVASCRIPT_REQUIREMENT_KEYWORD, "InlineJavascriptRequirement keyword expected")) { requirement.drop(); return false}
-        requirement.done(CwlElementTypes.INLINE_JAVASCRIPT_REQUIREMENT)
-//        requirement.done(CwlTokenTypes.INLINE_JAVASCRIPT_REQUIREMENT_KEYWORD) // TODO
+        nextToken()
+        if (!checkMatches(CwlTokenTypes.COLON, message("PARSE.expected.colon"))) {
+            requirement.drop(); return false
+        }
+        val requirementType: CwlElementType = when (myBuilder.tokenType) {
+            CwlTokenTypes.INLINE_JAVASCRIPT_REQUIREMENT_KEYWORD -> CwlElementTypes.INLINE_JAVASCRIPT_REQUIREMENT
+            CwlTokenTypes.DOCKER_REQUIREMENT_KEYWORD -> CwlElementTypes.DOCKER_REQUIREMENT
+            CwlTokenTypes.SCHEMA_DEF_REQUIREMENT_KEYWORD ->  CwlElementTypes.SCHEMA_DEF_REQUIREMENT
+            CwlTokenTypes.INITIAL_WORKDIR_REQUIREMENT_KEYWORD ->  CwlElementTypes.INITIAL_WORKDIR_REQUIREMENT
+            CwlTokenTypes.RESOURCE_REQUIREMENT_KEYWORD ->  CwlElementTypes.RESOURCE_REQUIREMENT
+            CwlTokenTypes.ENV_VAR_REQUIREMENT_KEYWORD ->  CwlElementTypes.ENV_VAR_REQUIREMENT
+            CwlTokenTypes.SHELL_COMMAND_REQUIREMENT_KEYWORD ->  CwlElementTypes.SHELL_COMMAND_REQUIREMENT
+            CwlTokenTypes.SOFTWARE_REQUIREMENT_KEYWORD ->  CwlElementTypes.SOFTWARE_REQUIREMENT
+            else -> {
+                myBuilder.error("Requirement expected")
+                requirement.drop(); return false
+            }
+        }
+        nextToken()
+        requirement.done(requirementType)
         return true
     }
 }

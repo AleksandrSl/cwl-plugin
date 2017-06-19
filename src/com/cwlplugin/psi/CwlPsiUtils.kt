@@ -1,6 +1,5 @@
 package com.cwlplugin.psi
 
-import com.cwlplugin.parser.CwlElement
 import com.intellij.lang.ASTNode
 import com.intellij.openapi.diagnostic.Logger
 

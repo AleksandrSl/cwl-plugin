@@ -1,5 +1,6 @@
 package com.cwlplugin.parser
 
+import com.cwlplugin.CwlBundle
 import com.cwlplugin.psi.CwlElementType
 import com.intellij.lang.PsiBuilder
 import com.intellij.openapi.diagnostic.Logger
@@ -16,10 +17,10 @@ open class Parsing(val parsingContext: ParsingContext) {
 
     val requirementsParser = parsingContext.requirementsParser
 
-    protected fun checkMatches(token: IElementType, message: String): Boolean {
+    protected fun checkMatches(token: IElementType, message: String, advanceLexer: Boolean = true): Boolean {
 
         if (myBuilder.tokenType == token) {  // == is used instead of equals in python source
-            myBuilder.advanceLexer()
+            if (advanceLexer) myBuilder.advanceLexer()
             return true
         }
         myBuilder.error(message)
@@ -79,4 +80,42 @@ open class Parsing(val parsingContext: ParsingContext) {
 //    protected fun getReferenceType(): IElementType {
 //        return CwlElementTypes.REFERENCE_EXPRESSION
 //    }
+
+    fun parseIndentedBlock(blockType: IElementType, parseStatement: () -> Boolean): Unit {
+        if (checkMatches(CwlTokenTypes.STATEMENT_BREAK, "Statement break expected")) {
+            if (checkMatches(CwlTokenTypes.INDENT, "Indent expected", advanceLexer = false)) {
+                val indentedBlock: PsiBuilder.Marker = myBuilder.mark()
+                nextToken()
+                if (myBuilder.eof()) {
+                    myBuilder.error("Indented block expected")
+                } else {
+                    while (!myBuilder.eof() && myBuilder.tokenType !== CwlTokenTypes.DEDENT) {
+                        if (!parseStatement()) break
+                    }
+                }
+                indentedBlock.done(blockType)
+                if (!myBuilder.eof()) {
+                    checkMatches(CwlTokenTypes.DEDENT, "Dedent expected")
+                }
+            }
+        }
+    }
+
+    fun parseColonAndIndentedBlock(blockType: IElementType, parseIndentedBlock: () -> Unit): Unit {
+        val block: PsiBuilder.Marker = myBuilder.mark()
+        nextToken()
+        checkMatches(CwlTokenTypes.COLON, CwlBundle.message("PARSE.expected.colon"))
+        parseIndentedBlock()
+        block.done(blockType)
+    }
+
+    fun reportParseStatementError(builder: PsiBuilder, firstToken: IElementType) {
+        if (firstToken === CwlTokenTypes.INCONSISTENT_DEDENT) {
+            builder.error("Unindent does not match any outer indentation level")
+        } else if (firstToken === CwlTokenTypes.INDENT) {
+            builder.error("Unexpected indent")
+        } else {
+            builder.error("Statement expected, found " + firstToken.toString())
+        }
+    }
 }

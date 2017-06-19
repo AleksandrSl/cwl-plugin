@@ -2,7 +2,6 @@ package com.cwlplugin.psi
 
 import com.cwlplugin.CwlFileType
 import com.cwlplugin.CwlLanguage
-import com.cwlplugin.parser.CwlElement
 import com.cwlplugin.parser.ScopeOwner
 import com.intellij.extapi.psi.PsiFileBase
 import com.intellij.openapi.fileTypes.FileType

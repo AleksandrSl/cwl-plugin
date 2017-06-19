@@ -1,5 +1,7 @@
 package com.cwlplugin.parser
 
+import com.cwlplugin.psi.CwlElement
+
 /**
  * Marker interface for CWL elements which define a scope.
  *

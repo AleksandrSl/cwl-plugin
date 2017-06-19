@@ -19,10 +19,12 @@ class CwlParser : PsiParser{
         val rootMarker = builder.mark()
         val context = createParsingContext(builder, ToolType.COMMAND_LINE_TOOL)
         val requirementsParser = context.requirementsParser
-        builder.setTokenTypeRemapper(requirementsParser) // must be done before touching the caching lexer with eof() call.
+        val commandLineToolparser = context.commandLineToolParser
+//        builder.setTokenTypeRemapper(requirementsParser) // must be done before touching the caching lexer with eof() call.
 //        var lastAfterSemicolon = false
         builder.setDebugMode(true)
-        requirementsParser.parsePrimaryRequirements()
+        commandLineToolparser.parseCommandLineTool()
+//        requirementsParser.parsePrimaryRequirements()
         while (!builder.eof()) {
 
             builder.advanceLexer()

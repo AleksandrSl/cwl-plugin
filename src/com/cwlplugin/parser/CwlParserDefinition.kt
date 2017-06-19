@@ -4,6 +4,7 @@ import com.cwlplugin.CwlLanguage
 import com.cwlplugin.lexer.CwlIndentationLexer
 import com.cwlplugin.psi.CwlElementType
 import com.cwlplugin.psi.CwlFile
+import com.cwlplugin.psi.CwlStubElementType
 import com.intellij.extapi.psi.ASTWrapperPsiElement
 import com.intellij.lang.ASTNode
 import com.intellij.lang.ParserDefinition
@@ -44,7 +45,7 @@ class CwlParserDefinition : ParserDefinition {
         if (type is CwlElementType) {
             val pyElType = type
             return pyElType.createElement(node)
-        } else if (type is CwlStubElementType<*,*>) {
+        } else if (type is CwlStubElementType<*, *>) {
             return type.createElement(node)
         }
         return ASTWrapperPsiElement(node)

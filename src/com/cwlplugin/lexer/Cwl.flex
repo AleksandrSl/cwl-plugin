@@ -49,7 +49,7 @@ EndOfLineComment = "#"{InputCharacter}*
 // Put constrains on identifier myself. I don't see meaning in identifiers like "*&&****&" or uyutut&&&%
 Identifier = [:jletter:] [:jletterdigit:]*
 DecIntegerLiteral = 0 | [1-9][0-9]*
-SimpleString = \" [^\"\r\n]* \"
+SimpleString = \"[^\"\r\n]*\"
 BareString = [^\n\r\(: \)]+
 String = {BareString} | {SimpleString}
 Expression = \$\(.*\) | \$\{.*\}
@@ -160,6 +160,6 @@ Boolean = True | False
         "Workflow"                         { return CwlTokenTypes.WORKFLOW_KEYWORD; }
         "writable"                         { return CwlTokenTypes.WRITABLE_KEYWORD; }
 //        {Identifier}                       { return CwlTokenTypes.IDENTIFIER; }
-//        {String}                           { return CwlTokenTypes.STRING;}
+        {String}                           { return CwlTokenTypes.STRING;}
     }
     .                                      { return TokenType.BAD_CHARACTER;}
