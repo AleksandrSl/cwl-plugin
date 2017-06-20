@@ -14,121 +14,117 @@
 
   // These tokens are just for Interactive Preview
   tokens = [
-  ANY = ".*"
-  ARRAY_TYPE = "array"
-  BASECOMMAND = "baseCommand"
-  BASENAME = "basename"
-  BOOLEAN = "True"
-  BOOLEAN_TYPE = "boolean"
-  CHECKSUM = "checksum"
-  CLASS = "class"
-  COLON = ":"
-  COMMA = ","
-  COMMAND_LINE_TOOL = "CommandLineTool"
-//  COMMAND = "ls"
-  CONTENTS = "contents"
-  CORES_MAX = "coresMin"
-  CORES_MIN = "coresMin"
-  //  COMMAND = "regexp:\w*"
-  CWL_VERSION = "cwlVersion"
-  DEFAULT = "default"
-  DIRECTORY_TYPE = "Directory"
-  DIRNAME = "dirname"
-  DOC = "doc"
-  DOCKER_FILE = "dockerFile"
-  DOCKER_IMAGE_ID = "dockerImageId"
-  DOCKER_IMPORT= "dockerImport"
-  DOCKER_LOAD = "dockerLoad"
-  DOCKER_OUTPUT_DIRECTORY = "dockerOutputDirectory"
-  DOCKER_PULL = "dockerPull"
-  DOCKER_REQUIREMENT = "DockerRequirement"
-  DOUBLE_TYPE = "double"
-  ENTRY = "entry"
-  ENTRYNAME = "entryname"
-  ENUM_TYPE = "enum"
-  ENV_DEF = "envDef"
-  ENV_NAME = "envName"
-  ENV_VALUE = "envValue"
-  ENV_VAR_REQUIREMENT = "EnvVarRequirement"
-  EOL = "regexp:\n|\r\n|\r"
-  EXPRESSION = "$()"
-  EXPRESSION_TOOL = "ExpressionTool"
-  FILE_TYPE = "File"
-  FLOAT_TYPE = "float"
-  FORMAT = "format"
-  GLOB = "glob"
-  HINTS  = "hints"
-  IDENTIFIER = "IDENTIFIER"
-  ID = "id"
-  INITIAL_WORKDIR_REQUIREMENT = "InitialWorkDirRequirement"
-  INLINE_JAVASCRIPT_REQUIREMENT = "InlineJavascriptRequirement"
-  INPUT_BINDING = "inputBinding"
+  ANY_TYPE_TK = "Any"
+  ARRAY_TYPE_TK = "array"
+  BASECOMMAND_TK = "baseCommand"
+  BASENAME_TK = "basename"
+  BOOLEAN_TK = "BOOLEAN_VALUE"
+  BOOLEAN_TYPE_TK = "boolean"
+  CHECKSUM_TK = "checksum"
+  CLASS_TK = "class"
+  COLON_TK = ":"
+  COMMA_TK = ","
+  COMMAND_LINE_TOOL_TK = "CommandLineTool"
+  CONTENTS_TK = "contents"
+  CORES_MAX_TK = "coresMin"
+  CORES_MIN_TK = "coresMin"
+  CWL_VERSION_TK = "cwlVersion"
+  DEFAULT_TK = "default"
+  DIRECTORY_TYPE_TK = "Directory"
+  DIRNAME_TK = "dirname"
+  DOC_TK = "doc"
+  DOCKER_FILE_TK = "dockerFile"
+  DOCKER_IMAGE_ID_TK = "dockerImageId"
+  DOCKER_IMPORT_TK = "dockerImport"
+  DOCKER_LOAD_TK = "dockerLoad"
+  DOCKER_OUTPUT_DIRECTORY_TK = "dockerOutputDirectory"
+  DOCKER_PULL_TK = "dockerPull"
+  DOCKER_REQUIREMENT_TK = "DockerRequirement"
+  DOUBLE_TYPE_TK = "double"
+  ENTRY_TK = "entry"
+  ENTRYNAME_TK = "entryname"
+  ENUM_TYPE_TK = "enum"
+  ENV_DEF_TK = "envDef"
+  ENV_NAME_TK = "envName"
+  ENV_VALUE_TK = "envValue"
+  ENV_VAR_REQUIREMENT_TK = "EnvVarRequirement"
+  EXPRESSION_TK = "$()"
+  EXPRESSION_TOOL_TK = "ExpressionTool"
+  FILE_TYPE_TK = "File"
+  FLOAT_TYPE_TK = "float"
+  FORMAT_TK = "format"
+  GLOB_TK = "glob"
+  HINTS_TK  = "hints"
+  IDENTIFIER_TK = "IDENTIFIER"
+  ID_TK = "id"
+  INITIAL_WORKDIR_REQUIREMENT_TK = "InitialWorkDirRequirement"
+  INLINE_JAVASCRIPT_REQUIREMENT_TK = "InlineJavascriptRequirement"
+  INPUT_BINDING_TK = "inputBinding"
   INPUTS_TK = "inputs"
-  INT = "regexp:\d+"
-  INT_TYPE = "int"
-  ITEM_SEPARATOR = "itemSeparator"
-  LABEL = "label"
-  LBRACKET = "["
-  LISTING = "listing"
-  LOAD_CONTENTS = "loadContents"
-  LOCATION = "location"
-  LONG_TYPE = "long"
-  NAME = "name"
-  NAMEEXT = "nameext"
-  NAMEROOT = "nameroot"
-  NULL_TYPE = "null"
-  NUMBER = "regexp:\d+"
-  OUTDIR_MAX = "outdirMax"
-  OUTDIR_MIN = "outdirMin"
-  OUTPUT_EVAL = "outputEval"
-  OUTPUTS = "outputs"
-  PACKAGE = "package"
-  PATH = "path"
-  PERMANENT_FAIL_CODES = "permanentFailCodes"
-  POSITION = "position"
-  PREFIX = "prefix"
-  RAM_MAX  = "ramMax"
-  RAM_MIN  = "ramMin"
-  RBRACKET = "]"
-  RECORD = "record"
+  INT_TK = "regexp:\d+"
+  INT_TYPE_TK = "int"
+  ITEM_SEPARATOR_TK = "itemSeparator"
+  LABEL_TK = "label"
+  LBRACKET_TK = "["
+  LISTING_TK = "listing"
+  LOAD_CONTENTS_TK = "loadContents"
+  LOCATION_TK = "location"
+  LONG_TYPE_TK = "long"
+  NAME_TK = "name"
+  NAMEEXT_TK = "nameext"
+  NAMEROOT_TK = "nameroot"
+  NULL_TYPE_TK = "null"
+  NUMBER_TK = "regexp:\d+"
+  OUTDIR_MAX_TK = "outdirMax"
+  OUTDIR_MIN_TK = "outdirMin"
+  OUTPUT_EVAL_TK = "outputEval"
+  OUTPUTS_TK = "outputs"
+  PACKAGE_TK = "package"
+  PATH_TK = "path"
+  PERMANENT_FAIL_CODES_TK = "permanentFailCodes"
+  POSITION_TK = "position"
+  PREFIX_TK = "prefix"
+  RAM_MAX_TK = "ramMax"
+  RAM_MIN_TK = "ramMin"
+  RBRACKET_TK = "]"
+  RECORD_TK = "record"
   REQUIREMENTS_TK = "requirements"
-  RESOURCE_REQUIREMENT = "ResourceRequirement"
-  SCHEMA_DEF_REQUIREMENT = "SchemaDefRequirement"
-  SECONDARY_FILES = "secondaryFiles"
-  SEPARATE = "separate"
-  SHELL_COMMAND_REQUIREMENT = "ShellCommandRequirement"
-  SHELL_QUOTE = "shellQuote"
-  SIZE = "size"
-  SOFTWARE_REQUIREMENT = "SoftwareRequirement"
+  RESOURCE_REQUIREMENT_TK = "ResourceRequirement"
+  SCHEMA_DEF_REQUIREMENT_TK = "SchemaDefRequirement"
+  SECONDARY_FILES_TK = "secondaryFiles"
+  SEPARATE_TK = "separate"
+  SHELL_COMMAND_REQUIREMENT_TK = "ShellCommandRequirement"
+  SHELL_QUOTE_TK = "shellQuote"
+  SIZE_TK = "size"
+  SOFTWARE_REQUIREMENT_TK = "SoftwareRequirement"
   space="regexp:\s+"
-  SPECS = "specs"
-  STREAMABLE = "streamable"
-  //  STRING = "regexp:(\s\|[\n\r]\w)"
-  STRING = "some_string"
-  STRING_TYPE = "string"
-  SUCCESS_CODES = "successCodes"
-  TEMPORARY_FAIL_CODES = "temporaryFailCodes"
-  TMPDIR_MAX = "tmpdirMax"
-  TMPDIR_MIN = "tmpdirMin"
-  TYPE = "type"
-  VALUE_FROM = "valueFrom"
-  CWL_VERSION_VALUE = "v1.0"
-  VERSION = "version"
-  WORKFLOW = "Workflow"
-  WRITABLE = "writable"
+  SPECS_TK = "specs"
+  STREAMABLE_TK = "streamable"
+  STRING_TK = "STRING_VALUE"
+  STRING_TYPE_TK = "string"
+  SUCCESS_CODES_TK = "successCodes"
+  TEMPORARY_FAIL_CODES_TK = "temporaryFailCodes"
+  TMPDIR_MAX_TK = "tmpdirMax"
+  TMPDIR_MIN_TK = "tmpdirMin"
+  TYPE_TK = "type"
+  VALUE_FROM_TK = "valueFrom"
+  CWL_VERSION_VALUE_TK = "v1.0"
+  VERSION_TK = "version"
+  WORKFLOW_TK = "Workflow"
+  WRITABLE_TK = "writable"
 ]
-
+generateTokenAccessors=true
 //  psiImplUtilClass="com.cwlplugin.psi.CwlPsiImplUtilKt"
 }
 
 //Make cwlVersion the first line
 cwl_file ::= !<<eof>> cwl_version tool_description
 
-private cwl_version ::= CWL_VERSION COLON CWL_VERSION_VALUE
+private cwl_version ::= CWL_VERSION_TK COLON_TK CWL_VERSION_VALUE_TK
 
-private tool_description ::= (command_line_tool)
+tool_description ::= (command_line_tool)
 
-private command_line_tool ::= command_line_tool_field *
+command_line_tool ::= command_line_tool_field *
 command_line_tool_field ::= (
     inputs
     | outputs
@@ -148,9 +144,9 @@ command_line_tool_field ::= (
     | permanent_fail_codes
     )
 
-private command_line_tool_class ::= CLASS COLON COMMAND_LINE_TOOL
+command_line_tool_class ::= CLASS_TK COLON_TK COMMAND_LINE_TOOL_TK
 // string	True
-requirements ::= REQUIREMENTS_TK COLON  requirement + 
+requirements ::= REQUIREMENTS_TK COLON_TK  requirement +
 requirement ::= (
 inline_javascript_requirement
 | schema_def_requirement
@@ -162,49 +158,55 @@ inline_javascript_requirement
 | resource_requirement
 )
 
-private inline_javascript_requirement ::= CLASS COLON INLINE_JAVASCRIPT_REQUIREMENT
-private schema_def_requirement ::= CLASS COLON SCHEMA_DEF_REQUIREMENT
-private docker_requirement ::= CLASS COLON DOCKER_REQUIREMENT  docker_requirement_field + 
-private docker_requirement_field ::= (
+private inline_javascript_requirement ::= CLASS_TK COLON_TK INLINE_JAVASCRIPT_REQUIREMENT_TK
+schema_def_requirement ::= CLASS_TK COLON_TK SCHEMA_DEF_REQUIREMENT_TK
+docker_requirement ::= CLASS_TK COLON_TK DOCKER_REQUIREMENT_TK  docker_requirement_field +
+{
+pin=3
+recoverWhile=docker_recover
+}
+
+private docker_recover ::= !(DOCKER_REQUIREMENT_TK)
+docker_requirement_field ::= (
 docker_pull
 | docker_load
 | docker_file
 | docker_import
 | docker_image_id
 | docker_output_directory)
-private docker_pull ::= DOCKER_PULL COLON STRING
-private docker_load ::= DOCKER_LOAD COLON STRING
-private docker_file ::= DOCKER_FILE COLON STRING
-private docker_import ::= DOCKER_IMPORT COLON STRING
-private docker_image_id ::= DOCKER_IMAGE_ID COLON STRING
-private docker_output_directory ::= DOCKER_OUTPUT_DIRECTORY COLON STRING
+docker_pull ::= DOCKER_PULL_TK COLON_TK STRING_TK
+private docker_load ::= DOCKER_LOAD_TK COLON_TK STRING_TK
+private docker_file ::= DOCKER_FILE_TK COLON_TK STRING_TK
+private docker_import ::= DOCKER_IMPORT_TK COLON_TK STRING_TK
+private docker_image_id ::= DOCKER_IMAGE_ID_TK COLON_TK STRING_TK
+private docker_output_directory ::= DOCKER_OUTPUT_DIRECTORY_TK COLON_TK STRING_TK
 
-private software_requirement ::= CLASS COLON SOFTWARE_REQUIREMENT  packages 
+software_requirement ::= CLASS_TK COLON_TK SOFTWARE_REQUIREMENT_TK  packages
 packages ::= software_package_array
-software_package_array ::= LBRACKET (software_package COMMA) * software_package RBRACKET
+software_package_array ::= LBRACKET_TK (software_package COMMA_TK) * software_package RBRACKET_TK
 software_package ::= (package | version | specs)
-private package ::= PACKAGE COLON STRING
-private version ::= VERSION COLON string_array
-private specs ::= SPECS COLON string_array
+private package ::= PACKAGE_TK COLON_TK STRING_TK
+private version ::= VERSION_TK COLON_TK string_array
+private specs ::= SPECS_TK COLON_TK string_array
 
-private initial_workdir_requirement ::= CLASS COLON INITIAL_WORKDIR_REQUIREMENT  initial_workdir_listing 
-initial_workdir_listing ::= file_array | directory_array | dirent_array | string_array | expression_array | STRING | EXPRESSION
+initial_workdir_requirement ::= CLASS_TK COLON_TK INITIAL_WORKDIR_REQUIREMENT_TK  initial_workdir_listing
+initial_workdir_listing ::= file_array | directory_array | dirent_array | string_array | expression_array | STRING_TK | EXPRESSION_TK
 // array<File | Directory | Dirent | string | Expression>
-dirent_array ::= LBRACKET (dirent COMMA) * dirent RBRACKET
+dirent_array ::= LBRACKET_TK (dirent COMMA_TK) * dirent RBRACKET_TK
 dirent ::= (entry | entryname | writable)
-private entry ::= ENTRY COLON (STRING | EXPRESSION)
-private entryname ::= ENTRYNAME COLON (STRING | EXPRESSION)
-private writable ::= WRITABLE COLON BOOLEAN
+private entry ::= ENTRY_TK COLON_TK (STRING_TK | EXPRESSION_TK)
+private entryname ::= ENTRYNAME_TK COLON_TK (STRING_TK | EXPRESSION_TK)
+private writable ::= WRITABLE_TK COLON_TK BOOLEAN_TK
 
 // TODO Maybe make all required fields autogenerated and preordered?
-private env_var_requirement ::= CLASS COLON ENV_VAR_REQUIREMENT  env_def 
-private env_def ::= ENV_DEF COLON env_name env_value
-private env_name ::= ENV_NAME COLON STRING
-private env_value ::= ENV_VALUE COLON (STRING | EXPRESSION)
+env_var_requirement ::= CLASS_TK COLON_TK ENV_VAR_REQUIREMENT_TK  env_def
+private env_def ::= ENV_DEF_TK COLON_TK env_name env_value
+private env_name ::= ENV_NAME_TK COLON_TK STRING_TK
+private env_value ::= ENV_VALUE_TK COLON_TK (STRING_TK | EXPRESSION_TK)
 
-private shell_command_requirement ::= CLASS COLON SHELL_COMMAND_REQUIREMENT
+shell_command_requirement ::= CLASS_TK COLON_TK SHELL_COMMAND_REQUIREMENT_TK
 
-private resource_requirement ::= CLASS COLON RESOURCE_REQUIREMENT  resource_requirement_field * 
+resource_requirement ::= CLASS_TK COLON_TK RESOURCE_REQUIREMENT_TK resource_requirement_field *
 resource_requirement_field ::= (
 cores_min
 | cores_max
@@ -215,50 +217,50 @@ cores_min
 | outdir_min
 | outdir_max
 )
-private cores_min ::= CORES_MIN COLON (NUMBER | STRING | EXPRESSION)
-private cores_max ::= CORES_MAX COLON (NUMBER | STRING | EXPRESSION)
-private ram_min ::= RAM_MIN COLON (NUMBER | STRING | EXPRESSION)
-private ram_max ::= RAM_MAX COLON (NUMBER | STRING | EXPRESSION)
-private tmpdir_min ::= TMPDIR_MIN COLON (NUMBER | STRING | EXPRESSION)
-private tmpdir_max ::= TMPDIR_MAX COLON (NUMBER | STRING | EXPRESSION)
-private outdir_min ::= OUTDIR_MIN COLON (NUMBER | STRING | EXPRESSION)
-private outdir_max ::= OUTDIR_MAX COLON (NUMBER | STRING | EXPRESSION)
+private cores_min ::= CORES_MIN_TK COLON_TK (NUMBER_TK | STRING_TK | EXPRESSION_TK)
+private cores_max ::= CORES_MAX_TK COLON_TK (NUMBER_TK | STRING_TK | EXPRESSION_TK)
+private ram_min ::= RAM_MIN_TK COLON_TK (NUMBER_TK | STRING_TK | EXPRESSION_TK)
+private ram_max ::= RAM_MAX_TK COLON_TK (NUMBER_TK | STRING_TK | EXPRESSION_TK)
+private tmpdir_min ::= TMPDIR_MIN_TK COLON_TK (NUMBER_TK | STRING_TK | EXPRESSION_TK)
+private tmpdir_max ::= TMPDIR_MAX_TK COLON_TK (NUMBER_TK | STRING_TK | EXPRESSION_TK)
+private outdir_min ::= OUTDIR_MIN_TK COLON_TK (NUMBER_TK | STRING_TK | EXPRESSION_TK)
+private outdir_max ::= OUTDIR_MAX_TK COLON_TK (NUMBER_TK | STRING_TK | EXPRESSION_TK)
 
 // array<InlineJavascriptRequirement | SchemaDefRequirement | DockerRequirement | SoftwareRequirement | InitialWorkDirRequirement | EnvVarRequirement | ShellCommandRequirement | ResourceRequirement>	False
-private hints ::= HINTS COLON STRING *
+hints ::= HINTS_TK COLON_TK STRING_TK *
 // array<Any>	False
-private base_command ::= BASECOMMAND COLON (STRING | string_array)
+base_command ::= BASECOMMAND_TK COLON_TK (STRING_TK | string_array)
 // string | array<string>	False
-private arguments ::= (string_array | expression_array | command_line_binding_array)
+arguments ::= (string_array | expression_array | command_line_binding_array)
 // array<string | Expression | CommandLineBinding>	False
-private stdin ::= STRING | EXPRESSION
+stdin ::= STDIN_TK COLON_TK STRING_TK | EXPRESSION_TK
 // string | Expression	False
-private stderr ::= STRING | EXPRESSION
+stderr ::= STDERR_TK COLON_TK STRING_TK | EXPRESSION_TK
 // string | Expression	False
-private stdout ::= STRING | EXPRESSION
+stdout ::= STDOUT_TK COLON_TK STRING_TK | EXPRESSION_TK
 //	string | Expression	False
 
-private success_codes ::= SUCCESS_CODES COLON int_array
+success_codes ::= SUCCESS_CODES_TK COLON_TK int_array
 // array.<int>	False
-private temporary_fail_codes ::= TEMPORARY_FAIL_CODES COLON int_array
+temporary_fail_codes ::= TEMPORARY_FAIL_CODES_TK COLON_TK int_array
 //	array<int>	False
-private permanent_fail_codes ::= PERMANENT_FAIL_CODES COLON int_array
+permanent_fail_codes ::= PERMANENT_FAIL_CODES_TK COLON_TK int_array
 //	array<int>	False
 
 
 // array<CommandInputParameter> | map<CommandInputParameter.id, CommandInputParameter.type> | map<CommandInputParameter.id, CommandInputParameter>	True
-inputs ::= INPUTS_TK COLON  command_input_parameter + 
+inputs ::= INPUTS_TK COLON_TK  command_input_parameter + 
 
-command_input_parameter ::= IDENTIFIER COLON  command_input_parameter_field +
+command_input_parameter ::= IDENTIFIER_TK COLON_TK  command_input_parameter_field +
 
 command_input_parameter_field ::= ( default | doc | format | id | input_binding | label | secondary_files | streamable | type )
 
-private default ::= DEFAULT COLON ANY
-private doc ::= DOC COLON (STRING | string_array)
-private format ::= FORMAT COLON (STRING | string_array | EXPRESSION)
-private id ::= ID COLON STRING
+private default ::= DEFAULT_TK COLON_TK STRING_TK  // Could be of type Any, but yaml string is any indeed
+private doc ::= DOC_TK COLON_TK (STRING_TK | string_array)
+private format ::= FORMAT_TK COLON_TK (STRING_TK | string_array | EXPRESSION_TK)
+private id ::= ID_TK COLON_TK STRING_TK
 
-private input_binding ::= INPUT_BINDING COLON  command_line_binding_field + 
+input_binding ::= INPUT_BINDING_TK COLON_TK  command_line_binding_field +
 command_line_binding_field ::=
 (
 load_contents
@@ -270,68 +272,68 @@ load_contents
 | shell_quote
 )
 
-private value_from ::= VALUE_FROM COLON (STRING | EXPRESSION)
-private position ::= POSITION COLON INT
-private separate ::= SEPARATE COLON BOOLEAN
-private item_separator ::= ITEM_SEPARATOR COLON STRING
-private prefix ::= PREFIX COLON STRING
-private shell_quote ::= SHELL_QUOTE COLON BOOLEAN
-private load_contents ::= LOAD_CONTENTS COLON BOOLEAN  // Only valid when type: File or is an array of items: File
+private value_from ::= VALUE_FROM_TK COLON_TK (STRING_TK | EXPRESSION_TK)
+private position ::= POSITION_TK COLON_TK INT_TK
+private separate ::= SEPARATE_TK COLON_TK BOOLEAN_TK
+private item_separator ::= ITEM_SEPARATOR_TK COLON_TK STRING_TK
+private prefix ::= PREFIX_TK COLON_TK STRING_TK
+private shell_quote ::= SHELL_QUOTE_TK COLON_TK BOOLEAN_TK
+private load_contents ::= LOAD_CONTENTS_TK COLON_TK BOOLEAN_TK  // Only valid when type: File or is an array of items: File
 
-private label ::= LABEL COLON STRING
-private secondary_files ::= SECONDARY_FILES COLON  (STRING | EXPRESSION | string_array | expression_array) 
-private streamable ::= STREAMABLE COLON BOOLEAN
-private type ::= TYPE COLON STRING_TYPE
+label ::= LABEL_TK COLON_TK STRING_TK
+secondary_files ::= SECONDARY_FILES_TK COLON_TK  (STRING_TK | EXPRESSION_TK | string_array | expression_array)
+streamable ::= STREAMABLE_TK COLON_TK BOOLEAN_TK
+type ::= TYPE_TK COLON_TK STRING_TYPE_TK
 
-private string_array ::= LBRACKET (STRING COMMA) * STRING RBRACKET
-private expression_array ::= LBRACKET (EXPRESSION COMMA) * EXPRESSION RBRACKET
-private command_line_binding_array ::= LBRACKET (input_binding COMMA) * input_binding RBRACKET
-int_array ::= LBRACKET (INT COMMA) * INT RBRACKET
-file_array ::= LBRACKET (file COMMA) * file RBRACKET
-directory_array ::= LBRACKET (directory COMMA) * directory RBRACKET
+private string_array ::= LBRACKET_TK (STRING_TK COMMA_TK) * STRING_TK RBRACKET_TK
+private expression_array ::= LBRACKET_TK (EXPRESSION_TK COMMA_TK) * EXPRESSION_TK RBRACKET_TK
+private command_line_binding_array ::= LBRACKET_TK (input_binding COMMA_TK) * input_binding RBRACKET_TK
+int_array ::= LBRACKET_TK (INT_TK COMMA_TK) * INT_TK RBRACKET_TK
+file_array ::= LBRACKET_TK (file_ COMMA_TK) * file_ RBRACKET_TK
+directory_array ::= LBRACKET_TK (directory COMMA_TK) * directory RBRACKET_TK
 
 // array<CommandOutputParameter> | map<CommandOutputParameter.id, CommandOutputParameter.type> | map<CommandOutputParameter.id, CommandOutputParameter>	True
-private outputs ::= OUTPUTS COLON  command_output_parameter + 
+outputs ::= OUTPUTS_TK COLON_TK  command_output_parameter +
 
-command_output_parameter ::= IDENTIFIER COLON  command_output_parameter_field + 
+command_output_parameter ::= IDENTIFIER_TK COLON_TK  command_output_parameter_field +
 command_output_parameter_field ::= (id | label | secondary_files | format | streamable | doc | output_binding | type)
 
 output_binding ::= command_output_binding
-command_output_binding ::= COLON  command_output_binding_field + 
+command_output_binding ::= COLON_TK  command_output_binding_field + 
 command_output_binding_field ::= (glob | load_contents | output_eval)
-private glob ::= GLOB COLON (STRING | EXPRESSION | string_array)
-private output_eval ::= OUTPUT_EVAL COLON (STRING | EXPRESSION)
+private glob ::= GLOB_TK COLON_TK (STRING_TK | EXPRESSION_TK | string_array)
+private output_eval ::= OUTPUT_EVAL_TK COLON_TK (STRING_TK | EXPRESSION_TK)
 
 // TODO add expression_tool and workflow
 private expression_tool ::= " "
 private workflow ::= " "
 
-file_ ::= CLASS COLON FILE_TYPE  file_field + 
+file_ ::= CLASS_TK COLON_TK FILE_TYPE  file_field +
 file_field ::= (location | path | basename | dirname | nameroot | nameext | checksum | size | file_secondary_files | format | contents)
-private location ::= LOCATION COLON STRING
-private path ::= PATH COLON STRING
-private basename ::= BASENAME COLON STRING
-private dirname ::= DIRNAME COLON STRING
-private nameext ::= NAMEEXT COLON STRING
-private nameroot ::= NAMEROOT COLON STRING
-private checksum ::= CHECKSUM COLON STRING
-private size ::= SIZE COLON NUMBER
-private file_secondary_files ::= SECONDARY_FILES COLON (file_array | directory_array)
-private contents ::= CONTENTS COLON STRING
+private location ::= LOCATION_TK COLON_TK STRING_TK
+private path ::= PATH_TK COLON_TK STRING_TK
+private basename ::= BASENAME_TK COLON_TK STRING_TK
+private dirname ::= DIRNAME_TK COLON_TK STRING_TK
+private nameext ::= NAMEEXT_TK COLON_TK STRING_TK
+private nameroot ::= NAMEROOT_TK COLON_TK STRING_TK
+private checksum ::= CHECKSUM_TK COLON_TK STRING_TK
+private size ::= SIZE_TK COLON_TK NUMBER_TK
+private file_secondary_files ::= SECONDARY_FILES_TK COLON_TK (file_array | directory_array)
+private contents ::= CONTENTS_TK COLON_TK STRING_TK
 
-directory ::= CLASS COLON DIRECTORY_TYPE  directory_field + 
+directory ::= CLASS_TK COLON_TK DIRECTORY_TYPE_TK  directory_field +
 directory_field ::= (location | path | basename | listing)
-private listing ::= LISTING COLON (file_array | directory_array) // The name of each file or subdirectory is determined by the basename field of each File or Directory object. It is an error if a File shares a basename with any other entry in listing. If two or more Directory object share the same basename, this must be treated as equivalent to a single subdirectory with the listings recursively merged.
+private listing ::= LISTING_TK COLON_TK (file_array | directory_array) // The name of each file or subdirectory is determined by the basename field of each File or Directory object. It is an error if a File shares a basename with any other entry in listing. If two or more Directory object share the same basename, this must be treated as equivalent to a single subdirectory with the listings recursively merged.
 
 private left command_input_record_schema ::= (record_type | label | command_input_record_fields )
 
-record_type ::= TYPE COLON RECORD
+record_type ::= TYPE_TK COLON_TK RECORD_TK
 command_input_record_fields ::= command_input_record_field *
 command_input_record_field ::= (name | doc | input_binding | label | command_input_record_field_type)
 command_input_record_field_type ::= (
 cwl_type
 | command_input_enum_schema
-| STRING
+| STRING_TK
 | cwl_type_array
 | command_input_record_schema_array
 | command_input_enum_schema_array
@@ -340,18 +342,18 @@ cwl_type
 | command_input_record_schema
 | command_input_array_schema
 )
-private name ::= NAME COLON STRING
+private name ::= NAME_TK COLON_TK STRING_TK
 
 command_input_enum_schema ::= (symbols | enum_type | label | input_binding)
 symbols ::= string_array
-private enum_type ::= TYPE COLON ENUM_TYPE
+private enum_type ::= TYPE_TK COLON_TK ENUM_TYPE
 
 command_input_array_schema ::= (array_type | label | input_binding | command_input_array_items)
-private array_type ::= TYPE COLON ARRAY_TYPE
+private array_type ::= TYPE_TK COLON_TK ARRAY_TYPE
 command_input_array_items ::= (
                           cwl_type
                           | command_input_enum_schema
-                          | STRING
+                          | STRING_TK
                           | cwl_type_array
                           | command_input_record_schema_array
                           | command_input_enum_schema_array
@@ -367,7 +369,7 @@ command_output_record_field ::= (name | command_output_record_field_type | doc |
 command_output_record_field_type ::= (
 cwl_type
 | command_output_enum_schema
-| STRING
+| STRING_TK
 | cwl_type_array
 | command_output_record_schema_array
 | command_output_enum_schema_array
@@ -383,22 +385,22 @@ command_output_array_items ::= command_output_record_field_type
 
 
 cwl_type ::= (
-NULL_TYPE
-| BOOLEAN_TYPE
-| INT_TYPE
-| LONG_TYPE
-| FLOAT_TYPE
-| DOUBLE_TYPE
-| STRING_TYPE
-| FILE_TYPE
-| DIRECTORY_TYPE
+NULL_TYPE_TK
+| BOOLEAN_TYPE_TK
+| INT_TYPE_TK
+| LONG_TYPE_TK
+| FLOAT_TYPE_TK
+| DOUBLE_TYPE_TK
+| STRING_TYPE_TK
+| FILE_TYPE_TK
+| DIRECTORY_TYPE_TK
 )
 
-cwl_type_array ::= LBRACKET (cwl_type COMMA) * cwl_type RBRACKET
-command_output_record_schema_array ::= LBRACKET (command_output_record_schema COMMA) * command_output_record_schema RBRACKET
-command_output_enum_schema_array ::= LBRACKET (command_output_enum_schema COMMA) * command_output_enum_schema RBRACKET
-command_output_array_schema_array ::= LBRACKET (command_output_array_schema COMMA) * command_output_array_schema RBRACKET
+cwl_type_array ::= LBRACKET_TK (cwl_type COMMA_TK) * cwl_type RBRACKET_TK
+command_output_record_schema_array ::= LBRACKET_TK (command_output_record_schema COMMA_TK) * command_output_record_schema RBRACKET_TK
+command_output_enum_schema_array ::= LBRACKET_TK (command_output_enum_schema COMMA_TK) * command_output_enum_schema RBRACKET_TK
+command_output_array_schema_array ::= LBRACKET_TK (command_output_array_schema COMMA_TK) * command_output_array_schema RBRACKET_TK
 
-command_input_record_schema_array ::= LBRACKET (command_input_record_schema COMMA) * command_input_record_schema RBRACKET
-command_input_enum_schema_array ::= LBRACKET (command_input_enum_schema COMMA) * command_input_enum_schema RBRACKET
-command_input_array_schema_array ::= LBRACKET (command_input_array_schema COMMA) * command_input_array_schema RBRACKET
+command_input_record_schema_array ::= LBRACKET_TK (command_input_record_schema COMMA_TK) * command_input_record_schema RBRACKET_TK
+command_input_enum_schema_array ::= LBRACKET_TK (command_input_enum_schema COMMA_TK) * command_input_enum_schema RBRACKET_TK
+command_input_array_schema_array ::= LBRACKET_TK (command_input_array_schema COMMA_TK) * command_input_array_schema RBRACKET_TK
