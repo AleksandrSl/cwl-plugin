@@ -75,11 +75,8 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
                 PERMANENT_FAIL_CODES_KEYWORD -> {
                     parseSimpleStatement(STRING, CwlElementTypes.PERMANENT_FAIL_CODES)
                 } // TODO
-//                INDENT -> {
-//                    myBuilder.error("Unexpected indent")
-//                }
                 else -> {
-//                    reportParseStatementError(myBuilder, firstToken);
+                  myBuilder.error("Unexpected $firstToken")
                     return false
                 }
             }

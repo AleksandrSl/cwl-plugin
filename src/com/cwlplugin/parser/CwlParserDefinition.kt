@@ -33,9 +33,7 @@ class CwlParserDefinition : ParserDefinition {
 
     override fun getFileNodeType(): IFileElementType = FILE
 
-    override fun createFile(viewProvider: FileViewProvider): PsiFile {
-        return CwlFile(viewProvider)
-    }
+    override fun createFile(viewProvider: FileViewProvider): PsiFile = CwlFile(viewProvider)
 
     override fun spaceExistanceTypeBetweenTokens(left: ASTNode, right: ASTNode): ParserDefinition.SpaceRequirements =
             ParserDefinition.SpaceRequirements.MAY
@@ -53,7 +51,7 @@ class CwlParserDefinition : ParserDefinition {
 
     val FILE = IFileElementType(CwlLanguage)
 
-    val myWhitespaceTokens = TokenSet.create(CwlTokenTypes.LINE_BREAK, CwlTokenTypes.SPACE, CwlTokenTypes.TAB, CwlTokenTypes.FORMFEED)
+    val myWhitespaceTokens = TokenSet.create(CwlTokenTypes.SPACE, CwlTokenTypes.TAB, CwlTokenTypes.FORMFEED)
     val myCommentTokens = TokenSet.create(CwlTokenTypes.END_OF_LINE_COMMENT)
 //    val myStringLiteralTokens = TokenSet.orSet(PyTokenTypes.STRING_NODES, TokenSet.create(PyElementTypes.STRING_LITERAL_EXPRESSION))
 }

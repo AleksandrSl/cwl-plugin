@@ -60,6 +60,9 @@ class RequirementsParser(context: ParsingContext) : Parsing(context) {
             }
         }
         nextToken()
+        if (!checkMatches(CwlTokenTypes.LINE_BREAK, "Line break expected")) {
+            requirement.drop(); return false
+        }
         requirement.done(requirementType)
         return true
     }

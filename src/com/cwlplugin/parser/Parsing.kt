@@ -82,7 +82,8 @@ open class Parsing(val parsingContext: ParsingContext) {
 //    }
 
     fun parseIndentedBlock(blockType: IElementType, parseStatement: () -> Boolean): Unit {
-        if (checkMatches(CwlTokenTypes.STATEMENT_BREAK, "Statement break expected")) {
+        if (checkMatches(CwlTokenTypes.LINE_BREAK, "Line break expected")) {
+            println("Instead indent: ${myBuilder.tokenType}")
             if (checkMatches(CwlTokenTypes.INDENT, "Indent expected", advanceLexer = false)) {
                 val indentedBlock: PsiBuilder.Marker = myBuilder.mark()
                 nextToken()

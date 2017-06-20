@@ -26,8 +26,7 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
 
     protected open class PendingToken(var type: IElementType?, val start: Int, val end: Int) {
 
-        override fun toString(): String =
-                "${type.toString()}:$start-$end"
+        override fun toString(): String = "${type.toString()}:$start-$end"
     }
 
     private class PendingCommentToken(type: IElementType?, start: Int, end: Int, val indent: Int) : PendingToken(type, start, end)
@@ -170,17 +169,14 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
         when {
             isBaseAt(CwlTokenTypes.LINE_BREAK) -> {
                 processLineBreak(tokenStart)
-                while (isBaseAt(commentTokenType)) {
-                    // comment at start of line; maybe we need to generate dedent before the comments
-                    myTokenQueue.add(PendingCommentToken(baseTokenType, baseTokenStart, baseTokenEnd, myLastNewLineIndent))
-                    advanceBase()
-                    if (!isBaseAt(CwlTokenTypes.LINE_BREAK)) break
-                    processLineBreak(baseTokenStart)
-                }
+//                while (isBaseAt(commentTokenType)) {
+//                     comment at start of line; maybe we need to generate dedent before the comments
+//                    myTokenQueue.add(PendingCommentToken(baseTokenType, baseTokenStart, baseTokenEnd, myLastNewLineIndent))
+//                    advanceBase()
+//                    if (!isBaseAt(CwlTokenTypes.LINE_BREAK)) break
+//                    processLineBreak(baseTokenStart)
+//                }
             }
-//            isBaseAt(CwlTokenTypes.BACKSLASH) -> {
-//                processBackslash(tokenStart)
-//            }
             isBaseAt(CwlTokenTypes.SPACE) -> {
                 processSpace()
             }
@@ -197,7 +193,6 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
         when(baseTokenType){
             CwlTokenTypes.LINE_BREAK -> processLineBreak(start)
 
-//            CwlTokenTypes.BACKSLASH) -> processBackslash(start)
             else -> myTokenQueue.add(PendingToken(CwlTokenTypes.SPACE, start, end))
         }
     }
@@ -229,10 +224,10 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
 
     protected fun processLineBreak(startPos: Int): Unit {
         if (myBraceLevel == 0) {
-            if (hasUnclosedColon) {
-                println("BREAK ME 1")
-                pushToken(CwlTokenTypes.STATEMENT_BREAK, startPos, startPos)
-            }
+//            if (hasUnclosedColon) {
+//                println("BREAK ME 1")
+//                pushToken(CwlTokenTypes.STATEMENT_BREAK, startPos, startPos)
+//            }
             myLineHasSignificantTokens = false
             hasUnclosedColon = false
             advanceBase()
@@ -242,7 +237,7 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
             processInsignificantLineBreak(startPos, false)
         }
     }
-
+//
     protected fun processInsignificantLineBreak(startPos: Int,
                                                 breakStatementOnLineBreak: Boolean): Unit {
         // merge whitespace following the line break character into the
