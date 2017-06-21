@@ -141,7 +141,7 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
             (myBraceLevel != 0 && RECOVERY_TOKENS.contains(tokenType)) -> {
                 myBraceLevel = 0
                 val pos = tokenStart
-                pushToken(CwlTokenTypes.STATEMENT_BREAK, pos, pos)
+//                pushToken(CwlTokenTypes.STATEMENT_BREAK, pos, pos)
                 val indents = myIndentStack.size()
                 for (i in 0..indents - 1 - 1) {
                     val indent = myIndentStack.peek()
@@ -273,6 +273,7 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
                 myTokenQueue.add(insertIndex, PendingToken(CwlTokenTypes.INDENT, indentOffset, indentOffset))
             }
             indent < lastIndent -> {
+                myTokenQueue.add(PendingToken(whitespaceTokenType, whiteSpaceStart, whiteSpaceEnd))
                 while (indent < lastIndent) {
                     myIndentStack.pop()
                     lastIndent = myIndentStack.peek()
@@ -289,7 +290,6 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
                     }
                     myTokenQueue.add(insertIndex, PendingToken(CwlTokenTypes.DEDENT, dedentOffset, dedentOffset))
                 }
-                myTokenQueue.add(PendingToken(whitespaceTokenType, whiteSpaceStart, whiteSpaceEnd))
             }
             else -> {
                 myTokenQueue.add(PendingToken(whitespaceTokenType, whiteSpaceStart, whiteSpaceEnd))

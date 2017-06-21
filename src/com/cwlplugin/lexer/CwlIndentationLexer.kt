@@ -15,7 +15,7 @@ class CwlIndentationLexer : CwlIndentationProcessor(_CwlLexer(null as Reader?), 
         super.processSpecialTokens()
         val tokenStart = baseTokenStart
         if (baseTokenType == null && addFinalBreak) {
-            pushToken(CwlTokenTypes.STATEMENT_BREAK, tokenStart, tokenStart)
+            pushToken(CwlTokenTypes.LINE_BREAK, tokenStart, tokenStart)
             addFinalBreak = false
         }
     }

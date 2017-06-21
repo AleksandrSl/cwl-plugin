@@ -20,11 +20,6 @@ class RequirementsParser(context: ParsingContext) : Parsing(context) {
      */
     fun parseRequirementsBlock(): Unit {
         parseColonAndIndentedBlock(CwlElementTypes.REQUIREMENTS_BLOCK, this::parseRequirementsList)
-        val requirementsBlock: PsiBuilder.Marker = myBuilder.mark()
-        nextToken()
-        checkMatches(CwlTokenTypes.COLON, message("PARSE.expected.colon"))
-        parseRequirementsList()
-        requirementsBlock.done(CwlElementTypes.REQUIREMENTS_BLOCK)
     }
 
     fun parseRequirementsList(): Unit {
@@ -59,11 +54,13 @@ class RequirementsParser(context: ParsingContext) : Parsing(context) {
                 requirement.drop(); return false
             }
         }
+        println("parseRequirement:: ${myBuilder.tokenType}")
         nextToken()
-        if (!checkMatches(CwlTokenTypes.LINE_BREAK, "Line break expected")) {
-            requirement.drop(); return false
-        }
         requirement.done(requirementType)
+        println("parseRequirement:: ${myBuilder.tokenType}")
+        if (!checkMatches(CwlTokenTypes.LINE_BREAK, "Line break expected")) {
+            return false
+        }
         return true
     }
 }
