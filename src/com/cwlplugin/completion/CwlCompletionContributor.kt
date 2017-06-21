@@ -24,6 +24,11 @@ class CwlCompletionContributor : CompletionContributor() {
                         "SchemaDefRequirement", "SoftwareRequirement", "InitialWorkDirRequirement",
                         "EnvVarRequirement", "ShellCommandRequirement", "ResourceRequirement"))
 
+        extend(CompletionType.BASIC, CwlKeywordCompletionProvider.general_context(),
+                CwlKeywordCompletionProvider("basename", "contents", "default", "Directory", "dirname", "dockerPull",
+                        "enum", "File", "float", "glob", "inputBinding", "itemSeparator", "listing", "loadContents",
+                        "path", "position", "prefix", "secondaryFiles", "separate", "type", "valueFrom"))
+
 //        extend(CompletionType.BASIC, CwlKeywordCompletionProvider.commandLineTool1(),
 //                CwlKeywordCompletionProvider("2"))
 //

@@ -1,11 +1,12 @@
 package com.cwlplugin.parser
 
 import com.cwlplugin.CwlBundle
+import com.cwlplugin.lexer.CwlTokenType
 import com.cwlplugin.psi.CwlElementType
 import com.intellij.lang.PsiBuilder
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.psi.tree.IElementType
-
+import kotlin.collections.all
 /**
  * @author yole, Aleksandr Slepchenkov [aslepchenkov@parseq.pro](mailto:aslepchenkov@parseq.pro)
  */
@@ -161,5 +162,21 @@ open class Parsing(val parsingContext: ParsingContext) {
                 }
             }
         }
+    }
+
+    fun parseFlowSequence(blockType: IElementType, elementType: CwlElementType): Boolean {
+        nextToken()
+        with(CwlTokenTypes) {
+            if (!checkMatches(COLON, CwlBundle.message("PARSE.expected.colon"))) return false
+            if (!checkMatches(LBRACKET, CwlBundle.message("PARSE.expected.lbracket"))) return false
+            if (!checkMatches(elementType, "Empty sequence")) return false
+            while (!atToken(RBRACKET)) {
+                println("in do statement")
+                if (!checkMatches(COMMA, CwlBundle.message("PARSE.expected.comma"))) return false
+                if (!checkMatches(elementType, "$elementType expected")) return false
+            }
+            if (!checkMatches(RBRACKET, CwlBundle.message("PARSE.expected.rbracket"))) return false
+        }
+        return checkMatches(CwlTokenTypes.LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))
     }
 }

@@ -50,7 +50,7 @@ EndOfLineComment = "#"{InputCharacter}*
 Identifier = [:jletter:] [:jletterdigit:]*
 DecIntegerLiteral = 0 | [1-9][0-9]*
 SimpleString = \"[^\"\r\n]*\"
-BareString = [^\n\r\(: \)]+
+BareString = [^\n\r\(:\),\"]+
 String = {BareString} | {SimpleString}
 Expression = \$\(.*\) | \$\{.*\}
 

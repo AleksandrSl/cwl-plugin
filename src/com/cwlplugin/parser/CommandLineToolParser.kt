@@ -38,7 +38,8 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
                     parseSimpleStatement(COMMAND_LINE_TOOL_KEYWORD, CwlElementTypes.COMMAND_LINE_TOOL_CLASS)
                 }
                 BASECOMMAND_KEYWORD -> {
-                    parseSimpleStatement(STRING, CwlElementTypes.BASE_COMMAND)
+                    parseBaseCommand()
+//                    parseSimpleStatement(STRING, CwlElementTypes.BASE_COMMAND)
                 } // TODO
                 OUTPUTS_KEYWORD -> {
                 }
@@ -189,7 +190,7 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
     }
 
     fun parseBaseCommand(): Boolean {
-        return true
+        return parseFlowSequence(CwlElementTypes.BASE_COMMAND, CwlTokenTypes.STRING)
     }
 
 //    fun parseDoc()
