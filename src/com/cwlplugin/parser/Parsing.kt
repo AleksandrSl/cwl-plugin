@@ -37,7 +37,7 @@ open class Parsing(val parsingContext: ParsingContext) {
             if (myBuilder.tokenType !== CwlTokenTypes.STATEMENT_BREAK && !atAnyOfTokens(*validSuccessiveTokens)) {
                 myBuilder.advanceLexer()
             }
-            nameExpected.error("PARSE.expected.identifier") // TODO Do I need bundle?
+            nameExpected.error("PARSE.expected.identifier")
             return false
         }
     }
@@ -120,6 +120,45 @@ open class Parsing(val parsingContext: ParsingContext) {
             }
             else -> {
                 builder.error("Statement expected, found " + firstToken.toString())
+            }
+        }
+    }
+
+    /**
+     * First token is already matched
+     */
+    fun parseSimpleStatement(secondToken: IElementType, statementElement: IElementType): Boolean {
+        val statement: PsiBuilder.Marker = myBuilder.mark()
+        nextToken()
+        if (!checkMatches(CwlTokenTypes.COLON, CwlBundle.message("PARSE.expected.colon"))) {
+            statement.drop(); return false
+        }
+        if (!checkMatches(secondToken, "$secondToken expected")) {
+            statement.drop(); return false
+        }
+        statement.done(statementElement)
+        return checkMatches(CwlTokenTypes.LINE_BREAK, "Line break expected")
+    }
+
+    fun parseSequence(blockType: IElementType, parseStatement: () -> Boolean): Unit {
+
+        if (checkMatches(CwlTokenTypes.LINE_BREAK, "Line break expected")) {
+            println("Instead indent: ${myBuilder.tokenType}")
+            if (checkMatches(CwlTokenTypes.INDENT, "Indent expected", advanceLexer = false)) {
+                val indentedBlock: PsiBuilder.Marker = myBuilder.mark()
+                nextToken()
+                if (myBuilder.eof()) {
+                    myBuilder.error("Indented block expected")
+                } else {
+                    while (!myBuilder.eof() && myBuilder.tokenType !== CwlTokenTypes.DEDENT) {
+                        if (!checkMatches(CwlTokenTypes.SEQUENCE_ELEMENT_PREFIX, CwlBundle.message("PARSE.expected.sequence_element_prefix"))) break
+                        if (!parseStatement()) break
+                    }
+                }
+                indentedBlock.done(blockType)
+                if (!myBuilder.eof()) {
+                    checkMatches(CwlTokenTypes.DEDENT, "Dedent expected")
+                }
             }
         }
     }

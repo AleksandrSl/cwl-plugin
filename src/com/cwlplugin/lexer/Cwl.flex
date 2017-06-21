@@ -67,7 +67,7 @@ Boolean = True | False
         [\f]                               { return CwlTokenTypes.FORMFEED; }
         {LineTerminator}                   { return CwlTokenTypes.LINE_BREAK; }
 //        "|"                                { yybegin(MULTILINE_STRING); }
-
+        "- "                               { return CwlTokenTypes.SEQUENCE_ELEMENT_PREFIX; }
         {Comment}                          { return CwlTokenTypes.END_OF_LINE_COMMENT; }
         {DecIntegerLiteral}                { return CwlTokenTypes.INT; }
         "array"                            { return CwlTokenTypes.ARRAY_TYPE_KEYWORD; }

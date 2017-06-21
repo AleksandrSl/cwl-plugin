@@ -121,6 +121,7 @@ object CwlTokenTypes {
     @JvmField val COLON = CwlElementType("COLON")
     @JvmField val COMMA = CwlElementType("COMMA")
     @JvmField val RBRACKET = CwlElementType("RBRACKET")
+    @JvmField val SEQUENCE_ELEMENT_PREFIX = CwlElementType("SEQUENCE_ELEMENT_PREFIX")
 
     // Indentation
     @JvmField val INDENT = CwlElementType("INDENT")

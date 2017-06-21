@@ -23,7 +23,7 @@ class RequirementsParser(context: ParsingContext) : Parsing(context) {
     }
 
     fun parseRequirementsList(): Unit {
-        parseIndentedBlock(CwlElementTypes.REQUIREMENT_LIST, parseStatement = this::parseRequirement)
+        parseSequence(CwlElementTypes.REQUIREMENT_LIST, parseStatement = this::parseRequirement)
     }
 
     /**
@@ -58,10 +58,7 @@ class RequirementsParser(context: ParsingContext) : Parsing(context) {
         nextToken()
         requirement.done(requirementType)
         println("parseRequirement:: ${myBuilder.tokenType}")
-        if (!checkMatches(CwlTokenTypes.LINE_BREAK, "Line break expected")) {
-            return false
-        }
-        return true
+        return checkMatches(CwlTokenTypes.LINE_BREAK, message("PARSE.expected.line_break"))
     }
 }
 

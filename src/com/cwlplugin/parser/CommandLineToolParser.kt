@@ -192,21 +192,6 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
         return true
     }
 
-    /**
-     * First token is already matched
-     */
-    fun parseSimpleStatement(secondToken: IElementType, statementElement: IElementType): Boolean {
-        val statement: PsiBuilder.Marker = myBuilder.mark()
-        nextToken()
-        if (!checkMatches(CwlTokenTypes.COLON, CwlBundle.message("PARSE.expected.colon"))) {
-            statement.drop(); return false
-        }
-        if (!checkMatches(secondToken, "$secondToken expected")) {
-            statement.drop(); return false
-        }
-        statement.done(statementElement)
-        return true
-    }
 //    fun parseDoc()
 //    fun parseId()
 //    fun parseLabel()
