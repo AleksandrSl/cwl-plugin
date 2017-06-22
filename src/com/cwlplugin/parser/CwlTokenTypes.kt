@@ -122,11 +122,18 @@ object CwlTokenTypes {
     @JvmField val COMMA = CwlElementType("COMMA")
     @JvmField val RBRACKET = CwlElementType("RBRACKET")
     @JvmField val SEQUENCE_ELEMENT_PREFIX = CwlElementType("SEQUENCE_ELEMENT_PREFIX")
+    @JvmField val LBRACE = CwlElementType("LBRACE")
+    @JvmField val RBRACE = CwlElementType("RBRACE")
+    @JvmField val PIPE = CwlElementType("PIPE") // literal block scalar
+    @JvmField val GT = CwlElementType("GT") // folded block scalar
 
     // Indentation
     @JvmField val INDENT = CwlElementType("INDENT")
     @JvmField val DEDENT = CwlElementType("DEDENT")
     @JvmField val INCONSISTENT_DEDENT = CwlElementType("INCONSISTENT_DEDENT")
+
+    // Multi line string
+    @JvmField val MLSPART = CwlElementType("MLSPART")
 
     // Line formatting
     @JvmField val SPACE = CwlElementType("SPACE")

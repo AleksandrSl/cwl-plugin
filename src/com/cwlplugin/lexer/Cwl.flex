@@ -50,7 +50,10 @@ EndOfLineComment = "#"{InputCharacter}*
 Identifier = [:jletter:] [:jletterdigit:]*
 DecIntegerLiteral = 0 | [1-9][0-9]*
 SimpleString = \"[^\"\r\n]*\"
-BareString = [^\n\r\(:\),\"]+
+
+// # can be inside string, but in this case aaa #aaaa will be a string also, not a string and comment
+// Bless the person who allowed strings without quotation marks!
+BareString = [^\n\r\(: \),\"]([^\n\r\(:#\),\"])*[^\n\r\(: #\),\"]
 String = {BareString} | {SimpleString}
 Expression = \$\(.*\) | \$\{.*\}
 
@@ -59,14 +62,14 @@ Boolean = True | False
 %state STRING
 %%
 
-
     <YYINITIAL> {
 
         [\ ]                               { return CwlTokenTypes.SPACE; }
         [\t]                               { return CwlTokenTypes.TAB; }
         [\f]                               { return CwlTokenTypes.FORMFEED; }
         {LineTerminator}                   { return CwlTokenTypes.LINE_BREAK; }
-//        "|"                                { yybegin(MULTILINE_STRING); }
+        "|"                                { return CwlTokenTypes.PIPE; }
+        ">"                                { return CwlTokenTypes.GT; }
         "- "                               { return CwlTokenTypes.SEQUENCE_ELEMENT_PREFIX; }
         {Comment}                          { return CwlTokenTypes.END_OF_LINE_COMMENT; }
         {DecIntegerLiteral}                { return CwlTokenTypes.INT; }
@@ -118,6 +121,7 @@ Boolean = True | False
         "int"                              { return CwlTokenTypes.INT_TYPE_KEYWORD; }
         "itemSeparator"                    { return CwlTokenTypes.ITEM_SEPARATOR_KEYWORD; }
         "label"                            { return CwlTokenTypes.LABEL_KEYWORD; }
+        "{"                                { return CwlTokenTypes.LBRACE; }
         "["                                { return CwlTokenTypes.LBRACKET; }
         "listing"                          { return CwlTokenTypes.LISTING_KEYWORD; }
         "loadContents"                     { return CwlTokenTypes.LOAD_CONTENTS_KEYWORD; }
@@ -137,6 +141,7 @@ Boolean = True | False
         "prefix"                           { return CwlTokenTypes.PREFIX_KEYWORD; }
         "ramMax"                           { return CwlTokenTypes.RAM_MAX_KEYWORD; }
         "ramMin"                           { return CwlTokenTypes.RAM_MIN_KEYWORD; }
+        "}"                                { return CwlTokenTypes.RBRACE; }
         "]"                                { return CwlTokenTypes.RBRACKET; }
         "record"                           { return CwlTokenTypes.RECORD_KEYWORD; }
         "requirements"                     { return CwlTokenTypes.REQUIREMENTS_KEYWORD; }

@@ -50,7 +50,9 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
                     parseSimpleStatement(STRING, CwlElementTypes.LABEL)
                 } // TODO
                 DOC_KEYWORD -> {
-                    parseSimpleStatement(STRING, CwlElementTypes.DOC)
+                    println("Doc parse started")
+                    return parseDoc()
+//                    parseSimpleStatement(STRING, CwlElementTypes.DOC)
                 } // TODO
                 HINTS_KEYWORD -> {
                     parseSimpleStatement(STRING, CwlElementTypes.HINTS)
@@ -193,7 +195,14 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
         return parseFlowSequence(CwlElementTypes.BASE_COMMAND, CwlTokenTypes.STRING)
     }
 
-//    fun parseDoc()
+    fun parseDoc(): Boolean {
+        nextToken()
+        if (!checkMatches(CwlTokenTypes.COLON, CwlBundle.message("PARSE.expected.colon"))) {
+            return false
+        }
+        return parseMultiLineString()
+    }
+
 //    fun parseId()
 //    fun parseLabel()
 //    fun parseStderr()

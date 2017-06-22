@@ -48,6 +48,7 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
         return baseTokenType === tokenType
     }
 
+    var multiLineStringStarted: Boolean = false
     override fun getTokenType(): IElementType? {
         if (myTokenQueue.size > 0) {
 //            println(myTokenQueue[0].type.toString())
@@ -63,7 +64,14 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
     override fun getTokenEnd(): Int = if (myTokenQueue.size > 0) myTokenQueue[0].end else baseTokenEnd
 
     override fun advance() {
-        when(tokenType) {
+        // Placed at the beginning not to miss first token
+        if (DUMP_TOKENS) {
+            if (tokenType != null) {
+                print("$tokenStart-$tokenEnd:$tokenType")
+                if (tokenType === CwlTokenTypes.LINE_BREAK) println("{$myBraceLevel}") else print(" ")
+            }
+        }
+        when (tokenType) {
             CwlTokenTypes.LINE_BREAK -> {
                 val text = tokenText
                 var spaces = 0
@@ -75,30 +83,25 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
                 }
                 myCurrentNewLineIndent = spaces
             }
-            CwlTokenTypes.TAB ->  myCurrentNewLineIndent += 8
+            CwlTokenTypes.TAB -> myCurrentNewLineIndent += 8
         }
         if (myTokenQueue.size > 0) {
             myTokenQueue.removeAt(0)
-            if (myProcessSpecialTokensPending) {
-                myProcessSpecialTokensPending = false
+            if (baseTokenType == CwlTokenTypes.PIPE) {  // Remove this
                 processSpecialTokens()
             }
         } else {
             advanceBase()
+//            println("Shitty baseToken: $baseTokenType")
             processSpecialTokens()
         }
         adjustBraceLevel()
-        if (DUMP_TOKENS) {
-            if (tokenType != null) {
-                print("$tokenStart-$tokenEnd:$tokenType")
-                if (tokenType === CwlTokenTypes.LINE_BREAK) println("{$myBraceLevel}") else print(" ")
-            }
-        }
+
     }
 
-    protected fun advanceBase() : Unit {
+    protected fun advanceBase(): Unit {
         super.advance()
-        hasUnclosedColon()
+//        hasUnclosedColon()
         checkSignificantTokens()
     }
 
@@ -178,7 +181,12 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
 //                }
             }
             isBaseAt(CwlTokenTypes.SPACE) -> {
+//                println("At space")
                 processSpace()
+            }
+            isBaseAt(CwlTokenTypes.PIPE) -> {
+//                println("At pipe")
+                processMultiLineString()
             }
         }
     }
@@ -187,57 +195,85 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
         val start = baseTokenStart
         var end = baseTokenEnd
         while (baseTokenType === CwlTokenTypes.SPACE) {
+//            println("Current token in space cycle: $tokenType")
             end = baseTokenEnd
             advanceBase()
         }
-        when(baseTokenType){
+        when (baseTokenType) {
             CwlTokenTypes.LINE_BREAK -> processLineBreak(start)
+
+            CwlTokenTypes.PIPE -> processMultiLineString()
 
             else -> myTokenQueue.add(PendingToken(CwlTokenTypes.SPACE, start, end))
         }
     }
 
-//    private fun processBackslash(tokenStart: Int) {
-//        val backslashToken = PendingToken(baseTokenType, tokenStart, baseTokenEnd)
-//        myTokenQueue.add(backslashToken)
-//        advanceBase()
-//        while (CwlTokenTypes.WHITESPACE.contains(baseTokenType)) {
-//            pushCurrentToken()
-//            advanceBase()
-//        }
-//        if (baseTokenType === CwlTokenTypes.LINE_BREAK) {
-//            backslashToken.type = CwlTokenTypes.SPACE
-//            processInsignificantLineBreak(baseTokenStart, true)
-//        }
-//        myProcessSpecialTokensPending = true
-//    }
-    protected fun hasUnclosedColon(){
+    /**
+     * Process multi line string
+     *
+     * Skip all indents inside it. Multi line string ends with dedent.
+     * Unfortunately it seems that I cannot replace existent token, only add new tokens.
+     * So I still should parse multiline string
+     */
+    fun processMultiLineString(): Unit {
+        var start = 0
+        var end = 0
+        // Push PIPE back, is's removed somehow
+        pushCurrentToken()
+        // Skip all tokens before line break. Parser will take care that they are only whitespaces
+        while (baseTokenType != CwlTokenTypes.LINE_BREAK) {
+//            println("Current token in first LB search block: $baseTokenType")
+            advanceBase()
+        }
+        // Process first line break
+        processLineBreak(baseTokenStart)  // This pushes at least one token into myTokenQueue
+//        println("Initial token queue: $myTokenQueue")
+        multiLineStringStarted = true
+//        println("Current token after LB search block: $baseTokenType")
+        start = baseTokenEnd
+        while (myTokenQueue.last().type != CwlTokenTypes.DEDENT && baseTokenType != null) {
+            when (baseTokenType) {
+                CwlTokenTypes.LINE_BREAK -> {
+//                    println("Token queue: $myTokenQueue")
+                    end = baseTokenStart
+//                    println("Line break in mls")
+                    pushToken(CwlTokenTypes.MLSPART, start, end)
+                    processLineBreak(baseTokenStart)
+                    start = myTokenQueue.last().end
+//                    println("Last token type: ${myTokenQueue.last().type}")
+                }
+                else -> {
+//                    println("Current token in else block: $baseTokenType")
+//                    start = baseTokenEnd
+                    advanceBase()
+                }
+            }
+        }
+        multiLineStringStarted = false
+    }
+
+    protected fun hasUnclosedColon() {
         if (!hasUnclosedColon) {
             hasUnclosedColon = baseTokenType == CwlTokenTypes.COLON
         } else {
-            if (!CwlTokenTypes.WHITESPACE_OR_LINEBREAK.contains(baseTokenType) && (baseTokenType != commentTokenType))
-            {
+            if (!CwlTokenTypes.WHITESPACE_OR_LINEBREAK.contains(baseTokenType) && (baseTokenType != commentTokenType)) {
                 hasUnclosedColon = false
             }
         }
-}
+    }
 
     protected fun processLineBreak(startPos: Int): Unit {
         if (myBraceLevel == 0) {
-//            if (hasUnclosedColon) {
-//                println("BREAK ME 1")
-//                pushToken(CwlTokenTypes.STATEMENT_BREAK, startPos, startPos)
-//            }
             myLineHasSignificantTokens = false
             hasUnclosedColon = false
             advanceBase()
             processIndent(startPos, CwlTokenTypes.LINE_BREAK)
         } else {
-            println("BREAK ME 3")
+//            println("BREAK ME 3")
             processInsignificantLineBreak(startPos, false)
         }
     }
-//
+
     protected fun processInsignificantLineBreak(startPos: Int,
                                                 breakStatementOnLineBreak: Boolean): Unit {
         // merge whitespace following the line break character into the
@@ -255,7 +291,7 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
         }
     }
 
-    protected fun processIndent(whiteSpaceStart: Int, whitespaceTokenType: IElementType) {
+    protected fun processIndent(whiteSpaceStart: Int, whitespaceTokenType: IElementType): Unit {
         var lastIndent = myIndentStack.peek()
         var indent = nextLineIndent
         myLastNewLineIndent = indent
@@ -263,14 +299,25 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
         if (baseTokenType === commentTokenType) {
             indent = lastIndent
         }
+        // TODO change here
         val whiteSpaceEnd = if (baseTokenType == null) super.getBufferEnd() else baseTokenStart
         when {
             indent > lastIndent -> {
-                myIndentStack.push(indent)
-                myTokenQueue.add(PendingToken(whitespaceTokenType, whiteSpaceStart, whiteSpaceEnd))
-                val insertIndex = skipPrecedingCommentsWithIndent(indent, myTokenQueue.size - 1)
-                val indentOffset = if (insertIndex == myTokenQueue.size) whiteSpaceEnd else myTokenQueue[insertIndex].start
-                myTokenQueue.add(insertIndex, PendingToken(CwlTokenTypes.INDENT, indentOffset, indentOffset))
+                /*
+                 * In multiline string only first indent after '|' matters. Following lines have the same indent
+                 * and all excessive tabs and whitespaces are parts of the string
+                 */
+                if (multiLineStringStarted) {
+                    myTokenQueue.add(PendingToken(whitespaceTokenType, whiteSpaceStart, whiteSpaceEnd))
+                } else {
+                    myIndentStack.push(indent)
+                    // TODO rewrite function since whiteSpacetoken is always line break? and it's one symbol length?
+                    myTokenQueue.add(PendingToken(whitespaceTokenType, whiteSpaceStart, whiteSpaceStart + 1))
+                    val insertIndex = skipPrecedingCommentsWithIndent(indent, myTokenQueue.size - 1)
+                    val indentOffset = if (insertIndex == myTokenQueue.size) whiteSpaceStart + 1 else myTokenQueue[insertIndex].start
+//                    myTokenQueue.add(insertIndex, PendingToken(CwlTokenTypes.INDENT, indentOffset, indentOffset))
+                    myTokenQueue.add(insertIndex, PendingToken(CwlTokenTypes.INDENT, indentOffset, baseTokenStart))
+                }
             }
             indent < lastIndent -> {
                 myTokenQueue.add(PendingToken(whitespaceTokenType, whiteSpaceStart, whiteSpaceEnd))
@@ -342,6 +389,6 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
 
     companion object {
 
-        private const val DUMP_TOKENS = false
+        private const val DUMP_TOKENS = true
     }
 }
