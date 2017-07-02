@@ -47,13 +47,15 @@ Comment = {EndOfLineComment}
 // Comment can be the last line of the file, without line terminator
 EndOfLineComment = "#"{InputCharacter}*
 // Put constrains on identifier myself. I don't see meaning in identifiers like "*&&****&" or uyutut&&&%
-Identifier = [:jletter:] [:jletterdigit:]*
+Identifier = [:jletter:][:jletterdigit:]*
 DecIntegerLiteral = 0 | [1-9][0-9]*
 SimpleString = \"[^\"\r\n]*\"
 
 // # can be inside string, but in this case aaa #aaaa will be a string also, not a string and comment
 // Bless the person who allowed strings without quotation marks!
-BareString = [^\n\r\(: \),\"]([^\n\r\(:#\),\"])*[^\n\r\(: #\),\"]
+//BareString = [^\n\r\(: \),\"]([^\n\r\(:#\),\"])*[^\n\r\(: #\),\"]
+// Permamently or maybe constantly restrict bare string value
+BareString = [:jletterdigit:]([^\n\r\(:#\),\"])*[^\n\r\(: #\),\"]
 String = {BareString} | {SimpleString}
 Expression = \$\(.*\) | \$\{.*\}
 
@@ -70,7 +72,7 @@ Boolean = True | False
         {LineTerminator}                   { return CwlTokenTypes.LINE_BREAK; }
         "|"                                { return CwlTokenTypes.PIPE; }
         ">"                                { return CwlTokenTypes.GT; }
-        "- "                               { return CwlTokenTypes.SEQUENCE_ELEMENT_PREFIX; }
+        "-"                                { return CwlTokenTypes.SEQUENCE_ELEMENT_PREFIX; }
         {Comment}                          { return CwlTokenTypes.END_OF_LINE_COMMENT; }
         {DecIntegerLiteral}                { return CwlTokenTypes.INT; }
         "array"                            { return CwlTokenTypes.ARRAY_TYPE_KEYWORD; }
@@ -164,7 +166,6 @@ Boolean = True | False
         "version"                          { return CwlTokenTypes.VERSION_KEYWORD; }
         "Workflow"                         { return CwlTokenTypes.WORKFLOW_KEYWORD; }
         "writable"                         { return CwlTokenTypes.WRITABLE_KEYWORD; }
-//        {Identifier}                       { return CwlTokenTypes.IDENTIFIER; }
         {String}                           { return CwlTokenTypes.STRING;}
     }
     .                                      { return TokenType.BAD_CHARACTER;}

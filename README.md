@@ -5,7 +5,20 @@
 Plugin for IntelliJ IDEA to work with
 [Common Workflow Language](http://www.commonwl.org/v1.0/index.html) files
 
-## Requirements
+## Usage
+
+* Copy the `cwl-plugin.jar` to the .IntelliJIDEAx0\config\plugins folder,
+and then restart your IDE so the changes may take effect.
+To know how to locate your plugins directory, refer to [IDE Settings,
+Caches, Logs, and Plugins](http://www.jetbrains.org/intellij/sdk/docs/basics/settings_caches_logs.html).
+
+* In the main menu, select File | Settings to open the Settings dialog box.
+* In the Settings dialog box, under IDE Settings, click Plugins.
+* In the Plugins area, open the Installed tab, and then select the check-box next to your plugin name.
+* When finished, click OK to close the Settings dialog box.
+* Restart the IDE so that your changes take effect.
+
+## Requirements for development
 
 To compile you will need:
 

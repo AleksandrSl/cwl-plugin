@@ -230,7 +230,7 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
 //        println("Initial token queue: $myTokenQueue")
         multiLineStringStarted = true
 //        println("Current token after LB search block: $baseTokenType")
-        start = baseTokenEnd
+        start = baseTokenStart
         while (myTokenQueue.last().type != CwlTokenTypes.DEDENT && baseTokenType != null) {
             when (baseTokenType) {
                 CwlTokenTypes.LINE_BREAK -> {
@@ -269,7 +269,6 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
             advanceBase()
             processIndent(startPos, CwlTokenTypes.LINE_BREAK)
         } else {
-//            println("BREAK ME 3")
             processInsignificantLineBreak(startPos, false)
         }
     }
@@ -308,7 +307,8 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
                  * and all excessive tabs and whitespaces are parts of the string
                  */
                 if (multiLineStringStarted) {
-                    myTokenQueue.add(PendingToken(whitespaceTokenType, whiteSpaceStart, whiteSpaceEnd))
+                    myTokenQueue.add(PendingToken(whitespaceTokenType, whiteSpaceStart,
+                            whiteSpaceEnd - indent + lastIndent)) // Stop line break on previous indent level
                 } else {
                     myIndentStack.push(indent)
                     // TODO rewrite function since whiteSpacetoken is always line break? and it's one symbol length?

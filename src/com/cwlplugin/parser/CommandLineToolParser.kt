@@ -2,9 +2,7 @@ package com.cwlplugin.parser
 
 import com.cwlplugin.CwlBundle
 import com.cwlplugin.psi.CwlElementTypes
-import com.intellij.lang.PsiBuilder
 import com.intellij.openapi.diagnostic.Logger
-import com.intellij.psi.tree.IElementType
 
 /**
  * @author Aleksandr Slepchenkov [aslepchenkov@parseq.pro](mailto:aslepchenkov@parseq.pro)
@@ -46,13 +44,8 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
                 ID_KEYWORD -> {
                     parseSimpleStatement(STRING, CwlElementTypes.ID)
                 } // TODO
-                LABEL_KEYWORD -> {
-                    parseSimpleStatement(STRING, CwlElementTypes.LABEL)
-                } // TODO
-                DOC_KEYWORD -> {
-                    println("Doc parse started")
-                    return parseDoc()
-//                    parseSimpleStatement(STRING, CwlElementTypes.DOC)
+                LABEL_KEYWORD, DOC_KEYWORD -> {
+                    return parseMultiLineStringValue()
                 } // TODO
                 HINTS_KEYWORD -> {
                     parseSimpleStatement(STRING, CwlElementTypes.HINTS)
@@ -116,8 +109,8 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
                     DEFAULT_KEYWORD -> {
                         parseSimpleStatement(STRING, CwlElementTypes.DEFAULT)
                     } // TODO
-                    DOC_KEYWORD -> {
-                        parseSimpleStatement(STRING, CwlElementTypes.DOC)
+                    DOC_KEYWORD, LABEL_KEYWORD -> {
+                        return parseMultiLineStringValue()
                     } // TODO
                     FORMAT_KEYWORD -> {
                         parseSimpleStatement(STRING, CwlElementTypes.FORMAT)
@@ -127,9 +120,6 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
                     } // TODO
                     INPUT_BINDING_KEYWORD -> {
                         parseInputBinding()
-                    } // TODO
-                    LABEL_KEYWORD -> {
-                        parseSimpleStatement(STRING, CwlElementTypes.LABEL)
                     } // TODO
                     SECONDARY_FILES_KEYWORD -> {
                         parseSimpleStatement(STRING, CwlElementTypes.SECONDARY_FILES)
@@ -195,7 +185,7 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
         return parseFlowSequence(CwlElementTypes.BASE_COMMAND, CwlTokenTypes.STRING)
     }
 
-    fun parseDoc(): Boolean {
+    fun parseMultiLineStringValue(): Boolean {
         nextToken()
         if (!checkMatches(CwlTokenTypes.COLON, CwlBundle.message("PARSE.expected.colon"))) {
             return false
@@ -204,7 +194,6 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
     }
 
 //    fun parseId()
-//    fun parseLabel()
 //    fun parseStderr()
 //    fun parseStdout()
 //    fun parseStdin()
