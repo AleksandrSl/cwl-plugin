@@ -28,12 +28,8 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
                 REQUIREMENTS_KEYWORD -> {
                     requirementsParser.parseRequirementsBlock()
                 }
-                CWL_VERSION -> parseSimpleStatement(CWL_VERSION_VALUE, CwlElementTypes.VERSION)
                 INPUTS_KEYWORD -> {
                     parseInputs()
-                }
-                CLASS_KEYWORD -> {
-                    parseSimpleStatement(COMMAND_LINE_TOOL_KEYWORD, CwlElementTypes.COMMAND_LINE_TOOL_CLASS)
                 }
                 BASECOMMAND_KEYWORD -> {
                     parseBaseCommand()
@@ -190,6 +186,7 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
         if (!checkMatches(CwlTokenTypes.COLON, CwlBundle.message("PARSE.expected.colon"))) {
             return false
         }
+
         return parseMultiLineString()
     }
 

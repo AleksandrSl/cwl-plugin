@@ -23,8 +23,8 @@ class CwlParser : PsiParser{
 //        builder.setTokenTypeRemapper(requirementsParser) // must be done before touching the caching lexer with eof() call.
 //        var lastAfterSemicolon = false
         builder.setDebugMode(true)
-        commandLineToolparser.parseCommandLineTool()
-//        requirementsParser.parsePrimaryRequirements()
+        val headerParser = context.headerParser
+        headerParser.parseHeaderElements()
         while (!builder.eof()) {
             builder.advanceLexer()
 //            context.pushScope(context.emptyParsingScope())

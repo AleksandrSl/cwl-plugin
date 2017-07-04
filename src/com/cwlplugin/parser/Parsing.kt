@@ -1,12 +1,11 @@
 package com.cwlplugin.parser
 
 import com.cwlplugin.CwlBundle
-import com.cwlplugin.lexer.CwlTokenType
 import com.cwlplugin.psi.CwlElementType
 import com.intellij.lang.PsiBuilder
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.psi.tree.IElementType
-import kotlin.collections.all
+
 /**
  * @author yole, Aleksandr Slepchenkov [aslepchenkov@parseq.pro](mailto:aslepchenkov@parseq.pro)
  */
@@ -126,9 +125,12 @@ open class Parsing(val parsingContext: ParsingContext) {
     }
 
     /**
-     * First token is already matched
+     * Parse simple statements like key: value
+     * Note: First token is already matched
      */
     fun parseSimpleStatement(secondToken: IElementType, statementElement: IElementType): Boolean {
+
+
         val statement: PsiBuilder.Marker = myBuilder.mark()
         nextToken()
         if (!checkMatches(CwlTokenTypes.COLON, CwlBundle.message("PARSE.expected.colon"))) {
