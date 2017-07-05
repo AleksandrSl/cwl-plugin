@@ -1,54 +1,11 @@
 package com.cwlplugin.psi
 
 import com.cwlplugin.CwlFileType
-import com.cwlplugin.psi.impl.CwlArgumentsImpl
-import com.cwlplugin.psi.impl.CwlBaseCommandImpl
-import com.cwlplugin.psi.impl.CwlCommandInputParameterImpl
-import com.cwlplugin.psi.impl.CwlCommandLineToolClassImpl
-import com.cwlplugin.psi.impl.CwlDefaultImpl
-import com.cwlplugin.psi.impl.CwlDocImpl
-import com.cwlplugin.psi.impl.CwlDockerRequirementImpl
-import com.cwlplugin.psi.impl.CwlEnvVarRequirementImpl
-import com.cwlplugin.psi.impl.CwlFormatImpl
-import com.cwlplugin.psi.impl.CwlHintsImpl
-import com.cwlplugin.psi.impl.CwlIdImpl
-import com.cwlplugin.psi.impl.CwlInitialWorkDirRequirementImpl
-import com.cwlplugin.psi.impl.CwlInlineJavascriptRequirementImpl
-import com.cwlplugin.psi.impl.CwlInputBindingImpl
-import com.cwlplugin.psi.impl.CwlInputsImpl
-import com.cwlplugin.psi.impl.CwlLabelImpl
-import com.cwlplugin.psi.impl.CwlLoadContentsImpl
-import com.cwlplugin.psi.impl.CwlOutputsImpl
-import com.cwlplugin.psi.impl.CwlPermanentFailCodesImpl
-import com.cwlplugin.psi.impl.CwlPositionImpl
-import com.cwlplugin.psi.impl.CwlPrefixImpl
-import com.cwlplugin.psi.impl.CwlRequirementListImpl
-import com.cwlplugin.psi.impl.CwlRequirementsBlockImpl
-import com.cwlplugin.psi.impl.CwlResourceRequirementImpl
-import com.cwlplugin.psi.impl.CwlSchemaDefRequirementImpl
-import com.cwlplugin.psi.impl.CwlSecondaryFilesImpl
-import com.cwlplugin.psi.impl.CwlSeparateImpl
-import com.cwlplugin.psi.impl.CwlShellCommandRequirementImpl
-import com.cwlplugin.psi.impl.CwlShellQuoteImpl
-import com.cwlplugin.psi.impl.CwlSoftwareRequirementImpl
-import com.cwlplugin.psi.impl.CwlStderrImpl
-import com.cwlplugin.psi.impl.CwlStdinImpl
-import com.cwlplugin.psi.impl.CwlStdoutImpl
-import com.cwlplugin.psi.impl.CwlStreamableImpl
-import com.cwlplugin.psi.impl.CwlSuccessCodesImpl
-import com.cwlplugin.psi.impl.CwlTemporaryFailCodesImpl
-import com.cwlplugin.psi.impl.CwlTypeImpl
-import com.cwlplugin.psi.impl.CwlValueFromImpl
-import com.cwlplugin.psi.impl.CwlVersionImpl
+import com.cwlplugin.psi.impl.*
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiNamedElement
 import com.intellij.psi.StubBasedPsiElement
-import com.intellij.psi.stubs.IStubElementType
-import com.intellij.psi.stubs.IndexSink
-import com.intellij.psi.stubs.NamedStub
-import com.intellij.psi.stubs.StubElement
-import com.intellij.psi.stubs.StubInputStream
-import com.intellij.psi.stubs.StubOutputStream
+import com.intellij.psi.stubs.*
 
 /**
  * @author Aleksandr Slepchenkov [aslepchenkov@parseq.pro](mailto:aslepchenkov@parseq.pro)
@@ -103,6 +60,8 @@ object CwlElementTypes {
     val ITEM_SEPARATOR = CwlElementType("ITEM_SEPARATOR", CwlItemSeparator::class.java)
     val PREFIX = CwlElementType("PREFIX", CwlPrefixImpl::class.java)
     val SHELL_QUOTE = CwlElementType("SHELL_QUOTE", CwlShellQuoteImpl::class.java)
+
+    val MULTI_LINE_STRING = CwlElementType("MULTI_LINE_STRING", CwlMultiLineStringImpl::class.java)
 
 }
 

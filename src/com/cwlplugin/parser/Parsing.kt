@@ -197,22 +197,4 @@ open class Parsing(val parsingContext: ParsingContext) {
         }
         return checkMatches(CwlTokenTypes.LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))
     }
-
-    // Should this be handled by lexer?
-    fun parseMultiLineString(): Boolean {
-        with(CwlTokenTypes) {
-            if (!checkMatches(CwlTokenTypes.PIPE, CwlBundle.message("PARSE.expected.pipe"))) return false
-            if (!checkMatches(CwlTokenTypes.LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))) return false
-            if (!checkMatches(CwlTokenTypes.INDENT, "Indent expected")) return false
-            if (!checkMatches(CwlTokenTypes.MLSPART, "Start of mls expected")) return false
-            if (!checkMatches(CwlTokenTypes.LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))) return false
-            while (!atToken(DEDENT)) {
-                println("in do statement")
-                if (!checkMatches(MLSPART, "Dedent or mls expected")) return false
-                if (!checkMatches(CwlTokenTypes.LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))) return false
-            }
-            if (!checkMatches(CwlTokenTypes.DEDENT, "End of mls expected")) return false
-            return true
-        }
-    }
 }

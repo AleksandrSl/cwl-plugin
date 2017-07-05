@@ -2,6 +2,7 @@ package com.cwlplugin.parser
 
 import com.cwlplugin.CwlBundle
 import com.cwlplugin.psi.CwlElementTypes
+import com.intellij.lang.PsiBuilder
 import com.intellij.openapi.diagnostic.Logger
 
 /**
@@ -41,7 +42,7 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
                     parseSimpleStatement(STRING, CwlElementTypes.ID)
                 } // TODO
                 LABEL_KEYWORD, DOC_KEYWORD -> {
-                    return parseMultiLineStringValue()
+                    return parseStringValue()
                 } // TODO
                 HINTS_KEYWORD -> {
                     parseSimpleStatement(STRING, CwlElementTypes.HINTS)
@@ -106,7 +107,7 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
                         parseSimpleStatement(STRING, CwlElementTypes.DEFAULT)
                     } // TODO
                     DOC_KEYWORD, LABEL_KEYWORD -> {
-                        return parseMultiLineStringValue()
+                        return parseStringValue()
                     } // TODO
                     FORMAT_KEYWORD -> {
                         parseSimpleStatement(STRING, CwlElementTypes.FORMAT)
@@ -189,25 +190,44 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
         }
 
         with(CwlTokenTypes) {
-            if (checkMatches(PIPE, CwlBundle.message("PARSE.expected.pipe"))) {
-                if (!checkMatches(LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))) return false
-                if (!checkMatches(INDENT, "Indent expected")) return false
-                if (!checkMatches(MLSPART, "Start of mls expected")) return false
-                if (!checkMatches(LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))) return false
-                while (!atToken(DEDENT)) {
-                    println("in do statement")
-                    if (!checkMatches(MLSPART, "Dedent or mls expected")) return false
-                    if (!checkMatches(LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))) return false
+            when (myBuilder.tokenType) {
+                PIPE -> {
+                    nextToken()
+                    val multiLineString: PsiBuilder.Marker = myBuilder.mark()
+                    if (!parseMultiLineString()) {
+                        multiLineString.drop()
+                        return false
+                    }
+                    multiLineString.done(CwlElementTypes.MULTI_LINE_STRING)
+                    return true
                 }
-                if (!checkMatches(CwlTokenTypes.DEDENT, "End of mls expected")) return false
-                return true
-            } else {
-                if (!checkMatches(STRING, CwlBundle.message("PARSE.expected.pipe") ))
+                STRING -> {
+                    nextToken()
+                    return checkMatches(LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))
+                }
+                else -> {
+                    myBuilder.error("PARSE.expected.string")
+                    return false
+                }
             }
-
-
         }
+    }
 
+    fun parseMultiLineString(): Boolean {
+        with(CwlTokenTypes) {
+            if (!checkMatches(LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))) return false
+            if (!checkMatches(INDENT, "Indent expected")) return false
+            if (!checkMatches(MLSPART, "Start of mls expected")) return false
+            if (!checkMatches(LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))) return false
+            while (!atToken(DEDENT)) {
+                println("in do statement")
+                if (!checkMatches(MLSPART, "Dedent or mls expected")) return false
+                if (!checkMatches(LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))) return false
+            }
+            if (!checkMatches(DEDENT, "End of mls expected")) return false
+            if (!checkMatches(LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))) return false
+        }
+        return true
     }
 
 //    fun parseId()
