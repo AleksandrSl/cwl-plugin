@@ -181,13 +181,33 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
         return parseFlowSequence(CwlElementTypes.BASE_COMMAND, CwlTokenTypes.STRING)
     }
 
-    fun parseMultiLineStringValue(): Boolean {
+    fun parseStringValue(): Boolean {
+
         nextToken()
         if (!checkMatches(CwlTokenTypes.COLON, CwlBundle.message("PARSE.expected.colon"))) {
             return false
         }
 
-        return parseMultiLineString()
+        with(CwlTokenTypes) {
+            if (checkMatches(PIPE, CwlBundle.message("PARSE.expected.pipe"))) {
+                if (!checkMatches(LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))) return false
+                if (!checkMatches(INDENT, "Indent expected")) return false
+                if (!checkMatches(MLSPART, "Start of mls expected")) return false
+                if (!checkMatches(LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))) return false
+                while (!atToken(DEDENT)) {
+                    println("in do statement")
+                    if (!checkMatches(MLSPART, "Dedent or mls expected")) return false
+                    if (!checkMatches(LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))) return false
+                }
+                if (!checkMatches(CwlTokenTypes.DEDENT, "End of mls expected")) return false
+                return true
+            } else {
+                if (!checkMatches(STRING, CwlBundle.message("PARSE.expected.pipe") ))
+            }
+
+
+        }
+
     }
 
 //    fun parseId()
