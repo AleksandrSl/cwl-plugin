@@ -2,6 +2,7 @@ package com.cwlplugin.parser
 
 import com.cwlplugin.CwlBundle
 import com.cwlplugin.psi.CwlElementType
+import com.cwlplugin.psi.CwlElementTypes
 import com.intellij.lang.PsiBuilder
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.psi.tree.IElementType
@@ -130,7 +131,6 @@ open class Parsing(val parsingContext: ParsingContext) {
      */
     fun parseSimpleStatement(secondToken: IElementType, statementElement: IElementType): Boolean {
 
-
         val statement: PsiBuilder.Marker = myBuilder.mark()
         nextToken()
         if (!checkMatches(CwlTokenTypes.COLON, CwlBundle.message("PARSE.expected.colon"))) {
@@ -143,6 +143,15 @@ open class Parsing(val parsingContext: ParsingContext) {
         return checkMatches(CwlTokenTypes.LINE_BREAK, "Line break expected")
     }
 
+    fun parseSimpleStatement(secondToken: IElementType): Boolean {
+
+        nextToken()
+        if (!checkMatches(CwlTokenTypes.COLON, CwlBundle.message("PARSE.expected.colon"))) return false
+        if (!checkMatches(secondToken, "$secondToken expected")) return false
+        return checkMatches(CwlTokenTypes.LINE_BREAK, "Line break expected")
+    }
+
+
     fun parseSequence(blockType: IElementType, parseStatement: () -> Boolean): Unit {
 
         if (checkMatches(CwlTokenTypes.LINE_BREAK, "Line break expected")) {
@@ -153,10 +162,21 @@ open class Parsing(val parsingContext: ParsingContext) {
                 if (myBuilder.eof()) {
                     myBuilder.error("Indented block expected")
                 } else {
-                    while (!myBuilder.eof() && myBuilder.tokenType !== CwlTokenTypes.DEDENT) {
-                        if (!checkMatches(CwlTokenTypes.SEQUENCE_ELEMENT_PREFIX, CwlBundle.message("PARSE.expected.sequence_element_prefix"))) break
+
+                    if (!checkMatches(CwlTokenTypes.SEQUENCE_ELEMENT_PREFIX, CwlBundle.message("PARSE.expected.sequence_element_prefix"))) {
+                        indentedBlock.drop()
+                        return
+                    }
+                    if (!parseStatement()) {
+                        indentedBlock.drop()
+                        return
+                    }
+                    while (!myBuilder.eof() && !atToken(CwlTokenTypes.DEDENT)) {
+                        print("Parse Sequence: At token ${myBuilder.tokenType}")
+                        if (!checkMatches(CwlTokenTypes.SEQUENCE_ELEMENT_PREFIX, CwlBundle.message("PARSE.expected.sequence_element_prefix_or_dedent"))) break
                         if (!parseStatement()) break
                     }
+                    print("escaped!")
                 }
                 indentedBlock.done(blockType)
                 if (!myBuilder.eof()) {
@@ -196,5 +216,52 @@ open class Parsing(val parsingContext: ParsingContext) {
             if (!checkMatches(RBRACE, CwlBundle.message("PARSE.expected.rbracket"))) return false
         }
         return checkMatches(CwlTokenTypes.LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))
+    }
+
+    fun parseStringValue(): Boolean {
+
+        nextToken()
+        if (!checkMatches(CwlTokenTypes.COLON, CwlBundle.message("PARSE.expected.colon"))) {
+            return false
+        }
+
+        with(CwlTokenTypes) {
+            when (myBuilder.tokenType) {
+                PIPE -> {
+                    nextToken()
+                    val multiLineString: PsiBuilder.Marker = myBuilder.mark()
+                    if (!parseMultiLineString()) {
+                        multiLineString.drop()
+                        return false
+                    }
+                    multiLineString.done(CwlElementTypes.MULTI_LINE_STRING)
+                    return true
+                }
+                STRING -> {
+                    nextToken()
+                    return checkMatches(LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))
+                }
+                else -> {
+                    myBuilder.error("PARSE.expected.string")
+                    return false
+                }
+            }
+        }
+    }
+
+    fun parseMultiLineString(): Boolean {
+        with(CwlTokenTypes) {
+            if (!checkMatches(LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))) return false
+            if (!checkMatches(INDENT, "Indent expected")) return false
+            if (!checkMatches(MLSPART, "Start of mls expected")) return false
+            if (!checkMatches(LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))) return false
+            while (!atToken(DEDENT)) {
+                println("in do statement")
+                if (!checkMatches(MLSPART, "Dedent or mls expected")) return false
+                if (!checkMatches(LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))) return false
+            }
+            if (!checkMatches(DEDENT, "End of mls expected")) return false
+        }
+        return true
     }
 }

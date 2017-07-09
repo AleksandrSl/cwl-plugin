@@ -1,8 +1,6 @@
 package com.cwlplugin.parser
 
-import com.cwlplugin.CwlBundle
 import com.cwlplugin.psi.CwlElementTypes
-import com.intellij.lang.PsiBuilder
 import com.intellij.openapi.diagnostic.Logger
 
 /**
@@ -180,54 +178,6 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
 
     fun parseBaseCommand(): Boolean {
         return parseFlowSequence(CwlElementTypes.BASE_COMMAND, CwlTokenTypes.STRING)
-    }
-
-    fun parseStringValue(): Boolean {
-
-        nextToken()
-        if (!checkMatches(CwlTokenTypes.COLON, CwlBundle.message("PARSE.expected.colon"))) {
-            return false
-        }
-
-        with(CwlTokenTypes) {
-            when (myBuilder.tokenType) {
-                PIPE -> {
-                    nextToken()
-                    val multiLineString: PsiBuilder.Marker = myBuilder.mark()
-                    if (!parseMultiLineString()) {
-                        multiLineString.drop()
-                        return false
-                    }
-                    multiLineString.done(CwlElementTypes.MULTI_LINE_STRING)
-                    return true
-                }
-                STRING -> {
-                    nextToken()
-                    return checkMatches(LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))
-                }
-                else -> {
-                    myBuilder.error("PARSE.expected.string")
-                    return false
-                }
-            }
-        }
-    }
-
-    fun parseMultiLineString(): Boolean {
-        with(CwlTokenTypes) {
-            if (!checkMatches(LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))) return false
-            if (!checkMatches(INDENT, "Indent expected")) return false
-            if (!checkMatches(MLSPART, "Start of mls expected")) return false
-            if (!checkMatches(LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))) return false
-            while (!atToken(DEDENT)) {
-                println("in do statement")
-                if (!checkMatches(MLSPART, "Dedent or mls expected")) return false
-                if (!checkMatches(LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))) return false
-            }
-            if (!checkMatches(DEDENT, "End of mls expected")) return false
-            if (!checkMatches(LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))) return false
-        }
-        return true
     }
 
 //    fun parseId()

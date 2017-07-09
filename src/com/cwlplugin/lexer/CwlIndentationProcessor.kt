@@ -92,16 +92,13 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
             }
         } else {
             advanceBase()
-//            println("Shitty baseToken: $baseTokenType")
             processSpecialTokens()
         }
         adjustBraceLevel()
-
     }
 
     protected fun advanceBase(): Unit {
         super.advance()
-//        hasUnclosedColon()
         checkSignificantTokens()
     }
 
@@ -144,7 +141,6 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
             (myBraceLevel != 0 && RECOVERY_TOKENS.contains(tokenType)) -> {
                 myBraceLevel = 0
                 val pos = tokenStart
-//                pushToken(CwlTokenTypes.STATEMENT_BREAK, pos, pos)
                 val indents = myIndentStack.size()
                 for (i in 0..indents - 1 - 1) {
                     val indent = myIndentStack.peek()
@@ -162,9 +158,7 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
     }
 
     protected fun checkSignificantTokens() {
-        myLineHasSignificantTokens = (!CwlTokenTypes.WHITESPACE_OR_LINEBREAK.contains(baseTokenType) && (baseTokenType != commentTokenType))
-//        println(baseTokenType)
-//        println("SIGNIFICANCE CHECKED, RESULT:$myLineHasSignificantTokens")
+        myLineHasSignificantTokens = myLineHasSignificantTokens || !CwlTokenTypes.NON_SIGNIFICANT_ELEMENTS.contains(baseTokenType)
     }
 
     protected open fun processSpecialTokens() {
@@ -312,7 +306,9 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
                 } else {
                     myIndentStack.push(indent)
                     // TODO rewrite function since whiteSpacetoken is always line break? and it's one symbol length?
-                    myTokenQueue.add(PendingToken(whitespaceTokenType, whiteSpaceStart, whiteSpaceStart + 1))
+                    if (myLineHasSignificantTokens){
+                        myTokenQueue.add(PendingToken(whitespaceTokenType, whiteSpaceStart, whiteSpaceStart + 1))
+                    }
                     val insertIndex = skipPrecedingCommentsWithIndent(indent, myTokenQueue.size - 1)
                     val indentOffset = if (insertIndex == myTokenQueue.size) whiteSpaceStart + 1 else myTokenQueue[insertIndex].start
 //                    myTokenQueue.add(insertIndex, PendingToken(CwlTokenTypes.INDENT, indentOffset, indentOffset))
@@ -320,7 +316,9 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
                 }
             }
             indent < lastIndent -> {
-                myTokenQueue.add(PendingToken(whitespaceTokenType, whiteSpaceStart, whiteSpaceEnd))
+                if (myLineHasSignificantTokens){
+                    myTokenQueue.add(PendingToken(whitespaceTokenType, whiteSpaceStart, whiteSpaceEnd))
+                }
                 while (indent < lastIndent) {
                     myIndentStack.pop()
                     lastIndent = myIndentStack.peek()
@@ -339,7 +337,9 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
                 }
             }
             else -> {
-                myTokenQueue.add(PendingToken(whitespaceTokenType, whiteSpaceStart, whiteSpaceEnd))
+                if (myLineHasSignificantTokens){
+                    myTokenQueue.add(PendingToken(whitespaceTokenType, whiteSpaceStart, whiteSpaceEnd))
+                }
             }
         }
     }
@@ -391,4 +391,5 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
 
         private const val DUMP_TOKENS = true
     }
+
 }

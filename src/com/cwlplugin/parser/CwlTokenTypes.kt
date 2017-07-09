@@ -266,7 +266,7 @@ object CwlTokenTypes {
 
     @JvmField val WHITESPACE = TokenSet.create(SPACE, TAB, FORMFEED)
     @JvmField val WHITESPACE_OR_LINEBREAK = TokenSet.create(SPACE, TAB, FORMFEED, LINE_BREAK)
-
+    @JvmField val NON_SIGNIFICANT_ELEMENTS = TokenSet.create(SPACE, TAB, FORMFEED, END_OF_LINE_COMMENT)
 
     @JvmField val EXPRESSION = CwlElementType("EXPRESSION")
 
