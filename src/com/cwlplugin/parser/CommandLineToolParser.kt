@@ -1,5 +1,6 @@
 package com.cwlplugin.parser
 
+import com.cwlplugin.CwlBundle
 import com.cwlplugin.psi.CwlElementTypes
 import com.intellij.openapi.diagnostic.Logger
 
@@ -32,15 +33,16 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
                 }
                 BASECOMMAND_KEYWORD -> {
                     parseBaseCommand()
-//                    parseSimpleStatement(STRING, CwlElementTypes.BASE_COMMAND)
                 } // TODO
                 OUTPUTS_KEYWORD -> {
                 }
                 ID_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseStringValue)
                     parseSimpleStatement(STRING, CwlElementTypes.ID)
                 } // TODO
                 LABEL_KEYWORD, DOC_KEYWORD -> {
-                    return parseStringValue()
+                    return checkKeyValue(this@CommandLineToolParser::parseStringValue)
+//                    return parseStringValue()
                 } // TODO
                 HINTS_KEYWORD -> {
                     parseSimpleStatement(STRING, CwlElementTypes.HINTS)
@@ -52,10 +54,10 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
                     parseSimpleStatement(STRING, CwlElementTypes.STDERR)
                 } // TODO
                 STDIN_KEYWORD -> {
-                    parseSimpleStatement(STRING, CwlElementTypes.STDIN)
+                    checkKeyValue(this@CommandLineToolParser::parseStringValue)
                 } // TODO
                 STDOUT_KEYWORD -> {
-                    parseSimpleStatement(STRING, CwlElementTypes.STDOUT)
+                    checkKeyValue(this@CommandLineToolParser::parseStringValue)
                 } // TODO
                 SUCCESS_CODES_KEYWORD -> {
                     parseSimpleStatement(STRING, CwlElementTypes.SUCCESS_CODES)
@@ -67,7 +69,8 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
                     parseSimpleStatement(STRING, CwlElementTypes.PERMANENT_FAIL_CODES)
                 } // TODO
                 else -> {
-                  myBuilder.error("Unexpected $firstToken")
+                    myBuilder.error("Unexpected $firstToken")
+                    nextToken()
                     return false
                 }
             }
@@ -75,12 +78,12 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
         return true
     }
 
-    fun parseInputs(): Boolean {
-        parseColonAndIndentedBlock(CwlElementTypes.INPUTS, parseIndentedBlock = this::parseCommandInputParameters)
-        return true
+    fun parseInputs(): Unit {
+        parseKeyValue(this::parseCommandInputParameters)
+        return
     }
 
-    fun parseCommandInputParameters() {
+    fun parseCommandInputParameters(): Unit {
         parseIndentedBlock(CwlElementTypes.COMMAND_INPUT_PARAMETER, parseStatement = this::parseCommandInputParameter)
     }
 
@@ -94,7 +97,7 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
     }
 
     fun parseCommandInputParameterFields() {
-        parseIndentedBlock(CwlElementTypes.COMMAND_INPUT_PARAMETER, parseStatement = this::parseCommandInputParameterField)
+        parseIndentedBlock(parseStatement = this::parseCommandInputParameterField)
     }
 
     fun parseCommandInputParameterField(): Boolean {
@@ -102,74 +105,85 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
         with(CwlTokenTypes) {
                 when (firstToken) {
                     DEFAULT_KEYWORD -> {
-                        parseSimpleStatement(STRING, CwlElementTypes.DEFAULT)
+                        return checkKeyValue(this@CommandLineToolParser::parseStringValue)
                     } // TODO
                     DOC_KEYWORD, LABEL_KEYWORD -> {
-                        return parseStringValue()
+                      return checkKeyValue(this@CommandLineToolParser::parseStringValue)
                     } // TODO
                     FORMAT_KEYWORD -> {
-                        parseSimpleStatement(STRING, CwlElementTypes.FORMAT)
+                        return checkKeyValue(this@CommandLineToolParser::parseStringValue)
                     } // TODO
                     ID_KEYWORD -> {
-                        parseSimpleStatement(STRING, CwlElementTypes.ID)
+                        return checkKeyValue(this@CommandLineToolParser::parseStringValue)
                     } // TODO
                     INPUT_BINDING_KEYWORD -> {
                         parseInputBinding()
                     } // TODO
                     SECONDARY_FILES_KEYWORD -> {
-                        parseSimpleStatement(STRING, CwlElementTypes.SECONDARY_FILES)
+                        parseKeyValue(CwlElementTypes.SECONDARY_FILES, this@CommandLineToolParser::parseSecondaryFiles)
                     } // TODO
                     STREAMABLE_KEYWORD -> {
-                        parseSimpleStatement(STRING, CwlElementTypes.STREAMABLE)
+                        return checkKeyValue(this@CommandLineToolParser::parseBoolValue)
                     } // TODO
                     TYPE_KEYWORD -> {
-                        parseSimpleStatement(STRING, CwlElementTypes.TYPE)
+                        return checkKeyValue(this@CommandLineToolParser::parseTypeValue)
                     } // TODO
                     else -> {
-                        reportParseStatementError(myBuilder, firstToken); return false
+                        reportParseStatementError(myBuilder, firstToken)
+                        return false
                     }
                 }
             }
-
         return true
     }
 
-    fun parseInputBinding() {
-        parseColonAndIndentedBlock(CwlElementTypes.INPUT_BINDING, this::parseInputBindingField)
+    fun parseInputBinding(): Unit {
+        parseColonAndIndentedBlock(CwlElementTypes.INPUT_BINDING, this::parseInputBindingBlock)
     }
 
-    fun parseInputBindingField() {
+    fun parseInputBindingBlock(): Unit {
+        parseIndentedBlock(this::parseInputBindingField)
+    }
+
+    fun parseInputBindingField():Boolean {
         val firstToken = myBuilder.tokenType
         if (firstToken != null) {
             with(CwlTokenTypes) {
                 when (firstToken) {
                     VALUE_FROM_KEYWORD -> {
-                        parseSimpleStatement(STRING, CwlElementTypes.VALUE_FROM)
+                        checkKeyValue(this@CommandLineToolParser::parseStringValue)
                     } // TODO
                     POSITION_KEYWORD -> {
-                        parseSimpleStatement(INT, CwlElementTypes.POSITION)
+                        checkKeyValue(this@CommandLineToolParser::parseIntValue)
                     } // TODO
                     SEPARATE_KEYWORD -> {
-                        parseSimpleStatement(STRING, CwlElementTypes.SEPARATE)
+                        checkKeyValue(this@CommandLineToolParser::parseBoolValue)
                     } // TODO
                     ITEM_SEPARATOR_KEYWORD -> {
-                        parseSimpleStatement(STRING, CwlElementTypes.ITEM_SEPARATOR)
+                        checkKeyValue(this@CommandLineToolParser::parseStringValue)
                     } // TODO
                     PREFIX_KEYWORD -> {
-                        parseSimpleStatement(STRING, CwlElementTypes.PREFIX)
+                        checkKeyValue(this@CommandLineToolParser::parseStringValue)
                     } // TODO
                     SHELL_QUOTE_KEYWORD -> {
-                        parseSimpleStatement(STRING, CwlElementTypes.SHELL_QUOTE)
+                        checkKeyValue(this@CommandLineToolParser::parseStringValue)
                     } // TODO
                     LOAD_CONTENTS_KEYWORD -> {
-                        parseSimpleStatement(BOOLEAN, CwlElementTypes.LOAD_CONTENTS)
+                        checkKeyValue(this@CommandLineToolParser::parseBoolValue)
                     } // TODO
                     else -> {
-                        reportParseStatementError(myBuilder, firstToken); return
+                        println("parseInputBindingField")
+                        reportParseStatementError(myBuilder, firstToken); return false
                     }
                 }
             }
         }
+        return true
+    }
+
+    fun parseSecondaryFiles(): Unit{
+        parseSequence(CwlElementTypes.SECONDARY_FILES, this::parseStringValue)
+        return
     }
 
     fun parseOutput(): Boolean {
@@ -178,6 +192,17 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
 
     fun parseBaseCommand(): Boolean {
         return parseFlowSequence(CwlElementTypes.BASE_COMMAND, CwlTokenTypes.STRING)
+    }
+
+    fun parseTypeValue(): Boolean{
+        with(CwlTokenTypes) {
+            if (!CWL_TYPES.contains(myBuilder.tokenType)) {
+                myBuilder.error("Type expected")
+            } else {
+                nextToken()
+            }
+            return checkMatches(CwlTokenTypes.LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))
+        }
     }
 
 //    fun parseId()

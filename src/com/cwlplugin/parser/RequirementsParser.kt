@@ -16,11 +16,13 @@ class RequirementsParser(context: ParsingContext) : Parsing(context) {
      * Parse all requirements statements and trailing COLON after requirements keyword
      */
     fun parseRequirementsBlock(): Unit {
-        parseColonAndIndentedBlock(CwlElementTypes.REQUIREMENTS_BLOCK, this::parseRequirementsList)
+        parseKeyValue(this::parseRequirementsSequence)
+//        parseColonAndIndentedBlock(CwlElementTypes.REQUIREMENTS_BLOCK, this::parseRequirementsSequence)
     }
 
-    fun parseRequirementsList(): Unit {
-        parseSequence(CwlElementTypes.REQUIREMENT_LIST, parseStatement = this::parseRequirement)
+    fun parseRequirementsSequence(): Unit {
+        parseSequence(CwlElementTypes.REQUIREMENT_LIST, parseElement = this::parseRequirement)
+        return
     }
 
     /**
@@ -85,9 +87,9 @@ class RequirementsParser(context: ParsingContext) : Parsing(context) {
                     // TODO
                     println("Shell command requirement: ${myBuilder.tokenType}")
                     nextToken()
-                    println("Shell command requirement: ${myBuilder.tokenType}")
                     if (!checkMatches(CwlTokenTypes.LINE_BREAK, message("PARSE.expected.line_break")))
                         return false
+                    println("Shell command requirement: ${myBuilder.tokenType}")
                     CwlElementTypes.SHELL_COMMAND_REQUIREMENT
                 }
                 SOFTWARE_REQUIREMENT_KEYWORD -> {
@@ -113,10 +115,10 @@ class RequirementsParser(context: ParsingContext) : Parsing(context) {
 
     fun parseDockerRequirement(): Boolean {
 
-        nextToken()
-        println("ParseDocker, ${myBuilder.tokenType}")
+        nextToken() // Skip already matched requirement
         if (!checkMatches(CwlTokenTypes.LINE_BREAK, message("PARSE.expected.line_break")))
             return false
+        println("ParseDocker, ${myBuilder.tokenType}")
         var isRight: Boolean = true
         with(CwlTokenTypes) {
             if (!checkMatches(CwlTokenTypes.INDENT, message("PARSE.expected.indent")))
@@ -125,22 +127,22 @@ class RequirementsParser(context: ParsingContext) : Parsing(context) {
             infinite_while@while (!atToken(DEDENT)) {
                 when (myBuilder.tokenType) {
                     DOCKER_FILE_KEYWORD -> {
-                        isRight = parseStringValue()
+                        isRight = checkKeyValue { parseStringValue() }
                     }
                     DOCKER_IMAGE_ID_KEYWORD -> {
-                        isRight = parseStringValue()
+                        isRight = checkKeyValue { parseStringValue() }
                     }
                     DOCKER_IMPORT_KEYWORD -> {
-                        isRight = parseStringValue()
+                        isRight = checkKeyValue { parseStringValue() }
                     }
                     DOCKER_LOAD_KEYWORD -> {
-                        isRight = parseStringValue()
+                        isRight = checkKeyValue { parseStringValue() }
                     }
                     DOCKER_PULL_KEYWORD -> {
-                        isRight = parseStringValue()
+                        isRight = checkKeyValue { parseStringValue() }
                     }
                     DOCKER_OUTPUT_DIRECTORY_KEYWORD -> {
-                        isRight = parseStringValue()
+                        isRight = checkKeyValue { parseStringValue() }
                     }
                     else -> {
                         isRight = false
