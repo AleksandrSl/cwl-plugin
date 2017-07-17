@@ -49,6 +49,7 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
     }
 
     var multiLineStringStarted: Boolean = false
+
     override fun getTokenType(): IElementType? {
         if (myTokenQueue.size > 0) {
 //            println(myTokenQueue[0].type.toString())
@@ -76,9 +77,9 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
                 val text = tokenText
                 var spaces = 0
                 for (i in text.length - 1 downTo 0) {
-                    when {
-                        text[i] == ' ' -> spaces++
-                        text[i] == '\t' -> spaces += 8
+                    when (text[i]) {
+                        ' ' -> spaces++
+                        '\t' -> spaces += 8
                     }
                 }
                 myCurrentNewLineIndent = spaces
@@ -331,7 +332,7 @@ open class CwlIndentationProcessor(lexer: FlexLexer, tokens: TokenSet) : Merging
                         insertIndex = skipPrecedingCommentsWithIndent(indent, insertIndex)
                     }
                     if (insertIndex != myTokenQueue.size) {
-                        dedentOffset = myTokenQueue[insertIndex].start
+                        dedentOffset = myTokenQueue[insertIndex].end
                     }
                     myTokenQueue.add(insertIndex, PendingToken(CwlTokenTypes.DEDENT, dedentOffset, dedentOffset))
                 }

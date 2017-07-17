@@ -1,9 +1,6 @@
 package com.cwlplugin.completion
 
-import com.cwlplugin.psi.CwlRequirementList
 import com.cwlplugin.psi.CwlRequirementsBlock
-import com.cwlplugin.parser.CwlTokenTypes
-import com.cwlplugin.psi.CwlFile
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
@@ -15,7 +12,6 @@ import com.intellij.openapi.editor.EditorModificationUtil
 import com.intellij.patterns.PlatformPatterns
 import com.intellij.patterns.PsiElementPattern
 import com.intellij.psi.PsiElement
-import com.intellij.psi.TokenType
 import com.intellij.util.ProcessingContext
 
 /**
@@ -39,7 +35,8 @@ class CwlKeywordCompletionProvider(private vararg val keywords: String)
         fun general_context(): PsiElementPattern.Capture<PsiElement> =
                 psiElement<PsiElement>().withParent(PlatformPatterns.psiFile())
 
-        fun requirements(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().afterLeaf(PlatformPatterns.psiElement(CwlTokenTypes.COLON).withParent(psiElement<CwlRequirementList>()))
+        //        fun requirements(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().afterLeaf(PlatformPatterns.psiElement(CwlTokenTypes.COLON).withParent(psiElement<CwlRequirementsBlock>()))
+        fun requirements(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().inside(psiElement<CwlRequirementsBlock>())
 
 //        fun commandLineTool1(): PsiElementPattern.Capture<PsiElement> =
 //                psiElement<PsiElement>().afterLeaf(psiElement<CwlRequirementsBlock>())
@@ -66,7 +63,7 @@ class CwlKeywordCompletionProvider(private vararg val keywords: String)
 //                .and(PlatformPatterns.psiElement().withParent(psiElement<CwlFile>()))
 
         private val PREFIXES = listOf(
-                AddPrefix("class: ") to listOf("DockerRequirement", "InlineJavascriptRequirement")
+                AddPrefix(" class: ") to listOf("DockerRequirement", "InlineJavascriptRequirement")
         )
 
         /**

@@ -16,13 +16,12 @@ class RequirementsParser(context: ParsingContext) : Parsing(context) {
      * Parse all requirements statements and trailing COLON after requirements keyword
      */
     fun parseRequirementsBlock(): Unit {
-        parseKeyValue(this::parseRequirementsSequence)
+        parseKeyValue(CwlElementTypes.REQUIREMENTS_BLOCK, this::parseRequirementsSequence)
 //        parseColonAndIndentedBlock(CwlElementTypes.REQUIREMENTS_BLOCK, this::parseRequirementsSequence)
     }
 
     fun parseRequirementsSequence(): Unit {
         parseSequence(CwlElementTypes.REQUIREMENT_LIST, parseElement = this::parseRequirement)
-        return
     }
 
     /**
@@ -33,25 +32,27 @@ class RequirementsParser(context: ParsingContext) : Parsing(context) {
     protected fun parseRequirement(): Boolean {
 
         println("parseRequirement:: ${myBuilder.tokenType}")
-        if (!checkMatches(CwlTokenTypes.CLASS_KEYWORD, "Class keyword expected", advanceLexer = false)) return false
+
         val requirement = myBuilder.mark()
+        checkMatches(CwlTokenTypes.CLASS_KEYWORD, "Class keyword expected", advanceLexer = false)
+
         nextToken()
         if (!checkMatches(CwlTokenTypes.COLON, message("PARSE.expected.colon"))) {
-            requirement.drop(); return false
+//            requirement.drop(); return false
         }
         with (CwlTokenTypes) {
             val requirementType: CwlElementType = when (myBuilder.tokenType) {
                 INLINE_JAVASCRIPT_REQUIREMENT_KEYWORD -> {
                     // TODO
                     nextToken()
-                    if (!checkMatches(CwlTokenTypes.LINE_BREAK, message("PARSE.expected.line_break")))
-                        return false
+                    checkMatches(CwlTokenTypes.LINE_BREAK, message("PARSE.expected.line_break"))
+//                        return false
                     CwlElementTypes.INLINE_JAVASCRIPT_REQUIREMENT
                 }
                 DOCKER_REQUIREMENT_KEYWORD -> {
                     if (!parseDockerRequirement()) {
-                        requirement.drop()
-                        return false
+//                        requirement.drop()
+//                        return false
                     }
                     CwlElementTypes.DOCKER_REQUIREMENT
                 }
@@ -101,15 +102,14 @@ class RequirementsParser(context: ParsingContext) : Parsing(context) {
                 }
                 else -> {
                     myBuilder.error("Requirement expected")
-                    requirement.drop()
-                    return false
+//                    requirement.drop()
+                    CwlElementTypes.DOCKER_REQUIREMENT
                 }
             }
             println("parseRequirement:: ${myBuilder.tokenType}")
             requirement.done(requirementType)
             println("parseRequirement:: ${myBuilder.tokenType}")
         }
-//        return checkMatches(CwlTokenTypes.LINE_BREAK, message("PARSE.expected.line_break"))
         return true
     }
 

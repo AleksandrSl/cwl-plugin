@@ -18,17 +18,9 @@ class HeaderParser(val context: ParsingContext) : Parsing(context) {
         val token = myBuilder.tokenType ?: return false
         with(CwlTokenTypes) {
 
-            if (token != CWL_VERSION
-                    || !parseSimpleStatement(CwlTokenTypes.CWL_VERSION_VALUE, CwlElementTypes.VERSION)) {
-                myBuilder.error(CwlBundle.message("PARSE.expected.cwl_version"))
-                return false
-            }
-
-            if (token != CLASS_KEYWORD) {
-                myBuilder.error(CwlBundle.message("PARSE.expected.class"))
-            }
+            parseKeyValue(CwlElementTypes.VERSION, this@HeaderParser::parseCwlVersionValue)
+            checkMatches(CLASS_KEYWORD, CwlBundle.message("PARSE.expected.class"))
             if (!parseTool()) {
-                myBuilder.error(CwlBundle.message("PARSE.expected.class"))
                 return false
             }
         }
@@ -39,7 +31,6 @@ class HeaderParser(val context: ParsingContext) : Parsing(context) {
 
         val tool: PsiBuilder.Marker = myBuilder.mark()
         var toolType: CwlElementType? = null
-        nextToken()
         if (!checkMatches(CwlTokenTypes.COLON, CwlBundle.message("PARSE.expected.colon"))) {
             tool.drop(); return false
         }
@@ -76,6 +67,16 @@ class HeaderParser(val context: ParsingContext) : Parsing(context) {
         }
         tool.done(toolType!!)
         return true
+    }
+
+    fun parseCwlVersionValue(): Unit {
+
+        if (!atToken(CwlTokenTypes.STRING, "v1.0")) {
+            myBuilder.error(CwlBundle.message("PARSE.invalid.version"))
+            return
+        }
+        nextToken()
+        checkMatches(CwlTokenTypes.LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))
     }
 
 }

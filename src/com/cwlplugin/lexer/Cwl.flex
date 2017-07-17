@@ -136,6 +136,7 @@ Boolean = True | False
         "outdirMax"                        { return CwlTokenTypes.OUTDIR_MAX_KEYWORD; }
         "outdirMin"                        { return CwlTokenTypes.OUTDIR_MIN_KEYWORD; }
         "outputEval"                       { return CwlTokenTypes.OUTPUT_EVAL_KEYWORD; }
+        "outputBinding"                    { return CwlTokenTypes.OUTPUT_BINDING_KEYWORD; }
         "outputs"                          { return CwlTokenTypes.OUTPUTS_KEYWORD; }
         "package"                          { return CwlTokenTypes.PACKAGE_KEYWORD; }
         "path"                             { return CwlTokenTypes.PATH_KEYWORD; }
@@ -162,7 +163,6 @@ Boolean = True | False
         "tmpdirMin"                        { return CwlTokenTypes.TMPDIR_MIN_KEYWORD; }
         "type"                             { return CwlTokenTypes.TYPE_KEYWORD; }
         "valueFrom"                        { return CwlTokenTypes.VALUE_FROM_KEYWORD; }
-        "v1.0"                             { return CwlTokenTypes.CWL_VERSION_VALUE; }
         "version"                          { return CwlTokenTypes.VERSION_KEYWORD; }
         "Workflow"                         { return CwlTokenTypes.WORKFLOW_KEYWORD; }
         "writable"                         { return CwlTokenTypes.WRITABLE_KEYWORD; }

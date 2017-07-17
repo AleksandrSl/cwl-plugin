@@ -35,6 +35,7 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
                     parseBaseCommand()
                 } // TODO
                 OUTPUTS_KEYWORD -> {
+                    parseOutputs()
                 }
                 ID_KEYWORD -> {
                     checkKeyValue(this@CommandLineToolParser::parseStringValue)
@@ -69,8 +70,6 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
                     parseSimpleStatement(STRING, CwlElementTypes.PERMANENT_FAIL_CODES)
                 } // TODO
                 else -> {
-                    myBuilder.error("Unexpected $firstToken")
-                    nextToken()
                     return false
                 }
             }
@@ -84,68 +83,63 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
     }
 
     fun parseCommandInputParameters(): Unit {
-        parseIndentedBlock(CwlElementTypes.COMMAND_INPUT_PARAMETER, parseStatement = this::parseCommandInputParameter)
+        parseSequence(CwlElementTypes.COMMAND_INPUT_PARAMETER, this::parseCommandInputParameter, simplified = true)
     }
 
     fun parseCommandInputParameter(): Boolean {
         if (myBuilder.tokenType == CwlTokenTypes.STRING) {
-            parseColonAndIndentedBlock(CwlElementTypes.COMMAND_INPUT_PARAMETER,
-                    parseIndentedBlock = this::parseCommandInputParameterFields)
+            parseKeyValue(CwlElementTypes.COMMAND_INPUT_PARAMETER, this::parseCommandInputParameterFields)
             return true
         }
         return false
     }
 
     fun parseCommandInputParameterFields() {
-        parseIndentedBlock(parseStatement = this::parseCommandInputParameterField)
+        parseSequence(CwlElementTypes.COMMAND_INPUT_PARAMETER, this::parseCommandInputParameterField, simplified = true)
     }
 
     fun parseCommandInputParameterField(): Boolean {
         val firstToken = myBuilder.tokenType ?: return false
         with(CwlTokenTypes) {
-                when (firstToken) {
-                    DEFAULT_KEYWORD -> {
-                        return checkKeyValue(this@CommandLineToolParser::parseStringValue)
-                    } // TODO
-                    DOC_KEYWORD, LABEL_KEYWORD -> {
-                      return checkKeyValue(this@CommandLineToolParser::parseStringValue)
-                    } // TODO
-                    FORMAT_KEYWORD -> {
-                        return checkKeyValue(this@CommandLineToolParser::parseStringValue)
-                    } // TODO
-                    ID_KEYWORD -> {
-                        return checkKeyValue(this@CommandLineToolParser::parseStringValue)
-                    } // TODO
-                    INPUT_BINDING_KEYWORD -> {
-                        parseInputBinding()
-                    } // TODO
-                    SECONDARY_FILES_KEYWORD -> {
-                        parseKeyValue(CwlElementTypes.SECONDARY_FILES, this@CommandLineToolParser::parseSecondaryFiles)
-                    } // TODO
-                    STREAMABLE_KEYWORD -> {
-                        return checkKeyValue(this@CommandLineToolParser::parseBoolValue)
-                    } // TODO
-                    TYPE_KEYWORD -> {
-                        return checkKeyValue(this@CommandLineToolParser::parseTypeValue)
-                    } // TODO
-                    else -> {
-                        reportParseStatementError(myBuilder, firstToken)
-                        return false
-                    }
+            return when (firstToken) {
+                DEFAULT_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseStringValue)
+                } // TODO
+                DOC_KEYWORD, LABEL_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseStringValue)
+                } // TODO
+                FORMAT_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseStringValue)
+                } // TODO
+                ID_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseStringValue)
+                } // TODO
+                INPUT_BINDING_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseInputBindingFields)
+                } // TODO
+                SECONDARY_FILES_KEYWORD -> {
+                    parseKeyValue(CwlElementTypes.SECONDARY_FILES, this@CommandLineToolParser::parseSecondaryFiles)
+                    true
+                } // TODO
+                STREAMABLE_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseBoolValue)
+                } // TODO
+                TYPE_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseTypeValue)
+                } // TODO
+                else -> {
+                    reportParseStatementError(myBuilder, firstToken)
+                    false
                 }
             }
-        return true
+        }
     }
 
-    fun parseInputBinding(): Unit {
-        parseColonAndIndentedBlock(CwlElementTypes.INPUT_BINDING, this::parseInputBindingBlock)
+    fun parseInputBindingFields(): Boolean {
+        return parseSequence(CwlElementTypes.INPUT_BINDING, this::parseInputBindingField, simplified = true)
     }
 
-    fun parseInputBindingBlock(): Unit {
-        parseIndentedBlock(this::parseInputBindingField)
-    }
-
-    fun parseInputBindingField():Boolean {
+    fun parseInputBindingField(): Boolean {
         val firstToken = myBuilder.tokenType
         if (firstToken != null) {
             with(CwlTokenTypes) {
@@ -181,20 +175,16 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
         return true
     }
 
-    fun parseSecondaryFiles(): Unit{
+    fun parseSecondaryFiles(): Unit {
         parseSequence(CwlElementTypes.SECONDARY_FILES, this::parseStringValue)
         return
-    }
-
-    fun parseOutput(): Boolean {
-        return true
     }
 
     fun parseBaseCommand(): Boolean {
         return parseFlowSequence(CwlElementTypes.BASE_COMMAND, CwlTokenTypes.STRING)
     }
 
-    fun parseTypeValue(): Boolean{
+    fun parseTypeValue(): Boolean {
         with(CwlTokenTypes) {
             if (!CWL_TYPES.contains(myBuilder.tokenType)) {
                 myBuilder.error("Type expected")
@@ -202,6 +192,88 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
                 nextToken()
             }
             return checkMatches(CwlTokenTypes.LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))
+        }
+    }
+
+    fun parseOutputs(): Unit {
+        parseKeyValue(CwlElementTypes.OUTPUTS, this::parseCommandOutputParameters)
+    }
+
+    fun parseCommandOutputParameters(): Unit {
+        parseSequence(CwlElementTypes.COMMAND_OUTPUT_PARAMETER, this::parseCommandOutputParameter, simplified = true)
+    }
+
+    fun parseCommandOutputParameter(): Boolean {
+        if (myBuilder.tokenType == CwlTokenTypes.STRING) {
+            parseKeyValue(CwlElementTypes.COMMAND_OUTPUT_PARAMETER, this::parseCommandOutputParameterFields)
+            return true
+        }
+        return false
+    }
+
+    fun parseCommandOutputParameterFields() {
+        parseSequence(CwlElementTypes.COMMAND_OUTPUT_PARAMETER, this::parseCommandOutputParameterField, simplified = true)
+    }
+
+
+    fun parseCommandOutputParameterField(): Boolean {
+        val firstToken = myBuilder.tokenType ?: return false
+        with(CwlTokenTypes) {
+            return when (firstToken) {
+                ID_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseStringValue)
+                }
+                LABEL_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseStringValue)
+                }
+
+                SECONDARY_FILES_KEYWORD -> {
+                    parseKeyValue(CwlElementTypes.SECONDARY_FILES, this@CommandLineToolParser::parseSecondaryFiles)
+                    true
+                }
+                FORMAT_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseStringValue)
+                }
+                STREAMABLE_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseBoolValue)
+                }
+                DOC_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseStringValue)
+                }
+                OUTPUT_BINDING_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseCommandOutputBindingFields)
+                }
+                TYPE_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseTypeValue)
+                }
+                else -> {
+                    reportParseStatementError(myBuilder, firstToken); return false
+                }
+            }
+        }
+    }
+
+    fun parseCommandOutputBindingFields(): Boolean {
+        return parseSequence(CwlElementTypes.OUTPUT_BINDING, this::parseCommandOutputBindingField, simplified = true)
+    }
+
+    fun parseCommandOutputBindingField(): Boolean {
+        val firstToken = myBuilder.tokenType ?: return false
+        with(CwlTokenTypes) {
+            return when (firstToken) {
+                GLOB_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseStringValue)
+                }
+                LOAD_CONTENTS_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseBoolValue)
+                }
+                OUTPUT_EVAL_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseStringValue)
+                }
+                else -> {
+                    reportParseStatementError(myBuilder, firstToken); return false
+                }
+            }
         }
     }
 

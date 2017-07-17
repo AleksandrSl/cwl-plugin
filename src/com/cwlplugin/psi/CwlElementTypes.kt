@@ -1,11 +1,57 @@
 package com.cwlplugin.psi
 
 import com.cwlplugin.CwlFileType
-import com.cwlplugin.psi.impl.*
+import com.cwlplugin.psi.impl.CwlArgumentsImpl
+import com.cwlplugin.psi.impl.CwlBaseCommandImpl
+import com.cwlplugin.psi.impl.CwlCommandInputParameterImpl
+import com.cwlplugin.psi.impl.CwlCommandLineToolClassImpl
+import com.cwlplugin.psi.impl.CwlCommandOutputParameterImpl
+import com.cwlplugin.psi.impl.CwlDefaultImpl
+import com.cwlplugin.psi.impl.CwlDocImpl
+import com.cwlplugin.psi.impl.CwlDockerRequirementImpl
+import com.cwlplugin.psi.impl.CwlEnvVarRequirementImpl
+import com.cwlplugin.psi.impl.CwlFormatImpl
+import com.cwlplugin.psi.impl.CwlHintsImpl
+import com.cwlplugin.psi.impl.CwlIdImpl
+import com.cwlplugin.psi.impl.CwlInitialWorkDirRequirementImpl
+import com.cwlplugin.psi.impl.CwlInlineJavascriptRequirementImpl
+import com.cwlplugin.psi.impl.CwlInputBindingImpl
+import com.cwlplugin.psi.impl.CwlInputsImpl
+import com.cwlplugin.psi.impl.CwlLabelImpl
+import com.cwlplugin.psi.impl.CwlLoadContentsImpl
+import com.cwlplugin.psi.impl.CwlMultiLineStringImpl
+import com.cwlplugin.psi.impl.CwlOutputBindingImpl
+import com.cwlplugin.psi.impl.CwlOutputsImpl
+import com.cwlplugin.psi.impl.CwlPermanentFailCodesImpl
+import com.cwlplugin.psi.impl.CwlPositionImpl
+import com.cwlplugin.psi.impl.CwlPrefixImpl
+import com.cwlplugin.psi.impl.CwlRequirementListImpl
+import com.cwlplugin.psi.impl.CwlRequirementsBlockImpl
+import com.cwlplugin.psi.impl.CwlResourceRequirementImpl
+import com.cwlplugin.psi.impl.CwlSchemaDefRequirementImpl
+import com.cwlplugin.psi.impl.CwlSecondaryFilesImpl
+import com.cwlplugin.psi.impl.CwlSeparateImpl
+import com.cwlplugin.psi.impl.CwlShellCommandRequirementImpl
+import com.cwlplugin.psi.impl.CwlShellQuoteImpl
+import com.cwlplugin.psi.impl.CwlSoftwareRequirementImpl
+import com.cwlplugin.psi.impl.CwlStderrImpl
+import com.cwlplugin.psi.impl.CwlStdinImpl
+import com.cwlplugin.psi.impl.CwlStdoutImpl
+import com.cwlplugin.psi.impl.CwlStreamableImpl
+import com.cwlplugin.psi.impl.CwlSuccessCodesImpl
+import com.cwlplugin.psi.impl.CwlTemporaryFailCodesImpl
+import com.cwlplugin.psi.impl.CwlTypeImpl
+import com.cwlplugin.psi.impl.CwlValueFromImpl
+import com.cwlplugin.psi.impl.CwlVersionImpl
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiNamedElement
 import com.intellij.psi.StubBasedPsiElement
-import com.intellij.psi.stubs.*
+import com.intellij.psi.stubs.IStubElementType
+import com.intellij.psi.stubs.IndexSink
+import com.intellij.psi.stubs.NamedStub
+import com.intellij.psi.stubs.StubElement
+import com.intellij.psi.stubs.StubInputStream
+import com.intellij.psi.stubs.StubOutputStream
 
 /**
  * @author Aleksandr Slepchenkov [aslepchenkov@parseq.pro](mailto:aslepchenkov@parseq.pro)
@@ -43,6 +89,7 @@ object CwlElementTypes {
     val TEMPORARY_FAIL_CODES = CwlElementType("TEMPORARY_FAIL_CODES", CwlTemporaryFailCodesImpl::class.java)
     val PERMANENT_FAIL_CODES = CwlElementType("PERMANENT_FAIL_CODES", CwlPermanentFailCodesImpl::class.java)
     val COMMAND_INPUT_PARAMETER  = CwlElementType("COMMAND_INPUT_PARAMETER", CwlCommandInputParameterImpl::class.java)
+    val COMMAND_OUTPUT_PARAMETER = CwlElementType("COMMAND_OUTPUT_PARAMETER", CwlCommandOutputParameterImpl::class.java)
 
 
     val DEFAULT = CwlElementType("DEFAULT", CwlDefaultImpl::class.java)
@@ -62,6 +109,8 @@ object CwlElementTypes {
     val SHELL_QUOTE = CwlElementType("SHELL_QUOTE", CwlShellQuoteImpl::class.java)
 
     val MULTI_LINE_STRING = CwlElementType("MULTI_LINE_STRING", CwlMultiLineStringImpl::class.java)
+
+    val OUTPUT_BINDING = CwlElementType("OUTPUT_BINDING", CwlOutputBindingImpl::class.java)
 
 }
 

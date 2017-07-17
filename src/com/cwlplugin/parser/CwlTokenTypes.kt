@@ -81,6 +81,7 @@ object CwlTokenTypes {
     @JvmField val OUTDIR_MAX_KEYWORD = CwlElementType("outdirMax")
     @JvmField val OUTDIR_MIN_KEYWORD = CwlElementType("outdirMin")
     @JvmField val OUTPUTS_KEYWORD = CwlElementType("outputs")
+    @JvmField val OUTPUT_BINDING_KEYWORD = CwlElementType("outputBinding")
     @JvmField val OUTPUT_EVAL_KEYWORD = CwlElementType("outputEval")
     @JvmField val PACKAGE_KEYWORD = CwlElementType("package")
     @JvmField val PATH_KEYWORD = CwlElementType("path")
