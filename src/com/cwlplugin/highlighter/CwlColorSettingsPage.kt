@@ -58,22 +58,22 @@ inputs:
     type: File
     inputBinding:
       position: 1
-      prefix: -i
+      prefix: "-i"
   strings:
     type: string[]?
     inputBinding:
       position: 1
-      prefix: -s
+      prefix: "-s"
   strings_file:
     type: File?
     inputBinding:
       position: 1
-      prefix: -f
+      prefix: "-f"
   output_file_name:
     type: string
     inputBinding:
       position: 1
-      prefix: -o
+      prefix: "-o"
       valueFrom: |
         $( self ? self : inputs.input_vcf.basename)
     default: ""

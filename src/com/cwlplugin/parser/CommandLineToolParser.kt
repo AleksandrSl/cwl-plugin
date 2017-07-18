@@ -39,11 +39,9 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
                 }
                 ID_KEYWORD -> {
                     checkKeyValue(this@CommandLineToolParser::parseStringValue)
-                    parseSimpleStatement(STRING, CwlElementTypes.ID)
                 } // TODO
                 LABEL_KEYWORD, DOC_KEYWORD -> {
-                    return checkKeyValue(this@CommandLineToolParser::parseStringValue)
-//                    return parseStringValue()
+                    checkKeyValue(this@CommandLineToolParser::parseStringValue)
                 } // TODO
                 HINTS_KEYWORD -> {
                     parseSimpleStatement(STRING, CwlElementTypes.HINTS)
@@ -78,12 +76,12 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
     }
 
     fun parseInputs(): Unit {
-        parseKeyValue(this::parseCommandInputParameters)
+        parseKeyValue(CwlElementTypes.INPUTS, this::parseCommandInputParameters)
         return
     }
 
     fun parseCommandInputParameters(): Unit {
-        parseSequence(CwlElementTypes.COMMAND_INPUT_PARAMETER, this::parseCommandInputParameter, simplified = true)
+        parseSequence(this::parseCommandInputParameter, simplified = true)
     }
 
     fun parseCommandInputParameter(): Boolean {
@@ -115,7 +113,7 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
                     checkKeyValue(this@CommandLineToolParser::parseStringValue)
                 } // TODO
                 INPUT_BINDING_KEYWORD -> {
-                    checkKeyValue(this@CommandLineToolParser::parseInputBindingFields)
+                    checkKeyValue(CwlElementTypes.INPUT_BINDING, this@CommandLineToolParser::parseInputBindingFields)
                 } // TODO
                 SECONDARY_FILES_KEYWORD -> {
                     parseKeyValue(CwlElementTypes.SECONDARY_FILES, this@CommandLineToolParser::parseSecondaryFiles)
@@ -136,39 +134,37 @@ class CommandLineToolParser(context: ParsingContext) : Parsing(context) {
     }
 
     fun parseInputBindingFields(): Boolean {
-        return parseSequence(CwlElementTypes.INPUT_BINDING, this::parseInputBindingField, simplified = true)
+        return parseSequence(this::parseInputBindingField, simplified = true)
     }
 
     fun parseInputBindingField(): Boolean {
-        val firstToken = myBuilder.tokenType
-        if (firstToken != null) {
-            with(CwlTokenTypes) {
-                when (firstToken) {
-                    VALUE_FROM_KEYWORD -> {
-                        checkKeyValue(this@CommandLineToolParser::parseStringValue)
-                    } // TODO
-                    POSITION_KEYWORD -> {
-                        checkKeyValue(this@CommandLineToolParser::parseIntValue)
-                    } // TODO
-                    SEPARATE_KEYWORD -> {
-                        checkKeyValue(this@CommandLineToolParser::parseBoolValue)
-                    } // TODO
-                    ITEM_SEPARATOR_KEYWORD -> {
-                        checkKeyValue(this@CommandLineToolParser::parseStringValue)
-                    } // TODO
-                    PREFIX_KEYWORD -> {
-                        checkKeyValue(this@CommandLineToolParser::parseStringValue)
-                    } // TODO
-                    SHELL_QUOTE_KEYWORD -> {
-                        checkKeyValue(this@CommandLineToolParser::parseStringValue)
-                    } // TODO
-                    LOAD_CONTENTS_KEYWORD -> {
-                        checkKeyValue(this@CommandLineToolParser::parseBoolValue)
-                    } // TODO
-                    else -> {
-                        println("parseInputBindingField")
-                        reportParseStatementError(myBuilder, firstToken); return false
-                    }
+        val firstToken = myBuilder.tokenType ?: return false
+        with(CwlTokenTypes) {
+            when (firstToken) {
+                VALUE_FROM_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseStringValue)
+                } // TODO
+                POSITION_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseIntValue)
+                } // TODO
+                SEPARATE_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseBoolValue)
+                } // TODO
+                ITEM_SEPARATOR_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseStringValue)
+                } // TODO
+                PREFIX_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseStringValue)
+                } // TODO
+                SHELL_QUOTE_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseStringValue)
+                } // TODO
+                LOAD_CONTENTS_KEYWORD -> {
+                    checkKeyValue(this@CommandLineToolParser::parseBoolValue)
+                } // TODO
+                else -> {
+                    println("parseInputBindingField")
+                    reportParseStatementError(myBuilder, firstToken); return false
                 }
             }
         }

@@ -1,5 +1,11 @@
 package com.cwlplugin.completion
 
+import com.cwlplugin.psi.CwlCommandInputParameter
+import com.cwlplugin.psi.CwlCommandOutputParameter
+import com.cwlplugin.psi.CwlDockerRequirement
+import com.cwlplugin.psi.CwlInputBinding
+import com.cwlplugin.psi.CwlOutputBinding
+import com.cwlplugin.psi.CwlRequirementList
 import com.cwlplugin.psi.CwlRequirementsBlock
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
@@ -17,53 +23,67 @@ import com.intellij.util.ProcessingContext
 /**
  * Created by aleksandrsl on 14.06.17.
  */
-class CwlKeywordCompletionProvider(private vararg val keywords: String)
+class CwlKeywordCompletionProvider(private val keywords: List<String>)
     : CompletionProvider<CompletionParameters>() {
 
     override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext?, result: CompletionResultSet) {
         keywords.forEach { keyword ->
             var builder = LookupElementBuilder.create(keyword)
-//            PREFIXES.filter { keyword in it.second }
-//                    .firstOrNull()
-//                    ?.let { builder = builder.withInsertHandler(it.first) }
+            PREFIXES.plus(SUFFIXES).filter { keyword in it.second }
+                    .firstOrNull()
+                    ?.let { builder = builder.withInsertHandler(it.first) }
             result.addElement(builder)
         }
     }
 
     companion object {
 
-        fun general_context(): PsiElementPattern.Capture<PsiElement> =
-                psiElement<PsiElement>().withParent(PlatformPatterns.psiFile())
-
-        //        fun requirements(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().afterLeaf(PlatformPatterns.psiElement(CwlTokenTypes.COLON).withParent(psiElement<CwlRequirementsBlock>()))
-        fun requirements(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().inside(psiElement<CwlRequirementsBlock>())
-
-//        fun commandLineTool1(): PsiElementPattern.Capture<PsiElement> =
-//                psiElement<PsiElement>().afterLeaf(psiElement<CwlRequirementsBlock>())
-//
-//        fun commandLineTool2(): PsiElementPattern.Capture<PsiElement> =
-//                psiElement<PsiElement>().withAncestor(2, psiElement<CwlRequirementsBlock>())
-//
-//        fun commandLineTool3(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().withFirstNonWhitespaceChild(psiElement<CwlRequirementList>())
-//
-//        fun commandLineTool4(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().withSuperParent(1, psiElement<CwlRequirementList>())
-//
-//        fun commandLineTool5(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().withParent(psiElement<CwlRequirementsBlock>())
-//
-//        fun commandLineTool6(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().afterLeaf(PlatformPatterns.psiElement(CwlTokenTypes.COLON).withSuperParent(1, psiElement<CwlRequirementList>()))
-
-//        fun commandLineTool7(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().afterLeaf(PlatformPatterns.psiElement(CwlTokenTypes.COLON).withParent(psiElement<CwlRequirementList>()))
+        fun generalContext(): PsiElementPattern.Capture<PsiElement> =
+                psiElement<PsiElement>()
+                        .andNot(psiElement<PsiElement>().andOr(
+                                psiElement<PsiElement>()
+                                        .inside(false, psiElement<CwlRequirementsBlock>()),
+                                psiElement<PsiElement>()
+                                        .inside(false, psiElement<CwlRequirementList>())))
 
 
-        // These works
-//        fun commandLineTool6(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().afterLeaf(PlatformPatterns.psiElement(CwlTokenTypes.COLON).withSuperParent(1, psiElement<CwlRequirementList>()))
-//
-//        fun commandLineTool7(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>().afterLeaf(PlatformPatterns.psiElement(CwlTokenTypes.COLON).withParent(psiElement<CwlRequirementList>()))
+        fun requirements(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>()
+                .andOr(psiElement<PsiElement>()
+                        .inside(psiElement<CwlRequirementsBlock>()),
+                        psiElement<PsiElement>()
+                                .afterSibling(psiElement<CwlRequirementsBlock>()))
 
-//                .and(PlatformPatterns.psiElement().withParent(psiElement<CwlFile>()))
+        fun dockerRequirement(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>()
+                .andOr(psiElement<PsiElement>()
+                        .inside(psiElement<CwlDockerRequirement>()),
+                        psiElement<PsiElement>()
+                                .afterSibling(psiElement<CwlDockerRequirement>()))
+
+        fun inputBinding(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>()
+                .andOr(psiElement<PsiElement>()
+                        .inside(psiElement<CwlInputBinding>()))
+
+        fun inputParameters(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>()
+                .inside(true, psiElement<CwlCommandInputParameter>())
+
+        fun outputParameters(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>()
+                .inside(true, psiElement<CwlCommandOutputParameter>())
+
+        fun outputBinding(): PsiElementPattern.Capture<PsiElement> = psiElement<PsiElement>()
+                .andOr(psiElement<PsiElement>()
+                        .inside(psiElement<CwlOutputBinding>()))
+
 
         private val PREFIXES = listOf(
-                AddPrefix(" class: ") to listOf("DockerRequirement", "InlineJavascriptRequirement")
+                AddPrefix("- class: ") to Keywords.requirements
+        )
+
+        private val SUFFIXES = listOf(
+                AddSuffix(": ") to Keywords.general
+                        .plus(Keywords.inputBinding)
+                        .plus(Keywords.inputParameters)
+                        .plus(Keywords.outputParameters)
+                        .plus(Keywords.dockerRequirement)
         )
 
         /**

@@ -55,7 +55,7 @@ SimpleString = \"[^\"\r\n]*\"
 // Bless the person who allowed strings without quotation marks!
 //BareString = [^\n\r\(: \),\"]([^\n\r\(:#\),\"])*[^\n\r\(: #\),\"]
 // Permamently or maybe constantly restrict bare string value
-BareString = [:jletterdigit:]([^\n\r\(:#\),\"])*[^\n\r\(: #\),\"]
+BareString = [:jletterdigit:]([^\n\r\(:#\),\"])*[^\n\r\(: #\]\),\"]
 String = {BareString} | {SimpleString}
 Expression = \$\(.*\) | \$\{.*\}
 

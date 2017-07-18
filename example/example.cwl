@@ -1,11 +1,36 @@
 cwlVersion: v1.0
 class: CommandLineTool
-baseCommand: echo
+
+baseCommand: [cut]
+
+id: "223123"
+
+label: "2131"
+
+requirements:
+    - class: DockerRequirement
+      dockerFile: |
+       some
+          text
+             describing
+        image
+    - class: InlineJavascriptRequirement
+
 inputs:
-  uyutut&&&%:-^&:
-    type: string
+
+  in_file:
+    type: File
     inputBinding:
-      position: 1
-      prefix: -f
-    doc: :9lll?:**9 ll
-outputs: []
+      position: 2
+      prefix: "-f"
+
+  column:
+    type: int
+    inputBinding:
+      position: 3
+      prefix: "-f"
+
+outputs:
+  out_f:
+    type: boolean
+

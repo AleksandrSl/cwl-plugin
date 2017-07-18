@@ -28,6 +28,7 @@
     <fileTypeFactory implementation="com.cwlplugin.CwlFileTypeFactory"/>
     <lang.parserDefinition language="cwl" implementationClass="com.cwlplugin.parser.CwlParserDefinition"/>
     <lang.syntaxHighlighterFactory key="cwl" implementationClass="com.cwlplugin.highlighter.CwlSyntaxHighlighterFactory"/>
+    <lang.commenter language="cwl" implementationClass="com.cwlplugin.commenter.CwlCommenter"/>
     <colorSettingsPage implementation="com.cwlplugin.highlighter.CwlColorSettingsPage"/>
     <completion.contributor language="cwl" implementationClass="com.cwlplugin.completion.CwlCompletionContributor"/>
     <!-- Add your extensions here -->

@@ -237,6 +237,7 @@ object CwlTokenTypes {
     @JvmField val CWL_TYPES = TokenSet.create(
             STRING_TYPE_KEYWORD,
             NULL_TYPE_KEYWORD,
+            INT_TYPE_KEYWORD,
             LONG_TYPE_KEYWORD,
             DOUBLE_TYPE_KEYWORD,
             FILE_TYPE_KEYWORD,

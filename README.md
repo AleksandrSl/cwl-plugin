@@ -18,6 +18,15 @@ Caches, Logs, and Plugins](http://www.jetbrains.org/intellij/sdk/docs/basics/set
 * When finished, click OK to close the Settings dialog box.
 * Restart the IDE so that your changes take effect.
 
+## Supported features
+
+* Syntax check for CommandLineTool
+* Autocompletion
+* Syntax highlighting. Can be tuned in `File > Settings > Editor > Color&Fonts > CWL`
+* Line commenting by `Ctrl + /`
+
+File with supported syntax can be found in `examples` folder
+
 ## Requirements for development
 
 To compile you will need:

@@ -131,7 +131,7 @@ open class Parsing(val parsingContext: ParsingContext) {
     }
 
     fun reportParseStatementError(builder: PsiBuilder, firstToken: IElementType) {
-        when(firstToken) {
+        when (firstToken) {
             CwlTokenTypes.INCONSISTENT_DEDENT -> {
                 builder.error("Unindent does not match any outer indentation level")
             }
@@ -189,8 +189,8 @@ open class Parsing(val parsingContext: ParsingContext) {
                     parseElement()
                     while (!myBuilder.eof() && !atToken(CwlTokenTypes.DEDENT)) {
                         print("Parse Sequence: At token ${myBuilder.tokenType}")
-                        if (!simplified && !checkMatches(CwlTokenTypes.SEQUENCE_ELEMENT_PREFIX, CwlBundle.message("PARSE.expected.sequence_element_prefix_or_dedent"))) break
-                        if (!parseElement()) break
+                        if (!simplified) checkMatches(CwlTokenTypes.SEQUENCE_ELEMENT_PREFIX, CwlBundle.message("PARSE.expected.sequence_element_prefix_or_dedent"))
+                        if (!parseElement()) nextToken() // Skip tokens until dedent if nothing matches
                     }
                     print("escaped!")
                 }
@@ -199,6 +199,36 @@ open class Parsing(val parsingContext: ParsingContext) {
                     checkMatches(CwlTokenTypes.DEDENT, "Dedent expected")
                 }
                 indentedBlock.done(blockType)
+            }
+        }
+        return true
+    }
+
+
+    fun parseSequence(parseElement: () -> Boolean, simplified: Boolean = false): Boolean {
+
+        if (checkMatches(CwlTokenTypes.LINE_BREAK, CwlBundle.message("PARSE.expected.line_break"))) {
+            println("Instead indent: ${myBuilder.tokenType}")
+            if (checkMatches(CwlTokenTypes.INDENT, "Indent expected", advanceLexer = false)) {
+                nextToken()
+                if (myBuilder.eof()) {
+                    myBuilder.error("Indented block expected")
+                } else {
+                    if (!simplified) {
+                        checkMatches(CwlTokenTypes.SEQUENCE_ELEMENT_PREFIX, CwlBundle.message("PARSE.expected.sequence_element_prefix"))
+                    }
+                    parseElement()
+                    while (!myBuilder.eof() && !atToken(CwlTokenTypes.DEDENT)) {
+                        print("Parse Sequence: At token ${myBuilder.tokenType}")
+                        if (!simplified) checkMatches(CwlTokenTypes.SEQUENCE_ELEMENT_PREFIX, CwlBundle.message("PARSE.expected.sequence_element_prefix_or_dedent"))
+                        if (!parseElement()) nextToken() // Skip tokens until dedent if nothing matches
+                    }
+                    print("escaped!")
+                }
+
+                if (!myBuilder.eof()) {
+                    checkMatches(CwlTokenTypes.DEDENT, "Dedent expected")
+                }
             }
         }
         return true
@@ -230,6 +260,16 @@ open class Parsing(val parsingContext: ParsingContext) {
         nextToken() // Skip key that is already matched
         if (!checkMatches(CwlTokenTypes.COLON, CwlBundle.message("PARSE.expected.colon"))) return false
         return parseValue()
+    }
+
+    fun checkKeyValue(statementElement: IElementType, parseValue: () -> Boolean): Boolean {
+
+        val statement: PsiBuilder.Marker = myBuilder.mark()
+        nextToken() // Skip key that is already matched
+        checkMatches(CwlTokenTypes.COLON, CwlBundle.message("PARSE.expected.colon"))
+        val res = parseValue()
+        statement.done(statementElement)
+        return res
     }
 
 
@@ -300,8 +340,6 @@ open class Parsing(val parsingContext: ParsingContext) {
             }
         }
     }
-
-
 
 
     fun parseMultiLineString(): Boolean {
